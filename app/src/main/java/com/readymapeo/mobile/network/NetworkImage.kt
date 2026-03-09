@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.utils
+package com.readymapeo.mobile.network
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

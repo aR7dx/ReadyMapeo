@@ -38,7 +38,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.R
 import com.readymapeo.mobile.config.ApiConfig
-import com.readymapeo.mobile.utils.NetworkImage
+import com.readymapeo.mobile.network.NetworkImage
+import com.readymapeo.mobile.navigation.redirectRoute
 import com.readymapeo.mobile.utils.toFrenchDate
 
 @Composable
@@ -71,7 +72,7 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 elevation = CardDefaults.cardElevation(4.dp),
-                onClick = {}
+                onClick = { redirectRoute("/raids/${it.raidId}") }
             ) {
 
                 RaidImage(it.raidImage)
@@ -92,7 +93,7 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
                     Divider()
 
                     // see details
-                    SeeDetailsButton("VOIR LES DETAILS")
+                    SeeDetailsButton("VOIR LES DETAILS", it.raidId)
                 }
             }
         }
@@ -175,9 +176,9 @@ fun Divider() {
 }
 
 @Composable
-fun SeeDetailsButton(text: String = "") {
+fun SeeDetailsButton(text: String = "", raidId: Int) {
     Button(
-        onClick = {},
+        onClick = { redirectRoute("/raids/${raidId}") },
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(ApiConfig.COLOR_MAIN_BROWN)

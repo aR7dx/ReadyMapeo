@@ -18,14 +18,12 @@ data class Raid (
     val raidNumber: Int,
     val createdAt: String,
     val updatedAt: String,
-    val racesCount: Int,
-    val club: RaidClub,
+    val isOpen: Boolean? = null,
+    val isUpcoming: Boolean? = null,
+    val isFinished: Boolean? = null,
+    val racesCount: Int? = null,
+    val club: Club,
     val registrationPeriod: RaidRegistrationPeriod
-)
-
-data class RaidClub (
-    val clubId: Int,
-    val clubName: String,
 )
 
 data class RaidRegistrationPeriod (
