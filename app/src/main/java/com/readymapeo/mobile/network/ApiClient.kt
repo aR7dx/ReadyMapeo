@@ -10,7 +10,7 @@ import java.net.URL
 object ApiClient {
     private fun request (method: String, path: String, body: String? = null, callback: (String) -> Unit) {
         Thread {
-            val url = URL(ApiConfig.BASE_URL + path)
+            val url = URL(ApiConfig.BASE_URL_API + path)
 
             val connection = url.openConnection() as HttpURLConnection
 
