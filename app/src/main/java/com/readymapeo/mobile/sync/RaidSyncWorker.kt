@@ -45,7 +45,7 @@ class RaidSyncWorker(context: Context, params: WorkerParameters) : CoroutineWork
                         raidNumber = raidJson.getInt("raid_number"),
                         createdAt = raidJson.getString("created_at"),
                         updatedAt = raidJson.getString("updated_at"),
-                        clubName = clubJson?.getString("club_name") ?: "",
+                        //clubName = clubJson?.getString("club_name") ?: "",
                         racesCount = raidJson.optInt("races_count"),
                         isOpen = raidJson.optBoolean("is_open"),
                         isUpcoming = raidJson.optBoolean("is_upcoming"),

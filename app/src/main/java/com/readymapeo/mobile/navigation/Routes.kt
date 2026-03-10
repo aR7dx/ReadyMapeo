@@ -3,6 +3,7 @@ package com.readymapeo.mobile.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import com.readymapeo.mobile.R
+import com.readymapeo.mobile.ui.screens.clubs.ClubsScreen
 import com.readymapeo.mobile.ui.screens.home.HomeScreen
 import com.readymapeo.mobile.ui.screens.profile.ProfileScreen
 import com.readymapeo.mobile.ui.screens.races.RacesScreen
@@ -13,7 +14,7 @@ val navRoutes = listOf(
     Route("/", { HomeScreen() }, R.drawable.home, "Home"),
     Route("/raids", { RaidsScreen() }, R.drawable.raids, "Raids"),
     Route("/races", { RacesScreen() }, R.drawable.races, "Courses"),
-    //Route("/clubs", {}, null, "Clubs"),
+    Route("/clubs", { ClubsScreen() }, R.drawable.clubs, "Clubs"),
     Route("/profile", { ProfileScreen() }, R.drawable.account_avatar, "Profil")
 )
 

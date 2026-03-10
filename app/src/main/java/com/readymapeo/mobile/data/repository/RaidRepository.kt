@@ -15,7 +15,7 @@ class RaidRepository(private val database: AppDatabase) {
     fun getAllRaids(): Flow<List<Raid>> = flow {
 
         raidDao.getAll().collect { localRaids ->
-            println("${localRaids.size} raids trouvé en bdd")
+            //println("${localRaids.size} raids trouvés en bdd")
 
             if (localRaids.isNotEmpty()) {
                 emit(localRaids)

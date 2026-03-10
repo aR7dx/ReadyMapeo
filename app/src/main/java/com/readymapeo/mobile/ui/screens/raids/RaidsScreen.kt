@@ -88,7 +88,7 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
                     StartAndEndDate(it.raidDateStart, it.raidDateEnd)
 
                     // club of the raid
-                    HostClub(it.club.clubName)
+                    //HostClub(it.club.clubName)
 
                     Divider()
 

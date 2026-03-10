@@ -8,6 +8,7 @@ import com.readymapeo.mobile.data.local.dao.ClubDao
 import com.readymapeo.mobile.data.local.dao.RaidDao
 import com.readymapeo.mobile.data.local.entity.Club
 import com.readymapeo.mobile.data.local.entity.Raid
+import com.readymapeo.mobile.data.local.migration.Migration3To4
 
 @Database(
     entities = [Club::class, Raid::class],
@@ -19,11 +20,14 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun raidDao(): RaidDao
 
     companion object {
-        fun getInstance(context: Context): AppDatabase = lazy {
+        fun getInstance(context: Context): AppDatabase = lazy<AppDatabase> {
             Room.databaseBuilder(
                 context,
                 AppDatabase::class.java, "modules.sqlite"
-            ).build()
+            )
+            //.addMigrations(Migration3To4())
+            //.fallbackToDestructiveMigration()
+            .build()
         }.value
     }
 }

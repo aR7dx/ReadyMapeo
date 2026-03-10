@@ -25,7 +25,7 @@ interface ClubDao {
     @Delete
     suspend fun delete(club: Club)
 
-    @Query("UPDATE Club SET isSynced = 1, lastSyncAt = :timestamp WHERE cludId = :id")
+    @Query("UPDATE Club SET isSynced = 1, lastSyncAt = :timestamp WHERE clubId = :id")
     suspend fun markAsSynced(id: Int, timestamp: Long)
 
     @Query("UPDATE Club SET isSynced = 1, lastSyncAt = :timestamp")
