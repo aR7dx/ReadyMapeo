@@ -1,19 +1,23 @@
 package com.readymapeo.mobile.ui.screens.raids
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import com.readymapeo.mobile.data.model.Raid
+import androidx.compose.runtime.State
+import com.readymapeo.mobile.data.local.AppDatabase
+import com.readymapeo.mobile.data.local.entity.Raid
 import com.readymapeo.mobile.data.repository.RaidRepository
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 
-class RaidsViewModel : ViewModel() {
-    var raids = mutableStateOf<List<Raid>>(emptyList())
-    private set
+class RaidsViewModel(application: Application) : AndroidViewModel(application) {
+    private val _raids = mutableStateOf<List<Raid>>(emptyList())
+    val raids: State<List<Raid>> = _raids
 
-    private val repository = RaidRepository()
+    private val database = AppDatabase.getInstance(application)
+    private val raidRepository = RaidRepository(database)
 
-    fun loadRaids() {
-        repository.getRaids {
-            raids.value = it
+    suspend fun loadRaids() {
+        raidRepository.getAllRaids().collect {
+            _raids.value = it
         }
     }
 }

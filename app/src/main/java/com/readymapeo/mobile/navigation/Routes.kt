@@ -13,19 +13,20 @@ val navRoutes = listOf(
     Route("/", { HomeScreen() }, R.drawable.home, "Home"),
     Route("/raids", { RaidsScreen() }, R.drawable.raids, "Raids"),
     Route("/races", { RacesScreen() }, R.drawable.races, "Courses"),
+    //Route("/clubs", {}, null, "Clubs"),
     Route("/profile", { ProfileScreen() }, R.drawable.account_avatar, "Profil")
 )
 
 val routes = navRoutes + listOf(
-    Route("/raids/{id}", { RaidScreen() }, null, null)
+    Route("/raids/{id}", { RaidScreen() }),
+    // ajout de nouvelles routes ici
 )
 
 class Route(
     val path: String,
     val screen: @Composable () -> Unit,
-    val iconRes: Int?,
+    val iconRes: Int? = null,
     val label: String? = "",
-    var routeParams: Map<String, String> = emptyMap()
 ) {
     fun matches(path: String): Boolean {
         val routeParts = this.path.split("/")

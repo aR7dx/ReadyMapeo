@@ -9,7 +9,6 @@ ksp {
     arg("room.incremental", "true")
     arg("room.generateKotlin", "true")
     arg("room.expandProjection", "true")
-    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 android {
@@ -69,6 +68,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.paging)
+    implementation(libs.androidx.work)
+    implementation(libs.androidx.material.icons.extended)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

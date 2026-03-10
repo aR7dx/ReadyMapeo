@@ -1,0 +1,265 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 4,
+    "identityHash": "885d760d3c6a9f188cfeb10ee9f7eed4",
+    "entities": [
+      {
+        "tableName": "Club",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clubId` INTEGER NOT NULL, `clubName` TEXT NOT NULL, `clubStreet` TEXT NOT NULL, `clubCity` TEXT NOT NULL, `clubPostalCode` TEXT NOT NULL, `ffsoId` TEXT NOT NULL, `description` TEXT, `clubImage` TEXT, `isApproved` INTEGER, `approvedBy` INTEGER, `approvedAt` TEXT, `createdBy` INTEGER, `createdAt` TEXT, `updatedAt` TEXT, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`clubId`))",
+        "fields": [
+          {
+            "fieldPath": "clubId",
+            "columnName": "clubId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clubName",
+            "columnName": "clubName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clubStreet",
+            "columnName": "clubStreet",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clubCity",
+            "columnName": "clubCity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clubPostalCode",
+            "columnName": "clubPostalCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ffsoId",
+            "columnName": "ffsoId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "clubImage",
+            "columnName": "clubImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isApproved",
+            "columnName": "isApproved",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "approvedBy",
+            "columnName": "approvedBy",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "approvedAt",
+            "columnName": "approvedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createdBy",
+            "columnName": "createdBy",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lastSyncAt",
+            "columnName": "lastSyncAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isSynced",
+            "columnName": "isSynced",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "clubId"
+          ]
+        }
+      },
+      {
+        "tableName": "Raid",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`raidId` INTEGER NOT NULL, `raidName` TEXT NOT NULL, `raidDescription` TEXT NOT NULL, `adhId` INTEGER NOT NULL, `cluId` INTEGER NOT NULL, `insId` INTEGER NOT NULL, `raidDateStart` TEXT NOT NULL, `raidDateEnd` TEXT NOT NULL, `raidContact` TEXT NOT NULL, `raidSiteUrl` TEXT NOT NULL, `raidImage` TEXT NOT NULL, `raidStreet` TEXT NOT NULL, `raidCity` TEXT NOT NULL, `raidPostalCode` TEXT NOT NULL, `raidNumber` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `racesCount` INTEGER, `club` TEXT NOT NULL, `isOpen` INTEGER, `isUpcoming` INTEGER, `isFinished` INTEGER, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`raidId`))",
+        "fields": [
+          {
+            "fieldPath": "raidId",
+            "columnName": "raidId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidName",
+            "columnName": "raidName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidDescription",
+            "columnName": "raidDescription",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "adhId",
+            "columnName": "adhId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cluId",
+            "columnName": "cluId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "insId",
+            "columnName": "insId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidDateStart",
+            "columnName": "raidDateStart",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidDateEnd",
+            "columnName": "raidDateEnd",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidContact",
+            "columnName": "raidContact",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidSiteUrl",
+            "columnName": "raidSiteUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidImage",
+            "columnName": "raidImage",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidStreet",
+            "columnName": "raidStreet",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidCity",
+            "columnName": "raidCity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidPostalCode",
+            "columnName": "raidPostalCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidNumber",
+            "columnName": "raidNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "racesCount",
+            "columnName": "racesCount",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "club",
+            "columnName": "club",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isOpen",
+            "columnName": "isOpen",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isUpcoming",
+            "columnName": "isUpcoming",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isFinished",
+            "columnName": "isFinished",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastSyncAt",
+            "columnName": "lastSyncAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isSynced",
+            "columnName": "isSynced",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "raidId"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '885d760d3c6a9f188cfeb10ee9f7eed4')"
+    ]
+  }
+}

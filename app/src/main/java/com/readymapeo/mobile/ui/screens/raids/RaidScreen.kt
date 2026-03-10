@@ -14,27 +14,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.readymapeo.mobile.data.model.Raid
-import com.readymapeo.mobile.data.repository.RaidRepository
 import com.readymapeo.mobile.navigation.currentRouteParams
 import com.readymapeo.mobile.navigation.redirectRoute
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun RaidScreen() {
-    val raid = remember { mutableStateOf<Raid?>(null) }
+fun RaidScreen(viewModel: RaidViewModel = viewModel()) {
     val raidId = currentRouteParams["id"]?.toIntOrNull()
-    val repository = RaidRepository()
 
     LaunchedEffect(raidId) {
-        raidId?.let {
-            repository.getRaidById(it) { fetchedRaid ->
-                raid.value = fetchedRaid
-            }
+        if (raidId != null) {
+            viewModel.loadRaid(raidId)
         }
     }
 
@@ -44,7 +37,6 @@ fun RaidScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Header avec bouton retour
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -62,10 +54,9 @@ fun RaidScreen() {
             )
         }
 
-        // Contenu
-        if (raid.value != null) {
+        if (viewModel.raid.value != null) {
             Text(
-                text = raid.value!!.raidName,
+                text = viewModel.raid.value!!.raidName,
                 style = MaterialTheme.typography.displayMedium
             )
         } else {

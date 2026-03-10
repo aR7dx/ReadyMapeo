@@ -1,9 +1,19 @@
 package com.readymapeo.mobile.data.local.entity
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    foreignKeys = [
+        ForeignKey(
+            entity = Club::class,
+            parentColumns = ["clubId"],
+            childColumns = ["cluId"],
+            onDelete = ForeignKey.SET_NULL
+        )
+    ]
+)
 data class Raid(
     @PrimaryKey val raidId: Int,
     val raidName: String,
@@ -22,8 +32,10 @@ data class Raid(
     val raidNumber: Int,
     val createdAt: String,
     val updatedAt: String,
+    val racesCount: Int? = null,
     val isOpen: Boolean? = null,
     val isUpcoming: Boolean? = null,
     val isFinished: Boolean? = null,
-    val racesCount: Int? = null,
+    val lastSyncAt: Long = 0,
+    val isSynced: Boolean = false,
 )
