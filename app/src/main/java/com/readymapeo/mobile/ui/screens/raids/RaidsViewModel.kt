@@ -1,12 +1,14 @@
 package com.readymapeo.mobile.ui.screens.raids
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
 import com.readymapeo.mobile.data.local.AppDatabase
 import com.readymapeo.mobile.data.local.entity.Raid
 import com.readymapeo.mobile.data.repository.RaidRepository
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import kotlinx.coroutines.launch
 
 class RaidsViewModel(application: Application) : AndroidViewModel(application) {
     private val _raids = mutableStateOf<List<Raid>>(emptyList())
@@ -15,9 +17,15 @@ class RaidsViewModel(application: Application) : AndroidViewModel(application) {
     private val database = AppDatabase.getInstance(application)
     private val raidRepository = RaidRepository(database)
 
-    suspend fun loadRaids() {
-        raidRepository.getAllRaids().collect {
-            _raids.value = it
+    init {
+        loadRaids()
+    }
+
+    private fun loadRaids() {
+        viewModelScope.launch {
+            raidRepository.getAllRaids().collect { raids ->
+                _raids.value = raids
+            }
         }
     }
 }

@@ -13,20 +13,15 @@ class RaidRepository(private val database: AppDatabase) {
     private val raidDao = database.raidDao()
 
     fun getAllRaids(): Flow<List<Raid>> = flow {
-
         raidDao.getAll().collect { localRaids ->
-            //println("${localRaids.size} raids trouvés en bdd")
 
-            if (localRaids.isNotEmpty()) {
-                emit(localRaids)
-            }
-            else if (NetworkConnectivity.isOnline.value) {
+            if (localRaids.isEmpty() && NetworkConnectivity.isOnline.value) {
                 val raidsFromApi = raidApiService.getRaids()
 
                 raidDao.insertAll(raidsFromApi)
+
                 emit(raidsFromApi)
-            }
-            else {
+            } else {
                 emit(localRaids)
             }
         }
@@ -35,10 +30,7 @@ class RaidRepository(private val database: AppDatabase) {
     suspend fun getRaidById(raidId: Int): Raid? {
         val raid = raidDao.getById(raidId)
 
-        if (raid != null) {
-            return raid
-        }
-        else if (NetworkConnectivity.isOnline.value){
+        if (raid == null && NetworkConnectivity.isOnline.value){
             val raidFromApi = raidApiService.getRaidById(raidId)
 
             raidDao.insert(raidFromApi!!)

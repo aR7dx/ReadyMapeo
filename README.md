@@ -4,3 +4,9 @@ Mobile version of ReadyMapeo (SAE301)
 
 ## Raids
 ![Raids](./image/raids_page.png)
+
+
+## Synchro 
+
+- [GET] all raids (OK) (deletion not sync)
+- [GET] all clubs (OK) (deletion not sync)

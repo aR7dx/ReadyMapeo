@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         NetworkConnectivity.init(this)
-        //SyncManager.initSyncWorker(this)
+        SyncManager.initSyncWorker(this)
 
         enableEdgeToEdge()
         setContent {

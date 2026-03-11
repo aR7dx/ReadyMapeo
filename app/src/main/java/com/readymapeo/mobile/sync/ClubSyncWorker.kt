@@ -3,21 +3,20 @@ package com.readymapeo.mobile.sync
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.readymapeo.mobile.data.api.RaidApiService
+import com.readymapeo.mobile.data.api.ClubApiService
 import com.readymapeo.mobile.data.local.AppDatabase
 
-class RaidSyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
+class ClubSyncWorker(context: Context, params: WorkerParameters): CoroutineWorker(context, params) {
 
     private val database = AppDatabase.getInstance(context)
-    private val raidDao = database.raidDao()
     private val clubDao = database.clubDao()
-    private val raidApiService = RaidApiService(clubDao)
+    private val clubApiService = ClubApiService()
 
     override suspend fun doWork(): Result {
         return try {
-            val raids = raidApiService.getRaids()
+            val clubs = clubApiService.getClubs()
 
-            raidDao.insertAll(raids)
+            clubDao.insertAll(clubs)
 
             Result.success()
         } catch (e: Exception) {
@@ -26,4 +25,3 @@ class RaidSyncWorker(context: Context, params: WorkerParameters) : CoroutineWork
         }
     }
 }
-

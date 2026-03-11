@@ -15,12 +15,7 @@ class ClubRepository(private val database: AppDatabase) {
     fun getAllClubs(): Flow<List<Club>> = flow {
 
         clubDao.getAll().collect { localClubs ->
-            //println("${localClubs.size} clubs trouvés en bdd")
-
-            if (localClubs.isNotEmpty()) {
-                emit(localClubs)
-            }
-            else if (NetworkConnectivity.isOnline.value) {
+            if (localClubs.isEmpty() && NetworkConnectivity.isOnline.value) {
                 val clubsFromApi = clubApiService.getClubs()
 
                 clubDao.insertAll(clubsFromApi)
@@ -35,10 +30,7 @@ class ClubRepository(private val database: AppDatabase) {
     suspend fun getClubById(clubId: Int): Club? {
         val club = clubDao.getById(clubId)
 
-        if (club != null) {
-            return club
-        }
-        else if (NetworkConnectivity.isOnline.value) {
+        if (club == null && NetworkConnectivity.isOnline.value) {
             val clubFromApi = clubApiService.getClubById(clubId)
 
             clubDao.insert(clubFromApi!!)
