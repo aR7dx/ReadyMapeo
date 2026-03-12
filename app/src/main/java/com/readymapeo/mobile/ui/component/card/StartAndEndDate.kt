@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.ui.component
+package com.readymapeo.mobile.ui.component.card
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,19 +13,27 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.readymapeo.mobile.R
+import com.readymapeo.mobile.utils.toFrenchDate
 
 @Composable
-fun CityAndPostalCode(locationName: String, locationPostalCode: String) {
+fun StartAndEndDate(startDate: String? = null, endDate: String? = null) {
+
+    val text = if (endDate.isNullOrEmpty()) {
+        "${startDate?.toFrenchDate()}"
+    } else {
+        "${startDate?.toFrenchDate()} - ${endDate.toFrenchDate()}"
+    }
+
     Row (verticalAlignment = Alignment.CenterVertically) {
         Icon(
-            imageVector = ImageVector.vectorResource(R.drawable.location_pin),
-            contentDescription = "location_pin",
+            imageVector = ImageVector.vectorResource(R.drawable.calendar),
+            contentDescription = "calendar",
             tint = Color.Unspecified
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = "$locationName $locationPostalCode",
-            color = Color(0xFF757d87),
+            text = text,
+            color = Color(0xFF7F8690)
         )
     }
 }

@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RaidDao {
 
-    @Query("SELECT * from Raid")
+    @Query("SELECT r.*, c.clubName  from Raid r JOIN Club c ON r.cluId = c.clubId")
     fun getAll(): Flow<List<Raid>>
 
     @Query("SELECT * from Raid WHERE raidId = :id")

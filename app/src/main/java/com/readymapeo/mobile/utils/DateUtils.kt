@@ -16,3 +16,20 @@ fun String.toFrenchDate(): String {
         instant.atZone(ZoneId.systemDefault())
     )
 }
+
+fun String.toFrenchDateNoYear(): String {
+    val instant = Instant.parse(this)
+
+    val formatter = DateTimeFormatter.ofPattern(
+        "d MMMM", Locale.FRENCH
+    )
+
+    return formatter.format(
+        instant.atZone(ZoneId.systemDefault())
+    )
+}
+
+fun String.toTimestamp(): Long {
+    val instant = Instant.parse(this)
+    return instant.toEpochMilli()
+}

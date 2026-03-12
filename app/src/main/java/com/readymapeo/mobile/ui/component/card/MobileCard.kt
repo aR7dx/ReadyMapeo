@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.ui.component
+package com.readymapeo.mobile.ui.component.card
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,8 +29,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.readymapeo.mobile.config.ApiConfig
-import com.readymapeo.mobile.network.NetworkConnectivity
 import com.readymapeo.mobile.network.NetworkImage
+import com.readymapeo.mobile.ui.component.Divider
 
 @Composable
 fun MobileCard(
@@ -48,12 +47,11 @@ fun MobileCard(
         elevation = CardDefaults.cardElevation(4.dp),
         onClick = onclick
     ) {
-        if (!imagePath.isNullOrBlank()) {
-            CardImage(imagePath)
-        } else {
-            // alternative image in case there is no specific image for the content
-            alternativeImage()
-        }
+
+        CardImage(
+            imagePath = imagePath,
+            alternativeImage = alternativeImage
+        )
 
         Column(modifier = Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             // title of the card
@@ -71,10 +69,12 @@ fun MobileCard(
 }
 
 @Composable
-fun CardImage(imagePath: String) {
+fun CardImage(imagePath: String?, alternativeImage: (@Composable () -> Unit)? = null) {
     NetworkImage(
-        imageUrl = "${ApiConfig.BASE_URL_STORAGE}/${imagePath}",
         modifier = Modifier.fillMaxWidth().height(200.dp),
+        baseUrl = ApiConfig.BASE_URL_STORAGE,
+        imagePath = imagePath,
+        alternativeImage = alternativeImage,
         contentScale = ContentScale.Crop
     )
 }
@@ -86,15 +86,6 @@ fun CardTitle(title: String) {
         style = MaterialTheme.typography.displaySmall
     )
     Spacer(modifier = Modifier.height(2.dp))
-}
-
-@Composable
-fun Divider() {
-    Spacer(modifier = Modifier.height(4.dp))
-    HorizontalDivider(
-        color = Color(0xFFE6E6ED)
-    )
-    Spacer(modifier = Modifier.height(4.dp))
 }
 
 @Composable

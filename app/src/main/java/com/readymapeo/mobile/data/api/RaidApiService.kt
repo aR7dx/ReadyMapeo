@@ -65,11 +65,11 @@ class RaidApiService(private val clubDao: ClubDao) {
     suspend fun parseRaidJson(raidJson: JSONObject): Raid? {
         val racesArray = raidJson.optJSONArray("races")
         val cluId = raidJson.getInt("clu_id")
+        val registrationJson = raidJson.getJSONObject("registration_period")
 
         // Verifie que le club existe
-        if (clubDao.getById(cluId) == null) {
-            return null
-        }
+        val club = clubDao.getById(cluId) ?: return null
+
 
         val raid = Raid(
             raidId = raidJson.getInt("raid_id"),
@@ -81,7 +81,7 @@ class RaidApiService(private val clubDao: ClubDao) {
             raidDateStart = raidJson.getString("raid_date_start"),
             raidDateEnd = raidJson.getString("raid_date_end"),
             raidContact = raidJson.getString("raid_contact"),
-            raidSiteUrl = raidJson.getString("raid_site_url"),
+            raidSiteUrl = raidJson.optStringOrNull("raid_site_url"),
             raidImage = raidJson.optStringOrNull("raid_image"),
             raidStreet = raidJson.getString("raid_street"),
             raidCity = raidJson.getString("raid_city"),
@@ -90,6 +90,9 @@ class RaidApiService(private val clubDao: ClubDao) {
             createdAt = raidJson.getString("created_at"),
             updatedAt = raidJson.getString("updated_at"),
             racesCount = racesArray?.length() ?: 0,
+            clubName = club.clubName,
+            insStartDate = registrationJson.getString("ins_start_date"),
+            insEndDate = registrationJson.getString("ins_end_date"),
             isOpen = raidJson.optBooleanOrNull("is_open"),
             isUpcoming = raidJson.optBooleanOrNull("is_upcoming"),
             isFinished = raidJson.optBooleanOrNull("is_finished"),

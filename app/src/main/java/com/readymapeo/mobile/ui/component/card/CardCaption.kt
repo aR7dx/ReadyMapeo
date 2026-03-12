@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.ui.component
+package com.readymapeo.mobile.ui.component.card
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

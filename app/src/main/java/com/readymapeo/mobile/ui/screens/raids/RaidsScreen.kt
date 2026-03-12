@@ -10,18 +10,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.navigation.redirectRoute
-import com.readymapeo.mobile.ui.component.CardCaption
-import com.readymapeo.mobile.ui.component.CityAndPostalCode
-import com.readymapeo.mobile.ui.component.MobileCard
-import com.readymapeo.mobile.ui.component.StartAndEndDate
-import com.readymapeo.mobile.ui.component.placeholder.CardImageTemplate
-import com.readymapeo.mobile.R
+import com.readymapeo.mobile.ui.component.card.CardCaption
+import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
+import com.readymapeo.mobile.ui.component.card.MobileCard
+import com.readymapeo.mobile.ui.component.card.StartAndEndDate
+import com.readymapeo.mobile.ui.component.placeholder.RaidImageTemplate
 
 @Composable
 fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
@@ -48,11 +44,7 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
         items(viewModel.raids.value) {
             MobileCard(
                 imagePath = it.raidImage,
-                alternativeImage = { CardImageTemplate(
-                    backgroundColor = Color(0xFFE7ECFF),
-                    imageVector = ImageVector.vectorResource(R.drawable.trophy),
-                    iconColor =  Color(0xFFA5B4FC)
-                )},
+                alternativeImage = { RaidImageTemplate() },
                 title = it.raidName,
                 onclick = { redirectRoute("/raids/${it.raidId}") }
             ) {
@@ -62,7 +54,7 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
                 // dates of raid
                 StartAndEndDate(it.raidDateStart, it.raidDateEnd)
 
-                CardCaption(it.cluId.toString())
+                CardCaption(it.clubName ?: "<Inconnu>")
             }
         }
     }

@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 6,
-    "identityHash": "580883ff647cb26c5fd74bd96c7c1a9d",
+    "version": 7,
+    "identityHash": "b66c62f224e53358bb699e0ed208d477",
     "entities": [
       {
         "tableName": "Club",
@@ -106,7 +106,7 @@
       },
       {
         "tableName": "Raid",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`raidId` INTEGER NOT NULL, `raidName` TEXT NOT NULL, `raidDescription` TEXT NOT NULL, `adhId` INTEGER NOT NULL, `cluId` INTEGER, `insId` INTEGER NOT NULL, `raidDateStart` TEXT NOT NULL, `raidDateEnd` TEXT NOT NULL, `raidContact` TEXT NOT NULL, `raidSiteUrl` TEXT NOT NULL, `raidImage` TEXT, `raidStreet` TEXT NOT NULL, `raidCity` TEXT NOT NULL, `raidPostalCode` TEXT NOT NULL, `raidNumber` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `racesCount` INTEGER, `clubName` TEXT, `isOpen` INTEGER, `isUpcoming` INTEGER, `isFinished` INTEGER, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`raidId`), FOREIGN KEY(`cluId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`raidId` INTEGER NOT NULL, `raidName` TEXT NOT NULL, `raidDescription` TEXT NOT NULL, `adhId` INTEGER NOT NULL, `cluId` INTEGER, `insId` INTEGER NOT NULL, `raidDateStart` TEXT NOT NULL, `raidDateEnd` TEXT NOT NULL, `raidContact` TEXT NOT NULL, `raidSiteUrl` TEXT, `raidImage` TEXT, `raidStreet` TEXT NOT NULL, `raidCity` TEXT NOT NULL, `raidPostalCode` TEXT NOT NULL, `raidNumber` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `racesCount` INTEGER, `clubName` TEXT, `isOpen` INTEGER, `isUpcoming` INTEGER, `isFinished` INTEGER, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`raidId`), FOREIGN KEY(`cluId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "raidId",
@@ -164,8 +164,7 @@
           {
             "fieldPath": "raidSiteUrl",
             "columnName": "raidSiteUrl",
-            "affinity": "TEXT",
-            "notNull": true
+            "affinity": "TEXT"
           },
           {
             "fieldPath": "raidImage",
@@ -269,7 +268,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '580883ff647cb26c5fd74bd96c7c1a9d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b66c62f224e53358bb699e0ed208d477')"
     ]
   }
 }

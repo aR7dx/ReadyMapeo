@@ -19,30 +19,40 @@ import java.net.URL
 
 @Composable
 fun NetworkImage(
-    imageUrl: String,
-    modifier: Modifier = Modifier,
-    contentScale: ContentScale = ContentScale.Crop
+    modifier: Modifier,
+    baseUrl: String? = null,
+    imagePath: String? = null,
+    alternativeImage: (@Composable () -> Unit)? = null,
+    contentScale: ContentScale = ContentScale.Crop,
 ) {
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
 
-    LaunchedEffect(imageUrl) {
-        bitmap = withContext(Dispatchers.IO) {
-            try {
-                val stream = URL(imageUrl).openStream()
-                BitmapFactory.decodeStream(stream)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                null
+    LaunchedEffect(baseUrl, imagePath) {
+
+        if (baseUrl.isNullOrBlank() || imagePath.isNullOrBlank()) {
+            bitmap = null
+        }
+        else {
+            bitmap = withContext(Dispatchers.IO) {
+                try {
+                    val stream = URL("$baseUrl/$imagePath").openStream()
+                    BitmapFactory.decodeStream(stream)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
             }
         }
     }
 
-    bitmap?.let {
+    if (bitmap != null) {
         Image(
-            bitmap = it.asImageBitmap(),
+            bitmap = bitmap!!.asImageBitmap(),
             contentDescription = null,
             modifier = modifier,
             contentScale = contentScale
         )
+    } else if (alternativeImage != null) {
+        alternativeImage()
     }
 }

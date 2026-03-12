@@ -17,9 +17,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.R
-import com.readymapeo.mobile.ui.component.CardCaption
-import com.readymapeo.mobile.ui.component.CityAndPostalCode
-import com.readymapeo.mobile.ui.component.MobileCard
+import com.readymapeo.mobile.ui.component.card.CardCaption
+import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
+import com.readymapeo.mobile.ui.component.card.MobileCard
 import com.readymapeo.mobile.ui.component.placeholder.CardImageTemplate
 
 @Composable
