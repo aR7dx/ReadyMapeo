@@ -52,8 +52,7 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
                 // dates of raid
                 StartAndEndDate(it.raidDateStart, it.raidDateEnd)
 
-                //HostClub(it.club.clubName)
-                CardCaption("")
+                CardCaption(it.cluId.toString())
             }
         }
     }

@@ -3,24 +3,19 @@ package com.readymapeo.mobile.ui.screens.clubs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.readymapeo.mobile.ui.component.CardCaption
+import com.readymapeo.mobile.ui.component.CityAndPostalCode
+import com.readymapeo.mobile.ui.component.MobileCard
 
 @Composable
 fun ClubsScreen(viewModel: ClubsViewModel = viewModel()) {
@@ -40,23 +35,22 @@ fun ClubsScreen(viewModel: ClubsViewModel = viewModel()) {
                     text = "Tous les clubs",
                     style = MaterialTheme.typography.displayLarge
                 )
+                Text(
+                    text = "Découvrez et rejoignez des clubs de course d'orientation près de chez vous",
+                    style = MaterialTheme.typography.bodyLarge,
+                )
             }
         }
 
         items(viewModel.clubs.value){
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(4.dp),
-                onClick = { }
+            MobileCard(
+                imagePath = it.clubImage,
+                title = it.clubName,
+                onclick = {},
             ) {
-                Column(modifier = Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        text = it.clubName,
-                        style = MaterialTheme.typography.displaySmall
-                    )
-                    Spacer(modifier = Modifier.height(2.dp))
-                }
+                CityAndPostalCode(it.clubCity, it.clubPostalCode)
+
+                CardCaption(it.createdBy.toString())
             }
         }
     }

@@ -34,8 +34,9 @@ import com.readymapeo.mobile.network.NetworkImage
 
 @Composable
 fun MobileCard(
-    imagePath: String,
+    imagePath: String? = null,
     title: String,
+    buttonText: String = "VOIR LES DETAILS",
     onclick: () -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -45,7 +46,9 @@ fun MobileCard(
         elevation = CardDefaults.cardElevation(4.dp),
         onClick = onclick
     ) {
-        CardImage(imagePath)
+        if (imagePath != null) {
+            CardImage(imagePath)
+        }
 
         Column(modifier = Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             // title of the card
@@ -57,7 +60,7 @@ fun MobileCard(
             Divider()
 
             // see details button
-            SeeDetailsButton("VOIR LES DETAILS", onclick)
+            SeeDetailsButton(buttonText, onclick)
         }
     }
 }

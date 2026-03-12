@@ -66,7 +66,19 @@ class ClubApiService {
     suspend fun parseClubJson(clubJson: JSONObject): Club? {
         val club = Club(
             clubId = clubJson.getInt("club_id"),
-            clubName = clubJson.getString("club_name")
+            clubName = clubJson.getString("club_name"),
+            clubStreet = clubJson.getString("club_street"),
+            clubCity = clubJson.getString("club_city"),
+            clubPostalCode = clubJson.getString("club_postal_code"),
+            ffsoId = clubJson.getString("ffso_id"),
+            description = clubJson.getString("description"),
+            clubImage = clubJson.getString("club_image"),
+            isApproved = clubJson.getBoolean("is_approved"),
+            approvedBy = clubJson.getInt("approved_by"),
+            approvedAt = clubJson.getString("approved_at"),
+            createdBy = clubJson.getInt("created_by"),
+            createdAt = clubJson.getString("created_at"),
+            updatedAt = clubJson.getString("updated_at")
         )
 
         return club

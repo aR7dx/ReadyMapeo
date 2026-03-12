@@ -16,7 +16,7 @@ import com.readymapeo.mobile.R
 import com.readymapeo.mobile.utils.toFrenchDate
 
 @Composable
-fun StartAndEndDate(startDate: String? = "", endDate: String? = "") {
+fun StartAndEndDate(startDate: String? = null, endDate: String? = null) {
 
     val text = if (endDate.isNullOrEmpty()) {
         "${startDate?.toFrenchDate()}"
