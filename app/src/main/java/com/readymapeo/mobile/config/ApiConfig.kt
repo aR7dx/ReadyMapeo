@@ -6,6 +6,6 @@ object ApiConfig {
     const val BASE_URL_STORAGE = "$BASE_URL/storage"
 
 
-    const val SQL_DATE_FORMAT = "yyyy-MM-ddThh:mm:ss.SSSSSSZ"
-    const val COLOR_MAIN_BROWN = 0xFF5D4037
+    //const val SQL_DATE_FORMAT = "yyyy-MM-ddThh:mm:ss.SSSSSSZ"
+
 }

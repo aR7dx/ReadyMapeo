@@ -78,16 +78,20 @@ fun EventStatusCardRaid(raid: Raid?) {
 fun EventInfoBloc(upperText: String, lowerText: String) {
 
     var color = Color(0xFF2563EB)
+    var icon = ImageVector.vectorResource(R.drawable.target_circle)
 
-    if (lowerText.toTimestamp() < System.currentTimeMillis()) {
+    // evenenement terminé
+    if (System.currentTimeMillis() > lowerText.toTimestamp()) {
         color = Color(0xFF10B981)
+        icon = ImageVector.vectorResource(R.drawable.checked_circle)
     }
 
     val text =  lowerText.toFrenchDate()
 
     Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+
         IconBox(
-            icon = ImageVector.vectorResource(R.drawable.checked_circle),
+            icon = icon,
             iconColor = Color.White,
             iconPadding = 0.dp,
             backgroundColor = color,

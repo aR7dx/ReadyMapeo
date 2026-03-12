@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.readymapeo.mobile.config.ApiConfig
 import com.readymapeo.mobile.network.NetworkImage
 import com.readymapeo.mobile.ui.component.Divider
+import com.readymapeo.mobile.ui.theme.CtaMainBrown
 
 @Composable
 fun MobileCard(
@@ -94,7 +95,7 @@ fun SeeDetailsButton(text: String = "", onclick: () -> Unit) {
         onClick = onclick,
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(ApiConfig.COLOR_MAIN_BROWN)
+            containerColor = CtaMainBrown
         ),
         shape = RoundedCornerShape(6.dp),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)

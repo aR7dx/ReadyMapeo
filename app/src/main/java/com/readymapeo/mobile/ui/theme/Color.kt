@@ -2,10 +2,9 @@ package com.readymapeo.mobile.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val CtaMainBrown = Color(0xFF5D4037)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val RaidGreenOverlay = Color(0xB3064E3B)
+val RaidGreenPrimary = Color(0xD9D9FBD3)
+val RaidGreenSecondary = Color(0xE6E6FFFA)
+
