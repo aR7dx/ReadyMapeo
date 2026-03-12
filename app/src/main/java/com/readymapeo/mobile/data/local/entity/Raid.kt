@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
             entity = Club::class,
             parentColumns = ["clubId"],
             childColumns = ["cluId"],
-            onDelete = ForeignKey.SET_NULL
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )
@@ -19,13 +19,13 @@ data class Raid(
     val raidName: String,
     val raidDescription: String,
     val adhId: Int,
-    val cluId: Int,
+    val cluId: Int?,
     val insId: Int,
     val raidDateStart: String,
     val raidDateEnd: String,
     val raidContact: String,
     val raidSiteUrl: String,
-    val raidImage: String,
+    val raidImage: String? = null,
     val raidStreet: String,
     val raidCity: String,
     val raidPostalCode: String,

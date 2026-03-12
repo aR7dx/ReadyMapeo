@@ -8,11 +8,11 @@ import com.readymapeo.mobile.data.local.dao.ClubDao
 import com.readymapeo.mobile.data.local.dao.RaidDao
 import com.readymapeo.mobile.data.local.entity.Club
 import com.readymapeo.mobile.data.local.entity.Raid
-import com.readymapeo.mobile.data.local.migration.Migration3To4
+import com.readymapeo.mobile.data.local.migration.Migration5To6
 
 @Database(
     entities = [Club::class, Raid::class],
-    version = 4
+    version = 6
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -25,7 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
                 context,
                 AppDatabase::class.java, "modules.sqlite"
             )
-            //.addMigrations(Migration3To4())
+            //.addMigrations(Migration5To6())
             //.fallbackToDestructiveMigration()
             .build()
         }.value

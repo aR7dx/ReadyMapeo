@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 4,
-    "identityHash": "59f814c6ae19af78b342f2e8a06c3d10",
+    "version": 6,
+    "identityHash": "9db6a660c91081015a4555081c899be8",
     "entities": [
       {
         "tableName": "Club",
@@ -106,7 +106,7 @@
       },
       {
         "tableName": "Raid",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`raidId` INTEGER NOT NULL, `raidName` TEXT NOT NULL, `raidDescription` TEXT NOT NULL, `adhId` INTEGER NOT NULL, `cluId` INTEGER NOT NULL, `insId` INTEGER NOT NULL, `raidDateStart` TEXT NOT NULL, `raidDateEnd` TEXT NOT NULL, `raidContact` TEXT NOT NULL, `raidSiteUrl` TEXT NOT NULL, `raidImage` TEXT, `raidStreet` TEXT NOT NULL, `raidCity` TEXT NOT NULL, `raidPostalCode` TEXT NOT NULL, `raidNumber` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `racesCount` INTEGER, `isOpen` INTEGER, `isUpcoming` INTEGER, `isFinished` INTEGER, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`raidId`), FOREIGN KEY(`cluId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`raidId` INTEGER NOT NULL, `raidName` TEXT NOT NULL, `raidDescription` TEXT NOT NULL, `adhId` INTEGER NOT NULL, `cluId` INTEGER, `insId` INTEGER NOT NULL, `raidDateStart` TEXT NOT NULL, `raidDateEnd` TEXT NOT NULL, `raidContact` TEXT NOT NULL, `raidSiteUrl` TEXT NOT NULL, `raidImage` TEXT, `raidStreet` TEXT NOT NULL, `raidCity` TEXT NOT NULL, `raidPostalCode` TEXT NOT NULL, `raidNumber` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `racesCount` INTEGER, `isOpen` INTEGER, `isUpcoming` INTEGER, `isFinished` INTEGER, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`raidId`), FOREIGN KEY(`cluId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "raidId",
@@ -135,8 +135,7 @@
           {
             "fieldPath": "cluId",
             "columnName": "cluId",
-            "affinity": "INTEGER",
-            "notNull": true
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "insId",
@@ -251,7 +250,7 @@
         "foreignKeys": [
           {
             "table": "Club",
-            "onDelete": "SET NULL",
+            "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
               "cluId"
@@ -265,7 +264,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '59f814c6ae19af78b342f2e8a06c3d10')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9db6a660c91081015a4555081c899be8')"
     ]
   }
 }

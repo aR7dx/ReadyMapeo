@@ -17,6 +17,7 @@ class RaidSyncWorker(context: Context, params: WorkerParameters) : CoroutineWork
         return try {
             val raids = raidApiService.getRaids()
 
+            //raidDao.deleteAll()
             raidDao.insertAll(raids)
 
             Result.success()

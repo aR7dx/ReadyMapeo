@@ -30,11 +30,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.readymapeo.mobile.config.ApiConfig
+import com.readymapeo.mobile.network.NetworkConnectivity
 import com.readymapeo.mobile.network.NetworkImage
 
 @Composable
 fun MobileCard(
     imagePath: String? = null,
+    alternativeImage: @Composable () -> Unit,
     title: String,
     buttonText: String = "VOIR LES DETAILS",
     onclick: () -> Unit,
@@ -46,8 +48,11 @@ fun MobileCard(
         elevation = CardDefaults.cardElevation(4.dp),
         onClick = onclick
     ) {
-        if (imagePath != null) {
+        if (!imagePath.isNullOrBlank()) {
             CardImage(imagePath)
+        } else {
+            // alternative image in case there is no specific image for the content
+            alternativeImage()
         }
 
         Column(modifier = Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {

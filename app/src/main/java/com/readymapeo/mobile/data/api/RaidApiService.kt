@@ -3,6 +3,8 @@ package com.readymapeo.mobile.data.api
 import com.readymapeo.mobile.data.local.dao.ClubDao
 import com.readymapeo.mobile.data.local.entity.Raid
 import com.readymapeo.mobile.network.ApiClient
+import com.readymapeo.mobile.utils.optBooleanOrNull
+import com.readymapeo.mobile.utils.optStringOrNull
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -80,7 +82,7 @@ class RaidApiService(private val clubDao: ClubDao) {
             raidDateEnd = raidJson.getString("raid_date_end"),
             raidContact = raidJson.getString("raid_contact"),
             raidSiteUrl = raidJson.getString("raid_site_url"),
-            raidImage = raidJson.getString("raid_image"),
+            raidImage = raidJson.optStringOrNull("raid_image"),
             raidStreet = raidJson.getString("raid_street"),
             raidCity = raidJson.getString("raid_city"),
             raidPostalCode = raidJson.getString("raid_postal_code"),
@@ -88,9 +90,9 @@ class RaidApiService(private val clubDao: ClubDao) {
             createdAt = raidJson.getString("created_at"),
             updatedAt = raidJson.getString("updated_at"),
             racesCount = racesArray?.length() ?: 0,
-            isOpen = raidJson.optBoolean("is_open"),
-            isUpcoming = raidJson.optBoolean("is_upcoming"),
-            isFinished = raidJson.optBoolean("is_finished"),
+            isOpen = raidJson.optBooleanOrNull("is_open"),
+            isUpcoming = raidJson.optBooleanOrNull("is_upcoming"),
+            isFinished = raidJson.optBooleanOrNull("is_finished"),
             lastSyncAt = System.currentTimeMillis(),
             isSynced = true
         )

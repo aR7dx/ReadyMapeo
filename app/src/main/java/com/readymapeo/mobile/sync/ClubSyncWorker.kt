@@ -16,6 +16,7 @@ class ClubSyncWorker(context: Context, params: WorkerParameters): CoroutineWorke
         return try {
             val clubs = clubApiService.getClubs()
 
+            //clubDao.deleteAll()
             clubDao.insertAll(clubs)
 
             Result.success()

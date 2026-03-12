@@ -11,11 +11,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.readymapeo.mobile.R
 import com.readymapeo.mobile.ui.component.CardCaption
 import com.readymapeo.mobile.ui.component.CityAndPostalCode
 import com.readymapeo.mobile.ui.component.MobileCard
+import com.readymapeo.mobile.ui.component.placeholder.CardImageTemplate
 
 @Composable
 fun ClubsScreen(viewModel: ClubsViewModel = viewModel()) {
@@ -45,6 +50,11 @@ fun ClubsScreen(viewModel: ClubsViewModel = viewModel()) {
         items(viewModel.clubs.value){
             MobileCard(
                 imagePath = it.clubImage,
+                alternativeImage = { CardImageTemplate(
+                    backgroundColor = Color(0xFFE2FCEF),
+                    imageVector = ImageVector.vectorResource(R.drawable.clubs),
+                    iconColor = Color(0xFF6EE7B7)
+                ) },
                 title = it.clubName,
                 onclick = {},
             ) {
