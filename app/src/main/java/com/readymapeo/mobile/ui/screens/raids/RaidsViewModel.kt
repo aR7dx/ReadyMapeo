@@ -28,4 +28,12 @@ class RaidsViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+    fun filterRaids(locationScope: String?, locationInputValue: String?, date: Long?) {
+        viewModelScope.launch {
+            raidRepository.getFilteredRaids(locationScope, locationInputValue, date).collect { filteredRaids ->
+                _raids.value = filteredRaids
+            }
+        }
+    }
 }

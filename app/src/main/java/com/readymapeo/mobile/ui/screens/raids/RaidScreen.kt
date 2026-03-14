@@ -23,10 +23,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import com.readymapeo.mobile.navigation.currentRouteParams
+import com.readymapeo.mobile.routes.currentRouteParams
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.R
-import com.readymapeo.mobile.navigation.redirectRoute
+import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.Pills
 import com.readymapeo.mobile.ui.component.navigation.BackNavbar
 import com.readymapeo.mobile.network.NetworkImage

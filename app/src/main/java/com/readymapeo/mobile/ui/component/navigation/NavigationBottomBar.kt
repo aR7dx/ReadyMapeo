@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.navigation
+package com.readymapeo.mobile.ui.component.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import com.readymapeo.mobile.routes.currentRoute
+import com.readymapeo.mobile.routes.navRoutes
+import com.readymapeo.mobile.routes.redirectRoute
 
 @PreviewScreenSizes
 @Composable

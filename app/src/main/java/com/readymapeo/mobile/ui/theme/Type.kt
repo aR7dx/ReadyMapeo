@@ -80,3 +80,12 @@ val Typography = Typography(
         color = Color(0xFF374151)
     )
 )
+
+object BoldTypography {
+    val bodyMediumBold = TextStyle(
+        fontFamily = Figtree,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+        color = Color(0xFF4B5563)
+    )
+}

@@ -27,6 +27,10 @@ class RaidRepository(private val database: AppDatabase) {
         }
     }
 
+    fun getFilteredRaids(locationScope: String?, locationInputValue: String?, date: Long?): Flow<List<Raid>> {
+        return raidDao.getFilteredRaids(locationScope, locationInputValue, date)
+    }
+
     suspend fun getRaidById(raidId: Int): Raid? {
         val raid = raidDao.getById(raidId)
 

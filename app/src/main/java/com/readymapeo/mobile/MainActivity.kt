@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.readymapeo.mobile.sync.SyncManager
 import com.readymapeo.mobile.ui.theme.ReadyMapeoTheme
-import com.readymapeo.mobile.navigation.NavigationBottomBar
+import com.readymapeo.mobile.ui.component.navigation.NavigationBottomBar
 import com.readymapeo.mobile.network.NetworkConnectivity
 
 class MainActivity : ComponentActivity() {

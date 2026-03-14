@@ -12,16 +12,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.readymapeo.mobile.navigation.redirectRoute
+import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.card.CardCaption
 import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
 import com.readymapeo.mobile.ui.component.card.MobileCard
 import com.readymapeo.mobile.ui.component.card.StartAndEndDate
+import com.readymapeo.mobile.ui.component.placeholder.NotContentDashedCard
 import com.readymapeo.mobile.ui.component.placeholder.RaidImageTemplate
+import com.readymapeo.mobile.ui.component.form.CollapsibleRaidsFilterForm
 
 @Composable
 fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
-
+    val raids = viewModel.raids.value
 
     LazyColumn(
         modifier = Modifier.fillMaxHeight(),
@@ -41,7 +43,11 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
             }
         }
 
-        items(viewModel.raids.value) {
+        item {
+            CollapsibleRaidsFilterForm(viewModel)
+        }
+
+        items(raids) {
             MobileCard(
                 imagePath = it.raidImage,
                 alternativeImage = { RaidImageTemplate() },
@@ -55,6 +61,15 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
                 StartAndEndDate(it.raidDateStart, it.raidDateEnd)
 
                 CardCaption(it.clubName ?: "<Inconnu>")
+            }
+        }
+
+        item {
+            if (raids.isEmpty()) {
+                NotContentDashedCard(
+                    title = "Aucun raid disponible",
+                    subText = "Il n'y a actuellement aucun raid disponible. Revenez bientôt pour découvrir de nouvelles aventures !"
+                )
             }
         }
     }

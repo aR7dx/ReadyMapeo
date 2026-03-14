@@ -5,7 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import com.readymapeo.mobile.config.ApiConfig
-import com.readymapeo.mobile.navigation.redirectRoute
+import com.readymapeo.mobile.routes.redirectRoute
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL

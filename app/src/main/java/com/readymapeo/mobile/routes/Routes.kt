@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.navigation
+package com.readymapeo.mobile.routes
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
