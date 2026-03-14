@@ -12,6 +12,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -40,6 +41,11 @@ data class RaidsFilterData(
 
 @Composable
 fun RaidsFilterForm(
+    submitButtonColor: Color = Color(0xFF1F2937),
+    submitIconColor: Color = Color.White,
+    submitTextColor: Color = Color.White,
+    backgroundColor: Color = Color.White,
+    dividerColor: Color = Color(0xFFE6E6ED),
     onFilterChange: (RaidsFilterData) -> Unit = {}
 ) {
     val locationScopes = listOf("Ville", "Département", "Région")
@@ -55,7 +61,7 @@ fun RaidsFilterForm(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
@@ -77,7 +83,7 @@ fun RaidsFilterForm(
                 categoryList = raidCategory
             )
 
-            Divider()
+            Divider(dividerColor = dividerColor)
 
             // submit form button
             Button(
@@ -91,15 +97,25 @@ fun RaidsFilterForm(
                     ))
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1F2937)),
+                colors = ButtonDefaults.buttonColors(containerColor = submitButtonColor),
                 shape = RoundedCornerShape(6.dp),
             ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.search),
-                    contentDescription = "search_icon",
-                    tint = Color.White,
-                    modifier = Modifier.size(16.dp)
-                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.search),
+                        contentDescription = "search_icon",
+                        tint = submitIconColor,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Text(
+                        text = "Rechercher",
+                        color = submitTextColor,
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                }
             }
         }
     }
@@ -109,7 +125,7 @@ fun RaidsFilterForm(
 fun LocationRow(data: List<String>, mutable: MutableState<String>, mutable2: MutableState<String>) {
     Column {
         Text(
-            text = "LOCALISATION",
+            text = "OÙ ?",
             modifier = Modifier
                 .padding(bottom = 4.dp)
                 .fillMaxWidth(),
@@ -132,7 +148,7 @@ fun LocationRow(data: List<String>, mutable: MutableState<String>, mutable2: Mut
 
             Input(
                 mutableValue = mutable2,
-                placeholder = "Recherchez..."
+                placeholder = "Ville, Région..."
             )
         }
     }
@@ -142,7 +158,7 @@ fun LocationRow(data: List<String>, mutable: MutableState<String>, mutable2: Mut
 fun DateRow(mutableSelectedDate: MutableState<Long?>) {
     Column {
         Text(
-            text = "DATE",
+            text = "QUAND ?",
             modifier = Modifier
                 .padding(bottom = 4.dp)
                 .fillMaxWidth(),
@@ -150,7 +166,7 @@ fun DateRow(mutableSelectedDate: MutableState<Long?>) {
             style = BoldTypography.bodyMediumBold
         )
 
-        DatePicker(mutableSelectedDate = mutableSelectedDate)
+        DatePicker(mutableSelectedDate = mutableSelectedDate, placeholder = "Toutes les dates")
     }
 }
 
@@ -158,7 +174,7 @@ fun DateRow(mutableSelectedDate: MutableState<Long?>) {
 fun TypeAndCategoryRow(selectedType: MutableState<String>, typeList: List<String>, selectedCategory: MutableState<String>, categoryList: List<String>) {
     Column {
         Text(
-            text = "TYPE ET CATÉGORIE",
+            text = "TYPE ET ÂGE",
             modifier = Modifier
                 .padding(bottom = 4.dp)
                 .fillMaxWidth(),

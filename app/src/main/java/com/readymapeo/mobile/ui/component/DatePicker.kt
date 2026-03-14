@@ -40,7 +40,11 @@ import com.readymapeo.mobile.utils.toFrenchDate
 // source : https://developer.android.com/develop/ui/compose/components/datepickers?hl=fr
 
 @Composable
-fun DatePicker(mutableSelectedDate: MutableState<Long?>) {
+fun DatePicker(
+    mutableSelectedDate: MutableState<Long?>,
+    placeholder: String = "Choisir une date",
+    backgroundColor: Color = Color.Transparent
+) {
     var showDatePicker by remember { mutableStateOf(false) }
 
     Box(
@@ -48,7 +52,7 @@ fun DatePicker(mutableSelectedDate: MutableState<Long?>) {
             .fillMaxWidth()
             .height(40.dp)
             .border(1.dp, Color.LightGray, RoundedCornerShape(6.dp))
-            .background(Color.White, RoundedCornerShape(6.dp))
+            .background(backgroundColor, RoundedCornerShape(6.dp))
             .clickable { showDatePicker = true }
     ) {
         Row(
@@ -75,7 +79,7 @@ fun DatePicker(mutableSelectedDate: MutableState<Long?>) {
                     ) {
                         if (mutableSelectedDate.value == null) {
                             Text(
-                                text = "Choisir une date",
+                                text = placeholder,
                                 color = Color.Black.copy(alpha = 0.5f),
                                 style = MaterialTheme.typography.bodyLarge
                             )

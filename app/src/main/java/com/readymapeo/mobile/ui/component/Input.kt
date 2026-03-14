@@ -28,7 +28,7 @@ fun Input(
     mutableValue: MutableState<String>,
     placeholder: String,
     textColor: Color = Color.Black,
-    backgroundColor: Color = Color.White,
+    backgroundColor: Color = Color.Transparent,
 ) {
     Box(
         modifier = Modifier

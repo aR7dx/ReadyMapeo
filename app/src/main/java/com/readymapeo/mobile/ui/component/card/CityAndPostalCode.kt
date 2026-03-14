@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.readymapeo.mobile.R
 
 @Composable
-fun CityAndPostalCode(locationName: String, locationPostalCode: String) {
+fun CityAndPostalCode(locationName: String = "", locationPostalCode: String = "") {
     Row (verticalAlignment = Alignment.CenterVertically) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.location_pin),

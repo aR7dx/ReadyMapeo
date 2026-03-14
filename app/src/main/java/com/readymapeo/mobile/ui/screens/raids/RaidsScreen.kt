@@ -47,20 +47,21 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
             CollapsibleRaidsFilterForm(viewModel)
         }
 
-        items(raids) {
+        items(raids) { raid ->
             MobileCard(
-                imagePath = it.raidImage,
+                imagePath = raid.raidImage,
                 alternativeImage = { RaidImageTemplate() },
-                title = it.raidName,
-                onclick = { redirectRoute("/raids/${it.raidId}") }
+                title = raid.raidName,
+                onclick = { redirectRoute("/raids/${raid.raidId}") }
             ) {
                 // location of raids
-                CityAndPostalCode(it.raidCity, it.raidPostalCode)
+                CityAndPostalCode(raid.raidCity, raid.raidPostalCode)
 
                 // dates of raid
-                StartAndEndDate(it.raidDateStart, it.raidDateEnd)
+                StartAndEndDate(raid.raidDateStart, raid.raidDateEnd)
 
-                CardCaption(it.clubName ?: "<Inconnu>")
+                // caption of the card
+                CardCaption(raid.clubName ?: "<Inconnu>")
             }
         }
 

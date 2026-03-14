@@ -28,6 +28,9 @@ interface RaidDao {
     """)
     fun getFilteredRaids(locationScope: String?, locationInputValue: String?, date: Long?): Flow<List<Raid>>
 
+    @Query("SELECT * from Raid ORDER BY createdAt DESC  LIMIT 3")
+    fun getLast3Raids(): Flow<List<Raid>>
+
     @Upsert
     suspend fun insert(raid: Raid)
 

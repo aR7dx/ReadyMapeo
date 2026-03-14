@@ -11,7 +11,7 @@ import com.readymapeo.mobile.ui.screens.raids.RaidsScreen
 import com.readymapeo.mobile.ui.screens.raids.RaidScreen
 
 val navRoutes = listOf(
-    Route("/", { HomeScreen() }, R.drawable.home, "Home"),
+    Route("/", { HomeScreen() }, R.drawable.home, "Accueil"),
     Route("/raids", { RaidsScreen() }, R.drawable.raids, "Raids"),
     Route("/races", { RacesScreen() }, R.drawable.races, "Courses"),
     Route("/clubs", { ClubsScreen() }, R.drawable.clubs, "Clubs"),
