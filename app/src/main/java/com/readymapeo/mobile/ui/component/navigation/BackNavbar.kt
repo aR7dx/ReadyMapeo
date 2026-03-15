@@ -16,15 +16,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+@Preview(showBackground = true)
 @Composable
 fun BackNavbar(
     text: String = "Retour",
     textColor: Color = Color.Black,
     backgroundColor: Color = Color.White,
     iconColor: Color = Color.Black,
-    onclick: () -> Unit
+    onclick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier

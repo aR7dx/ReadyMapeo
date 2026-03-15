@@ -38,7 +38,7 @@ fun Input(
     mutableValue: MutableState<String>,
     label: String? = null,
     labelColor: Color = Color.DarkGray,
-    placeholder: String,
+    placeholder: String = "",
     textColor: Color = Color.Black,
     backgroundColor: Color = Color.Transparent,
 ) {

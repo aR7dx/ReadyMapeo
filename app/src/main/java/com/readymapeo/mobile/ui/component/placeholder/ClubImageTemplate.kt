@@ -11,13 +11,13 @@ import com.readymapeo.mobile.R
 
 @Preview(showBackground = true)
 @Composable
-fun RaidImageTemplate(
+fun ClubImageTemplate(
     height: Dp = 250.dp
 ) {
     CardImageTemplate(
         height = height,
-        backgroundColor = Color(0xFFE7ECFF),
-        imageVector = ImageVector.vectorResource(R.drawable.trophy),
-        iconColor =  Color(0xFFA5B4FC)
+        backgroundColor = Color(0xFFE2FCEF),
+        imageVector = ImageVector.vectorResource(R.drawable.clubs),
+        iconColor = Color(0xFF6EE7B7)
     )
 }

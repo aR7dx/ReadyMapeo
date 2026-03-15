@@ -6,11 +6,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.DatePicker
@@ -36,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.readymapeo.mobile.R
 import com.readymapeo.mobile.utils.toFrenchDate
 
-// composant en partie réalisé à l'aide de la documentation d'android
+// composant en partie réalisé à l'aide de la documentation d'Android
 // source : https://developer.android.com/develop/ui/compose/components/datepickers?hl=fr
 
 @Composable

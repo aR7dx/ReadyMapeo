@@ -49,7 +49,7 @@ fun EventStatusCardRaid(raid: Raid?) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "STATUT DE L'EVENEMENT",
+                    text = "STATUT DE L'ÉVÉNEMENT",
                     color = Color(0xFF1E3A8A),
                     style = MaterialTheme.typography.titleMedium,
                 )
@@ -61,7 +61,7 @@ fun EventStatusCardRaid(raid: Raid?) {
             ) {
                 EventInfoBloc("INSCRIPTIONS", raid?.insStartDate ?: "<Inconnu>")
                 EventInfoBloc("FIN INSCRIPTIONS", raid?.insEndDate ?: "<Inconnu>")
-                EventInfoBloc("EVENEMENT", raid?.raidDateStart ?: "<Inconnu>")
+                EventInfoBloc("ÉVÉNEMENT", raid?.raidDateStart ?: "<Inconnu>")
             }
 
         }
@@ -80,7 +80,7 @@ fun EventInfoBloc(upperText: String, lowerText: String) {
     var color = Color(0xFF2563EB)
     var icon = ImageVector.vectorResource(R.drawable.target_circle)
 
-    // evenenement terminé
+    // événement terminé
     if (System.currentTimeMillis() > lowerText.toTimestamp()) {
         color = Color(0xFF10B981)
         icon = ImageVector.vectorResource(R.drawable.checked_circle)

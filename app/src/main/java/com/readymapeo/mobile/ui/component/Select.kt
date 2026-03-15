@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -25,8 +24,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.readymapeo.mobile.ui.theme.BoldTypography
 
-// composant en partie réalisé à l'aide de la documentation d'android
+// composant en partie réalisé à l'aide de la documentation d'Android
 // source : https://developer.android.com/develop/ui/compose/components/menu?hl=fr
 
 @Composable
@@ -37,10 +37,11 @@ fun Select(
     textColor: Color = Color.Black,
     iconColor: Color = Color.Black,
     border: BorderStroke =  BorderStroke(1.dp, Color.LightGray),
-    backgroundColor: Color = Color.Transparent
+    backgroundColor: Color = Color.Transparent,
+    dropdownMenuBackgroundColor: Color = Color.White
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val selectedOption = remember { mutableStateOf<String>(data[0]) }
+    val selectedOption = remember { mutableStateOf(data[0]) }
 
     Box(modifier = modifier) {
         Button(
@@ -73,15 +74,27 @@ fun Select(
 
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
+            shape = RoundedCornerShape(6.dp),
+            containerColor = dropdownMenuBackgroundColor,
+            tonalElevation = 4.dp,
+            shadowElevation = 8.dp,
         ) {
             data.forEach { option ->
                 DropdownMenuItem(
-                    text = { Text(option) },
+                    text = { Text(
+                            text = option,
+                            color = textColor,
+                            style = if (option == selectedOption.value) {
+                                BoldTypography.bodyLarge
+                            } else {
+                                MaterialTheme.typography.bodyLarge
+                            }
+                    )},
                     onClick = {
                         selectedOption.value = option
                         expanded = false
-                        onSelectionChange(option) // permet de renvoyer la valeur selectionnée
+                        onSelectionChange(option)
                     }
                 )
             }
