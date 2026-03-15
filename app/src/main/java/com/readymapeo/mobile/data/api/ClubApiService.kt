@@ -12,7 +12,7 @@ import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class ClubApiService {
+object ClubApiService {
 
     suspend fun getClubs(): List<Club> {
         return suspendCancellableCoroutine { continuation ->
@@ -66,7 +66,7 @@ class ClubApiService {
         }
     }
 
-    suspend fun parseClubJson(clubJson: JSONObject): Club? {
+    fun parseClubJson(clubJson: JSONObject): Club {
         val club = Club(
             clubId = clubJson.getInt("club_id"),
             clubName = clubJson.getString("club_name"),

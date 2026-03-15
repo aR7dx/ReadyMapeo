@@ -1,11 +1,15 @@
 package com.readymapeo.mobile
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import com.readymapeo.mobile.data.local.AppDatabase
+import com.readymapeo.mobile.data.local.token.TokenManager
+import com.readymapeo.mobile.data.repository.RaidRepository
+import com.readymapeo.mobile.data.repository.ClubRepository
 import com.readymapeo.mobile.sync.SyncManager
 import com.readymapeo.mobile.ui.theme.ReadyMapeoTheme
 import com.readymapeo.mobile.ui.component.navigation.NavigationBottomBar
@@ -15,20 +19,26 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        NetworkConnectivity.init(this)
-        SyncManager.initSyncWorker(this)
-
         enableEdgeToEdge()
         setContent {
             ReadyMapeoTheme {
-                ReadyMapeoApp()
+                ReadyMapeoApp(context = this)
             }
         }
     }
 }
 
-@PreviewScreenSizes
 @Composable
-fun ReadyMapeoApp() {
+fun ReadyMapeoApp(context: Context) {
+
+    NetworkConnectivity.init(context)
+    SyncManager.initSyncWorker(context)
+
+    TokenManager.init(context)
+
+    val database = AppDatabase.getInstance(context)
+    RaidRepository.setDatabase(database)
+    ClubRepository.setDatabase(database)
+
     NavigationBottomBar()
 }

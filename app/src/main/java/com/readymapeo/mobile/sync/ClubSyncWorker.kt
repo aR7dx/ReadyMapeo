@@ -10,11 +10,10 @@ class ClubSyncWorker(context: Context, params: WorkerParameters): CoroutineWorke
 
     private val database = AppDatabase.getInstance(context)
     private val clubDao = database.clubDao()
-    private val clubApiService = ClubApiService()
 
     override suspend fun doWork(): Result {
         return try {
-            val clubs = clubApiService.getClubs()
+            val clubs = ClubApiService.getClubs()
 
             //clubDao.deleteAll()
             clubDao.insertAll(clubs)

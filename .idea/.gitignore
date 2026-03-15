@@ -1,3 +1,11 @@
 # Default ignored files
 /shelf/
+/copilot*
+/modules.xml
 /workspace.xml
+/studiobot.xml
+/navEditor.xml
+/migrations.xml
+/deviceManager.xml
+/assetWizardSettings.xml
+/deployementTargetSelector.xml

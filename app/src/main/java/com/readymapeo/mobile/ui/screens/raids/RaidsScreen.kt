@@ -9,9 +9,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.readymapeo.mobile.routes.currentQueryParams
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.card.CardCaption
 import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
@@ -24,6 +27,16 @@ import com.readymapeo.mobile.ui.component.form.CollapsibleRaidsFilterForm
 @Composable
 fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
     val raids = viewModel.raids.value
+
+    LaunchedEffect(currentQueryParams) {
+        if (currentQueryParams.isNotEmpty()) {
+            val locationScope = currentQueryParams["locationScope"] ?: "Ville"
+            val locationInputValue = currentQueryParams["locationInputValue"] ?: ""
+            val date = currentQueryParams["date"]?.toLongOrNull()
+            
+            viewModel.filterRaids(locationScope, locationInputValue, date)
+        }
+    }
 
     LazyColumn(
         modifier = Modifier.fillMaxHeight(),

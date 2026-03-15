@@ -12,7 +12,15 @@ import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class RaidApiService(private val clubDao: ClubDao) {
+object RaidApiService {
+
+    private var clubDao: ClubDao? = null
+
+    fun setClubDao(dao: ClubDao) {
+        if (clubDao == null) {
+            clubDao = dao
+        }
+    }
 
     suspend fun getRaids(): List<Raid> {
         return suspendCancellableCoroutine { continuation ->
@@ -68,7 +76,7 @@ class RaidApiService(private val clubDao: ClubDao) {
         val registrationJson = raidJson.getJSONObject("registration_period")
 
         // Verifie que le club existe
-        val club = clubDao.getById(cluId) ?: return null
+        val club = clubDao?.getById(cluId) ?: return null
 
 
         val raid = Raid(

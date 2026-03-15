@@ -39,9 +39,11 @@ import com.readymapeo.mobile.ui.component.card.MobileCard
 import com.readymapeo.mobile.ui.component.card.StartAndEndDate
 import com.readymapeo.mobile.ui.component.form.RaidsFilterForm
 import com.readymapeo.mobile.ui.component.placeholder.RaidImageTemplate
+import com.readymapeo.mobile.ui.screens.raids.RaidsViewModel
 import com.readymapeo.mobile.ui.theme.CtaMainGreen
 import com.readymapeo.mobile.ui.theme.CtaMainLightGreen
 import com.readymapeo.mobile.ui.theme.RaidGreenOverlay
+import com.readymapeo.mobile.ui.theme.RaidGreenSecondary
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
@@ -80,42 +82,11 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
             Column(
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-                Text(
-                    text = "Raids ajoutés récemment",
-                    style = MaterialTheme.typography.displaySmall
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Découvrez les derniers raids créés.",
-                    color = Color.Gray,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Spacer(modifier = Modifier.height(12.dp))
+                RaidCarouselHeader()
 
                 RaidCarousel(raidList = last3raids)
 
-                Spacer(modifier = Modifier.height(4.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    TextButton(
-                        onClick = { redirectRoute("/raids") },
-                    ) {
-                        Text(
-                            text = "Voir tout le calendrier",
-                            color = CtaMainLightGreen,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                            contentDescription = null,
-                            tint = CtaMainLightGreen
-                        )
-                    }
-                }
+                SeeRaidsCalendar()
             }
         }
     }
@@ -134,35 +105,61 @@ fun HomeBannerImage(modifier: Modifier = Modifier) {
 
 @Composable
 fun HomeBanner() {
+    val raidsViewModel: RaidsViewModel = viewModel()
+
     Column(modifier = Modifier.padding(top = 32.dp, start = 16.dp, end = 16.dp)) {
         Text(
             text = "Trouvez votre prochaine",
-            color = Color.White,
-            style = MaterialTheme.typography.displayMedium
+            color = RaidGreenSecondary,
+            style = MaterialTheme.typography.displayLarge
         )
         Text(
             text = "Course d'Orientation",
             color = CtaMainLightGreen,
-            style = MaterialTheme.typography.displayMedium
+            style = MaterialTheme.typography.displayLarge
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Explorez et inscrivez-vous à des courses d'orientation.",
-            color = Color.White,
-            style = MaterialTheme.typography.bodyLarge,
+            color = RaidGreenSecondary,
+            style = MaterialTheme.typography.headlineSmall,
         )
         Spacer(modifier = Modifier.height(32.dp))
 
         RaidsFilterForm(
+            viewModel = raidsViewModel,
             submitButtonColor = CtaMainGreen,
-            backgroundColor = Color(0xE1EAF8F2),
+            backgroundColor = Color(0xEDF6F8F7),
             dividerColor = Color.LightGray
         ) { filterData ->
-            redirectRoute("/raids")
+            val params = buildString {
+                append("?locationScope=${filterData.locationScope}")
+                if (filterData.locationInputValue.isNotEmpty()) {
+                    append("&locationInputValue=${filterData.locationInputValue}")
+                }
+                if (filterData.date != null) {
+                    append("&date=${filterData.date}")
+                }
+            }
+            redirectRoute("/raids$params")
         }
     }
 }
 
+@Composable
+fun RaidCarouselHeader() {
+    Text(
+        text = "Raids ajoutés récemment",
+        style = MaterialTheme.typography.displaySmall
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(
+        text = "Découvrez les derniers raids créés.",
+        color = Color.Gray,
+        style = MaterialTheme.typography.bodyLarge
+    )
+    Spacer(modifier = Modifier.height(12.dp))
+}
 
 @Composable
 fun RaidCarousel(raidList: List<Raid>) {
@@ -189,4 +186,30 @@ fun RaidCarousel(raidList: List<Raid>) {
     }
 
     Carousel(carouselItems = raidsList)
+}
+
+@Composable
+fun SeeRaidsCalendar() {
+    Spacer(modifier = Modifier.height(4.dp))
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        TextButton(
+            onClick = { redirectRoute("/raids") },
+        ) {
+            Text(
+                text = "Voir tout le calendrier",
+                color = CtaMainLightGreen,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = CtaMainLightGreen
+            )
+        }
+    }
 }

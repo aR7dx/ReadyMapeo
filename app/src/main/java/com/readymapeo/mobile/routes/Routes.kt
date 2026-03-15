@@ -3,6 +3,8 @@ package com.readymapeo.mobile.routes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import com.readymapeo.mobile.R
+import com.readymapeo.mobile.ui.screens.auth.LoginScreen
+import com.readymapeo.mobile.ui.screens.clubs.ClubScreen
 import com.readymapeo.mobile.ui.screens.clubs.ClubsScreen
 import com.readymapeo.mobile.ui.screens.home.HomeScreen
 import com.readymapeo.mobile.ui.screens.profile.ProfileScreen
@@ -20,10 +22,12 @@ val navRoutes = listOf(
 
 val routes = navRoutes + listOf(
     Route("/raids/{id}", { RaidScreen() }),
+    Route("/clubs/{id}", { ClubScreen() }),
+    Route("/login", { LoginScreen() })
     // ajout de nouvelles routes ici
 )
 
-class Route(
+class Route (
     val path: String,
     val screen: @Composable () -> Unit,
     val iconRes: Int? = null,
@@ -43,7 +47,7 @@ class Route(
         return true
     }
 
-    fun extractParams(path: String): Map<String, String> {
+    fun extractPathParams(path: String): Map<String, String> {
         val routeParts = this.path.split("/")
         val pathParts = path.split("/")
         val params = mutableMapOf<String, String>()
@@ -60,12 +64,27 @@ class Route(
 
 val currentRoute = mutableStateOf(navRoutes[0])
 var currentRouteParams: Map<String, String> = emptyMap()
+var currentQueryParams: Map<String, String> = emptyMap()
 
 fun redirectRoute(path: String) {
-    val route = routes.find { it.matches(path) }
+    val pathAndQuery = path.split("?")
+    val _path = pathAndQuery[0]
+    
+    val queryParams = mutableMapOf<String, String>()
+    if (pathAndQuery.size > 1) {
+        pathAndQuery[1].split("&").forEach { param ->
+            val parts = param.split("=")
+            if (parts.size == 2) {
+                queryParams[parts[0]] = parts[1]
+            }
+        }
+    }
+    
+    val route = routes.find { it.matches(_path) }
     route?.let {
         currentRoute.value = it
-        currentRouteParams = it.extractParams(path)
+        currentRouteParams = it.extractPathParams(_path)
+        currentQueryParams = queryParams
     }
 }
 

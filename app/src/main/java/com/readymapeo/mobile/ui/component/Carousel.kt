@@ -18,7 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Carousel(carouselItems: List<@Composable () -> Unit>) {
+fun Carousel(
+    indicator: Boolean = true,
+    carouselItems: List<@Composable () -> Unit>
+) {
     val pagerState = rememberPagerState { carouselItems.count() }
 
     Column(
@@ -44,24 +47,26 @@ fun Carousel(carouselItems: List<@Composable () -> Unit>) {
             }
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            repeat(carouselItems.size) { index ->
-                Box(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .background(
-                            color = if (index == pagerState.currentPage) Color.Black else Color.LightGray,
-                            shape = CircleShape
-                        )
-                )
-                if (index < carouselItems.size - 1) {
-                    Box(modifier = Modifier.size(4.dp))
+        if (indicator) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                repeat(carouselItems.size) { index ->
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .background(
+                                color = if (index == pagerState.currentPage) Color.Black else Color.LightGray,
+                                shape = CircleShape
+                            )
+                    )
+                    if (index < carouselItems.size - 1) {
+                        Box(modifier = Modifier.size(4.dp))
+                    }
                 }
             }
         }

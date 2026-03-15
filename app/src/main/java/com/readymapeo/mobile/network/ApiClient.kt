@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import com.readymapeo.mobile.config.ApiConfig
-import com.readymapeo.mobile.routes.redirectRoute
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
@@ -35,18 +34,23 @@ object ApiClient {
                     writer.close()
                 }
 
-                val response = connection.inputStream.bufferedReader().readText()
+                val responseCode = connection.responseCode
 
+                val response = if (responseCode in 200..299) {
+                    connection.inputStream.bufferedReader().readText()
+                } else {
+                    connection.errorStream?.bufferedReader()?.readText() ?: "{\"error\": \"HTTP $responseCode\"}"
+                }
+                
                 Handler(Looper.getMainLooper()).post {
                     callback(response)
                 }
-            } catch (_: Exception) {
-               Handler(Looper.getMainLooper()).post {
+            } catch (e: Exception) {
+                Handler(Looper.getMainLooper()).post {
                     appContext?.let {
-                        Toast.makeText(it, "Impossible de se connecter au serveur", Toast.LENGTH_LONG).show()
+                        Toast.makeText(it, "Erreur réseau: ${e.message}", Toast.LENGTH_LONG).show()
                     }
-                    redirectRoute("/")
-               }
+                }
             }
         }.start()
     }

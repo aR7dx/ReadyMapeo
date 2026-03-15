@@ -54,6 +54,7 @@ fun CollapsibleRaidsFilterForm(viewModel: RaidsViewModel, isOpen: Boolean = fals
             exit = shrinkVertically()
         ) {
             RaidsFilterForm(
+                viewModel = viewModel,
                 onFilterChange = { filterData ->
                     viewModel.filterRaids(
                         filterData.locationScope,

@@ -12,11 +12,9 @@ class RaidViewModel(application: Application) : AndroidViewModel(application) {
     private val _raid = mutableStateOf<Raid?>(null)
     val raid: State<Raid?> = _raid
 
-    private val database = AppDatabase.getInstance(application)
-    private val raidRepository = RaidRepository(database)
 
     suspend fun loadRaid(raidId: Int) {
-        val r = raidRepository.getRaidById(raidId)
+        val r = RaidRepository.getRaidById(raidId)
 
         if (r != null) {
             _raid.value = r

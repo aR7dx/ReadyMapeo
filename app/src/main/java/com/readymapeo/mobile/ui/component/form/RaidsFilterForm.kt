@@ -29,6 +29,7 @@ import com.readymapeo.mobile.ui.component.DatePicker
 import com.readymapeo.mobile.ui.component.Divider
 import com.readymapeo.mobile.ui.component.Input
 import com.readymapeo.mobile.ui.component.Select
+import com.readymapeo.mobile.ui.screens.raids.RaidsViewModel
 import com.readymapeo.mobile.ui.theme.BoldTypography
 
 data class RaidsFilterData(
@@ -41,6 +42,7 @@ data class RaidsFilterData(
 
 @Composable
 fun RaidsFilterForm(
+    viewModel: RaidsViewModel,
     submitButtonColor: Color = Color(0xFF1F2937),
     submitIconColor: Color = Color.White,
     submitTextColor: Color = Color.White,
@@ -48,16 +50,7 @@ fun RaidsFilterForm(
     dividerColor: Color = Color(0xFFE6E6ED),
     onFilterChange: (RaidsFilterData) -> Unit = {}
 ) {
-    val locationScopes = listOf("Ville", "Département", "Région")
-    val raidType = listOf("Tous", "Loisir", "Compétition")
-    val raidCategory = listOf("Tous", "Benjamins", "Minimes", "Cadets", "Juniors", "Espoirs", "Séniors", "Vétérans")
 
-    // mutable
-    val selectedLocationScope = remember { mutableStateOf(locationScopes[0]) }
-    val locationInputValue = remember { mutableStateOf("") }
-    val selectedDate = remember { mutableStateOf<Long?>(null) }
-    val selectedType = remember { mutableStateOf(raidType[0]) }
-    val selectedCategory = remember { mutableStateOf(raidCategory[0]) }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -69,54 +62,39 @@ fun RaidsFilterForm(
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             LocationRow(
-                data = locationScopes,
-                mutable = selectedLocationScope,
-                mutable2 = locationInputValue
+                data = viewModel.locationScopes,
+                mutable = viewModel.selectedLocationScope,
+                mutable2 = viewModel.locationInputValue
             )
 
-            DateRow(mutableSelectedDate = selectedDate)
+            DateRow(mutableSelectedDate = viewModel.selectedDate)
 
             TypeAndCategoryRow(
-                selectedType = selectedType,
-                typeList = raidType,
-                selectedCategory = selectedCategory,
-                categoryList = raidCategory
+                selectedType = viewModel.selectedType,
+                typeList = viewModel.raidType,
+                selectedCategory = viewModel.selectedCategory,
+                categoryList = viewModel.raidCategory
             )
 
             Divider(dividerColor = dividerColor)
 
-            // submit form button
-            Button(
-                onClick = {
+            SubmitFormButton(
+                text = "Rechercher...",
+                textColor = submitTextColor,
+                backgroundColor = submitButtonColor,
+                icon = ImageVector.vectorResource(R.drawable.search),
+                iconColor = submitIconColor,
+                iconOnLeft = true,
+                onclick = {
                     onFilterChange(RaidsFilterData(
-                        locationScope = selectedLocationScope.value,
-                        locationInputValue = locationInputValue.value,
-                        date = selectedDate.value,
-                        type = selectedType.value,
-                        category = selectedCategory.value
+                        locationScope = viewModel.selectedLocationScope.value,
+                        locationInputValue = viewModel.locationInputValue.value,
+                        date = viewModel.selectedDate.value,
+                        type = viewModel.selectedType.value,
+                        category = viewModel.selectedCategory.value
                     ))
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = submitButtonColor),
-                shape = RoundedCornerShape(6.dp),
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.search),
-                        contentDescription = "search_icon",
-                        tint = submitIconColor,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Text(
-                        text = "Rechercher",
-                        color = submitTextColor,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
                 }
-            }
+            )
         }
     }
 }
@@ -130,7 +108,7 @@ fun LocationRow(data: List<String>, mutable: MutableState<String>, mutable2: Mut
                 .padding(bottom = 4.dp)
                 .fillMaxWidth(),
             color = Color(0xFF9EA5B1),
-            style = BoldTypography.bodyMediumBold
+            style = BoldTypography.bodyMedium
         )
 
         Row(
@@ -163,7 +141,7 @@ fun DateRow(mutableSelectedDate: MutableState<Long?>) {
                 .padding(bottom = 4.dp)
                 .fillMaxWidth(),
             color = Color(0xFF9EA5B1),
-            style = BoldTypography.bodyMediumBold
+            style = BoldTypography.bodyMedium
         )
 
         DatePicker(mutableSelectedDate = mutableSelectedDate, placeholder = "Toutes les dates")
@@ -179,7 +157,7 @@ fun TypeAndCategoryRow(selectedType: MutableState<String>, typeList: List<String
                 .padding(bottom = 4.dp)
                 .fillMaxWidth(),
             color = Color(0xFF9EA5B1),
-            style = BoldTypography.bodyMediumBold
+            style = BoldTypography.bodyMedium
         )
 
         Row(

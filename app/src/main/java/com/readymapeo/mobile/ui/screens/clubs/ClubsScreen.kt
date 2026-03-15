@@ -17,6 +17,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.R
+import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.card.CardCaption
 import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
 import com.readymapeo.mobile.ui.component.card.MobileCard
@@ -56,7 +57,9 @@ fun ClubsScreen(viewModel: ClubsViewModel = viewModel()) {
                     iconColor = Color(0xFF6EE7B7)
                 ) },
                 title = it.clubName,
-                onclick = {},
+                onclick = {
+                    redirectRoute("/clubs/${it.clubId}")
+                },
             ) {
                 CityAndPostalCode(it.clubCity, it.clubPostalCode)
 

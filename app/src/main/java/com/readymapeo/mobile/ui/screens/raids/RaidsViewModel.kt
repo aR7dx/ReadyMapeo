@@ -5,17 +5,25 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
-import com.readymapeo.mobile.data.local.AppDatabase
 import com.readymapeo.mobile.data.local.entity.Raid
 import com.readymapeo.mobile.data.repository.RaidRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 class RaidsViewModel(application: Application) : AndroidViewModel(application) {
     private val _raids = mutableStateOf<List<Raid>>(emptyList())
     val raids: State<List<Raid>> = _raids
 
-    private val database = AppDatabase.getInstance(application)
-    private val raidRepository = RaidRepository(database)
+    val locationScopes = listOf("Ville", "Département", "Région")
+    val raidType = listOf("Tous", "Loisir", "Compétition")
+    val raidCategory = listOf("Tous", "Benjamins", "Minimes", "Cadets", "Juniors", "Espoirs", "Séniors", "Vétérans")
+
+    // mutable
+    val selectedLocationScope = mutableStateOf(locationScopes[0])
+    val locationInputValue = mutableStateOf("")
+    val selectedDate = mutableStateOf<Long?>(null)
+    val selectedType = mutableStateOf(raidType[0])
+    val selectedCategory = mutableStateOf(raidCategory[0])
 
     init {
         loadRaids()
@@ -23,17 +31,23 @@ class RaidsViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun loadRaids() {
         viewModelScope.launch {
-            raidRepository.getAllRaids().collect { raids ->
+            RaidRepository.getAllRaids().collect { raids ->
                 _raids.value = raids
             }
         }
     }
 
-    fun filterRaids(locationScope: String?, locationInputValue: String?, date: Long?) {
+    fun filterRaids(locationScope: String, inputValue: String?, date: Long?) {
         viewModelScope.launch {
-            raidRepository.getFilteredRaids(locationScope, locationInputValue, date).collect { filteredRaids ->
-                _raids.value = filteredRaids
-            }
+            RaidRepository.getFilteredRaids(locationScope, inputValue, date)
+                .distinctUntilChanged()
+                .collect { filteredRaids ->
+                    selectedLocationScope.value = locationScope
+                    locationInputValue.value = inputValue ?: ""
+                    selectedDate.value = date
+
+                    _raids.value = filteredRaids
+                }
         }
     }
 }
