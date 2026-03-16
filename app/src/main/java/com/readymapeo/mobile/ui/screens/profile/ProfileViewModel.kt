@@ -10,12 +10,14 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(application: Application): AndroidViewModel(application) {
 
-    private val _isLoggedIn = MutableStateFlow(false)
-    val isLoggedIn: StateFlow<Boolean> = _isLoggedIn
+    private val _isLoggedIn = MutableStateFlow<Boolean?>(null)
+    val isLoggedIn: StateFlow<Boolean?> = _isLoggedIn
 
     init {
         viewModelScope.launch {
-            _isLoggedIn.value = AuthRepository.isLoggedIn()
+            AuthRepository.isLoggedIn().collect { loggedIn ->
+                _isLoggedIn.value = loggedIn
+            }
         }
     }
 }

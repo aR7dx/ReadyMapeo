@@ -1,5 +1,6 @@
 package com.readymapeo.mobile
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,6 +11,7 @@ import com.readymapeo.mobile.data.local.AppDatabase
 import com.readymapeo.mobile.data.local.token.TokenManager
 import com.readymapeo.mobile.data.repository.RaidRepository
 import com.readymapeo.mobile.data.repository.ClubRepository
+import com.readymapeo.mobile.network.ApiClient
 import com.readymapeo.mobile.sync.SyncManager
 import com.readymapeo.mobile.ui.theme.ReadyMapeoTheme
 import com.readymapeo.mobile.ui.component.navigation.NavigationBottomBar
@@ -30,13 +32,15 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ReadyMapeoApp(context: Context) {
+    val appContext = context.applicationContext as Application
 
-    NetworkConnectivity.init(context)
-    SyncManager.initSyncWorker(context)
+    NetworkConnectivity.init(appContext)
+    SyncManager.initSyncWorker(appContext)
 
-    TokenManager.init(context)
+    TokenManager.init(appContext)
+    ApiClient.init(appContext)
 
-    val database = AppDatabase.getInstance(context)
+    val database = AppDatabase.getInstance(appContext)
     RaidRepository.setDatabase(database)
     ClubRepository.setDatabase(database)
 

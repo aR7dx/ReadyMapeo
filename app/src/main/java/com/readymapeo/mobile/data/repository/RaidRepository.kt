@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.SharingStarted.Companion.Lazily
 
 object RaidRepository {
 
@@ -38,7 +39,7 @@ object RaidRepository {
                         emit(localRaids)
                     }
                 }
-            }.stateIn(GlobalScope, kotlinx.coroutines.flow.SharingStarted.Lazily, emptyList())
+            }.stateIn(GlobalScope, Lazily, emptyList())
         }
         return raidsStateFlow!!
     }

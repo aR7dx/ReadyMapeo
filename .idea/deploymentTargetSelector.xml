@@ -2,12 +2,12 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="app">
+      <SelectionState runConfigName="MainActivity">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-03-12T13:52:33.925255818Z">
+        <DropdownSelection timestamp="2026-03-16T14:06:13.300049086Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=1862d0ce" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/sneak/.android/avd/Pixel_9a.avd" />
             </handle>
           </Target>
         </DropdownSelection>

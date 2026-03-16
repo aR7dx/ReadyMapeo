@@ -5,64 +5,49 @@ import com.readymapeo.mobile.network.ApiClient
 import com.readymapeo.mobile.utils.optBooleanOrNull
 import com.readymapeo.mobile.utils.optIntOrNull
 import com.readymapeo.mobile.utils.optStringOrNull
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 object ClubApiService {
 
-    suspend fun getClubs(): List<Club> {
-        return suspendCancellableCoroutine { continuation ->
-            ApiClient.get("/clubs") { response ->
-                try {
-                    val jsonObject = JSONObject(response)
-                    val dataObject = jsonObject.getJSONObject("data")
-                    val dataArray = dataObject.getJSONArray("data")
+    suspend fun getClubs(): List<Club> = withContext(Dispatchers.IO) {
+        try {
+            val response = ApiClient.get("/clubs")
 
-                    GlobalScope.launch {
-                        val clubs = mutableListOf<Club>()
-                        for (i in 0 until dataArray.length()) {
-                            val clubJson = dataArray.getJSONObject(i)
+            val jsonObject = JSONObject(response)
+            val dataObject = jsonObject.getJSONObject("data")
+            val dataArray = dataObject.getJSONArray("data")
 
-                            val club = parseClubJson(clubJson)
-                            if (club != null) {
-                                clubs.add(club)
-                            }
-                        }
+            val clubs = mutableListOf<Club>()
+            for (i in 0 until dataArray.length()) {
+                val clubJson = dataArray.getJSONObject(i)
 
-                        continuation.resume(clubs)
-                    }
-                }
-                catch (e: Exception) {
-                    continuation.resumeWithException(e)
-                }
+                val club = parseClubJson(clubJson)
+                clubs.add(club)
             }
+
+            clubs
+        }
+        catch (e: Exception) {
+            throw e
         }
     }
 
-    suspend fun getClubById(clubId: Int): Club? {
-        return suspendCancellableCoroutine { continuation ->
+    suspend fun getClubById(clubId: Int): Club? = withContext(Dispatchers.IO) {
+        try {
+            val response = ApiClient.get("/clubs/$clubId")
 
-            ApiClient.get("/clubs/$clubId") { response ->
-                try {
+            val jsonObject = JSONObject(response)
+            val dataObject = jsonObject.getJSONObject("data")
 
-                    val jsonObject = JSONObject(response)
-                    val dataObject = jsonObject.getJSONObject("data")
+            val clubJson = dataObject.getJSONObject("club")
 
-                    val clubJson = dataObject.getJSONObject("club")
-
-                    GlobalScope.launch {
-                        val club = parseClubJson(clubJson)
-                        continuation.resume(club)
-                    }
-                }
-                catch (e: Exception) {
-                    continuation.resumeWithException(e)
-                }
-            }
+            val club = parseClubJson(clubJson)
+            club
+        }
+        catch (e: Exception) {
+            throw e
         }
     }
 

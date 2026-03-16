@@ -5,12 +5,9 @@ import com.readymapeo.mobile.data.local.entity.Raid
 import com.readymapeo.mobile.network.ApiClient
 import com.readymapeo.mobile.utils.optBooleanOrNull
 import com.readymapeo.mobile.utils.optStringOrNull
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 object RaidApiService {
 
@@ -22,51 +19,43 @@ object RaidApiService {
         }
     }
 
-    suspend fun getRaids(): List<Raid> {
-        return suspendCancellableCoroutine { continuation ->
-            ApiClient.get("/raids") { response ->
-                try {
-                    val jsonObject = JSONObject(response)
-                    val dataArray = jsonObject.getJSONArray("data")
+    suspend fun getRaids(): List<Raid> = withContext(Dispatchers.IO) {
+        try {
+            val response = ApiClient.get("/raids")
 
-                    GlobalScope.launch {
-                        val raids = mutableListOf<Raid>()
-                        for (i in 0 until dataArray.length()) {
-                            val raidJson = dataArray.getJSONObject(i)
+            val jsonObject = JSONObject(response)
+            val dataArray = jsonObject.getJSONArray("data")
 
-                            val raid = parseRaidJson(raidJson)
-                            if (raid != null) {
-                                raids.add(raid)
-                            }
-                        }
+            val raids = mutableListOf<Raid>()
+            for (i in 0 until dataArray.length()) {
+                val raidJson = dataArray.getJSONObject(i)
 
-                        continuation.resume(raids)
-                    }
-                }
-                catch (e: Exception) {
-                    continuation.resumeWithException(e)
+                val raid = parseRaidJson(raidJson)
+                if (raid != null) {
+                    raids.add(raid)
                 }
             }
+
+            raids
+        }
+        catch (e: Exception) {
+           throw e
         }
     }
 
-    suspend fun getRaidById(raidId: Int): Raid? {
-        return suspendCancellableCoroutine { continuation ->
-            ApiClient.get("/raids/$raidId") { response ->
-                try {
-                    val jsonObject = JSONObject(response)
-                    val dataObject = jsonObject.getJSONObject("data")
-                    val raidJson = dataObject.getJSONObject("raid")
+    suspend fun getRaidById(raidId: Int): Raid? = withContext(Dispatchers.IO) {
+        try {
+            val response = ApiClient.get("/raids/$raidId")
 
-                    GlobalScope.launch {
-                        val raid = parseRaidJson(raidJson)
-                        continuation.resume(raid)
-                    }
-                }
-                catch (e: Exception) {
-                    continuation.resumeWithException(e)
-                }
-            }
+            val jsonObject = JSONObject(response)
+            val dataObject = jsonObject.getJSONObject("data")
+            val raidJson = dataObject.getJSONObject("raid")
+
+            val raid = parseRaidJson(raidJson)
+            raid
+        }
+        catch (e: Exception) {
+            throw e
         }
     }
 

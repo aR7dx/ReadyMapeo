@@ -1,10 +1,12 @@
 package com.readymapeo.mobile.network
 
 import android.app.Application
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import com.readymapeo.mobile.config.ApiConfig
+import com.readymapeo.mobile.data.local.token.TokenManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
@@ -16,70 +18,63 @@ object ApiClient {
         appContext = context
     }
 
-    private fun request (method: String, path: String, body: String? = null, callback: (String) -> Unit) {
-        Thread {
-            try {
-                val url = URL(ApiConfig.BASE_URL_API + path)
+    private suspend fun request (
+        method: String,
+        path: String,
+        body: String? = null
+    ): String = withContext(Dispatchers.IO) {
+        try {
+            val token = TokenManager.getToken().first()
 
-                val connection = url.openConnection() as HttpURLConnection
+            val url = URL(ApiConfig.BASE_URL_API + path)
+            val connection = url.openConnection() as HttpURLConnection
 
-                connection.requestMethod = method
-                connection.setRequestProperty("Content-Type", "application/json")
+            connection.requestMethod = method
+            connection.setRequestProperty("Content-Type", "application/json")
+            connection.setRequestProperty("Accept", "application/json")
 
-                if (body != null) {
-                    connection.doOutput = true
-                    val writer = OutputStreamWriter(connection.outputStream)
+            token?.let {
+                connection.setRequestProperty("Authorization", "Bearer $it")
+            }
+
+            if (body != null) {
+                connection.doOutput = true
+                OutputStreamWriter(connection.outputStream).use { writer ->
                     writer.write(body)
                     writer.flush()
-                    writer.close()
-                }
-
-                val responseCode = connection.responseCode
-
-                val response = if (responseCode in 200..299) {
-                    connection.inputStream.bufferedReader().readText()
-                } else {
-                    connection.errorStream?.bufferedReader()?.readText() ?: "{\"error\": \"HTTP $responseCode\"}"
-                }
-                
-                Handler(Looper.getMainLooper()).post {
-                    callback(response)
-                }
-            } catch (e: Exception) {
-                Handler(Looper.getMainLooper()).post {
-                    appContext?.let {
-                        Toast.makeText(it, "Erreur réseau: ${e.message}", Toast.LENGTH_LONG).show()
-                    }
                 }
             }
-        }.start()
+
+            val response = if (connection.responseCode in 200..299) {
+                connection.inputStream.bufferedReader().readText()
+            } else {
+                connection.errorStream?.bufferedReader()?.readText() ?: "{\"error\": \"HTTP ${connection.responseCode}\"}"
+            }
+
+            response
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                appContext?.let {
+                    Toast.makeText(it, "Erreur réseau: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+            throw e
+        }
     }
 
-    fun get(path: String, callback: (String) -> Unit) {
-        request("GET", path, null, callback)
+    suspend fun get(path: String): String {
+        return request("GET", path, null)
     }
-
-    fun post(path: String, body: String, callback: (String) -> Unit) {
-        request("POST", path, body, callback)
+    suspend fun post(path: String, body: String): String {
+        return request("POST", path, body)
     }
-
-    //fun postSync(path: String, body: String): String = requestSync("POST", path, body)
-
-    fun put(path: String, body: String, callback: (String) -> Unit) {
-        request("PUT", path, body, callback)
+    suspend fun put(path: String, body: String): String {
+        return request("PUT", path, body)
     }
-
-    //fun putSync(path: String, body: String): String = requestSync("PUT", path, body)
-
-    fun patch(path: String, body: String, callback: (String) -> Unit) {
-        request("PATCH", path, body, callback)
+    suspend fun patch(path: String, body: String): String {
+        return request("PATCH", path, body)
     }
-
-    //fun patchSync(path: String, body: String): String = requestSync("PATCH", path, body)
-
-    fun delete(path: String, body: String, callback: (String) -> Unit) {
-        request("DELETE", path, body, callback)
+    suspend fun delete(path: String, body: String): String {
+        return request("DELETE", path, body)
     }
-
-    //fun deleteSync(path: String, body: String): String = requestSync("DELETE", path, body)
 }
