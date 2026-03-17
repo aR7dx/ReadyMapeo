@@ -33,7 +33,7 @@ object AuthRepository {
         TokenManager.saveToken(token)
     }
 
-    suspend fun getUserInfo(): Flow<User> = withContext(Dispatchers.IO) {
+    suspend fun getUserInfo(): Flow<User> = withContext(Dispatchers.IO){
         userDao.delete()
         val user = AuthApiService.getUserInfo()
         userDao.insert(user)

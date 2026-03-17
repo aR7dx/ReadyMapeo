@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Upsert
-    fun insert(user: User)
+    suspend fun insert(user: User)
 
     @Query("SELECT * FROM User LIMIT 1")
     fun getUser(): Flow<User>
 
     @Query("DELETE FROM User")
-    fun delete()
+    suspend fun delete()
 }

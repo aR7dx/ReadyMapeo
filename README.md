@@ -13,33 +13,41 @@ Mobile version of ReadyMapeo (SAE301)
 
 
 ## FINISHED
-- home page
-- raids page
+- ~home page~
+- ~raids page~
+- ~raids filtering~
 - raid page (lack races list)
-- clubs page
-- account connection
-- raids filtering
+- ~clubs page~
+- ~account connection~
+- ~account page~
 
 ## TODO
 - affichage d'un club
-- affichage des courses d'un raid
 - affichage des courses
 - affichage d'une course
+- affichage des courses d'un raid
 
-- rejoindre / quitter un club
-- s'inscrire à une course
-
+<br/>
+ 
 - créer / modifier / supprimer un club
 - créer / modifier / supprimer un raid
 - créer / modifier / supprimer une course
-- créer / modifier / supprimer une equipe
+- créer / modifier / supprimer une équipe
+- rejoindre / quitter un club
+- s'inscrire à une course
+- inviter dans une équipe
+
+<br/>
 
 - se déconnecter de son compte
 - créer / modifier / supprimer un compte
-- page de compte
+
+<br/>
 
 - classements
 - synchro des classements
 - synchro des courses
+
+<br/>
 
 - renvoyer vers le vrai site pour le panel admin (depuis la page profil)

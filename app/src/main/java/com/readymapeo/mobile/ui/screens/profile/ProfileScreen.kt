@@ -1,5 +1,6 @@
 package com.readymapeo.mobile.ui.screens.profile
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.R
@@ -40,20 +43,25 @@ import com.readymapeo.mobile.ui.component.CTAButton
 import com.readymapeo.mobile.ui.theme.BoldTypography
 import com.readymapeo.mobile.utils.toFrenchDate
 import com.readymapeo.mobile.utils.toTimestamp
+import com.readymapeo.mobile.utils.toYear
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun ProfileScreen(viewModel: ProfileViewModel = viewModel()) {
     val isLoggedIn by viewModel.isLoggedIn.collectAsState()
 
+    LaunchedEffect(isLoggedIn) {
+        if (isLoggedIn == false) {
+            redirectRoute("/login")
+        }
+    }
+
     when (isLoggedIn) {
         null -> {
             LoadingScreen()
         }
         false -> {
-            LaunchedEffect(Unit) {
-                redirectRoute("/login")
-            }
+            LoadingScreen()
         }
         true -> {
             ProfileContent(viewModel.user)
@@ -87,6 +95,15 @@ fun ProfileContent(userState: StateFlow<User?>) {
         item {
             ProfileInfo(userState)
         }
+
+        item {
+            Spacer(modifier = Modifier.height(4.dp))
+            UserTeams(userState)
+        }
+
+        item {
+            LastRaces()
+        }
     }
 }
 
@@ -101,8 +118,9 @@ fun ProfileHeader(userState: StateFlow<User?>) {
             .padding(top = 4.dp, bottom = 8.dp),
         shape = RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(4.dp),
-    ) {
+        elevation = CardDefaults.cardElevation(1.dp),
+        border = BorderStroke(1.dp, Color.LightGray),
+        ) {
         Column (
             modifier = Modifier
                 .fillMaxWidth()
@@ -150,39 +168,43 @@ fun ProfileHeader(userState: StateFlow<User?>) {
                         text = "Inscrit le ${user.value?.createdAt?.toFrenchDate() ?: "<Inconnu>"}",
                         style = MaterialTheme.typography.bodyLarge
                     )
+                    // System.currentTimeMillis().toYear()
                     Text(
-                        text = "Age : ${(System.currentTimeMillis() - (user.value?.createdAt?.toTimestamp() ?: 0)).toFrenchDate()}",
+                        text = "Age : ${(user.value?.createdAt?.toTimestamp()?.toYear())}",
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Text(
-                        text = "Téléphone : ${user.value?.phone}",
+                        text = "Adresse : ${user.value?.address}",
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }
         }
 
-        CTAButton(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = "MODIFIER",
-            backgroundColor = Color(0xFF1F2937),
-            icon = ImageVector.vectorResource(R.drawable.edit_square),
-            iconColor = Color.White,
-            iconOnLeft = true
-        ) {
-            println("DEBUG: rediriger vers /profile/edit")
+        Row {
+            CTAButton(
+                modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(0.7f),
+                text = "MODIFIER",
+                backgroundColor = Color(0xFF1F2937),
+                icon = ImageVector.vectorResource(R.drawable.edit_square),
+                iconColor = Color.White,
+                iconOnLeft = true
+            ) {
+                println("DEBUG: rediriger vers /profile/edit")
+            }
+
+            CTAButton(
+                modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(1f),
+                text = "",
+                backgroundColor = Color(0xFFCE2222),
+                icon = ImageVector.vectorResource(R.drawable.logout),
+                iconColor = Color.White,
+                iconOnLeft = true
+            ) {
+                println("DEBUG: rediriger vers /logout")
+            }
         }
 
-        CTAButton(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = "SE DÉCONNECTER",
-            backgroundColor = Color(0xFFDC2626),
-            icon = ImageVector.vectorResource(R.drawable.edit_square),
-            iconColor = Color.White,
-            iconOnLeft = true
-        ) {
-            println("DEBUG: rediriger vers /logout")
-        }
 
         Spacer(modifier = Modifier.height(16.dp))
     }
@@ -197,12 +219,118 @@ fun ProfileInfo(userState: StateFlow<User?>) {
             .fillMaxWidth(),
         shape = RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(4.dp),
-    ) {
+        elevation = CardDefaults.cardElevation(1.dp),
+        border = BorderStroke(1.dp, Color.LightGray),
+        ) {
         Column(
             modifier = Modifier.padding(24.dp)
         ) {
-            Text("Licence: ${user.value?.licenseNumber}")
+            Text(
+                text= "Licence:",
+                style = BoldTypography.headlineMedium
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+
+            if (user.value?.licenseNumber != null && user.value?.licenseEndValidity != null) {
+                Text(
+                    text = "Numéro: ${user.value?.licenseNumber}",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = "Validité de la licence: ${user.value?.licenseEndValidity}",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+
+            Text(
+                text= "Contact:",
+                style = BoldTypography.headlineMedium
+            )
+            Text("Téléphone: ${user.value?.phone}")
         }
+    }
+}
+
+@Composable
+fun UserTeams(userState: StateFlow<User?>) {
+
+    Column {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(0.dp)
+        ) {
+            Text(
+                modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 0.dp, bottom = 8.dp),
+                text = "Vos équipes | ",
+                style = MaterialTheme.typography.displaySmall
+            )
+            TextButton(
+                onClick = {}
+            ) {
+                Text(
+                    text = "Créer une équipe",
+                    color = Color(0xFF3B82F6),
+                    style = MaterialTheme.typography.displaySmall
+                )
+            }
+        }
+
+        NoTeamCard()
+    }
+
+}
+
+@Composable
+fun NoTeamCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp, horizontal = 8.dp),
+        shape = RoundedCornerShape(6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        border = BorderStroke(1.dp, Color.LightGray),
+    ) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp),
+            text = "Vous n'êtes dans aucune équipe.",
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun LastRaces() {
+    Column {
+        Text(
+            modifier = Modifier.padding(8.dp),
+            text = "Vos dernières courses",
+            style = MaterialTheme.typography.displaySmall
+        )
+        NoLastRacesCard()
+    }
+
+}
+
+@Composable
+fun NoLastRacesCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp, horizontal = 8.dp),
+        shape = RoundedCornerShape(6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        border = BorderStroke(1.dp, Color.LightGray),
+    ) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp),
+            text = "Vous n'avez participé à aucune course pour le moment.",
+            textAlign = TextAlign.Center
+        )
     }
 }

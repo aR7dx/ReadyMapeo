@@ -5,12 +5,14 @@ import com.readymapeo.mobile.data.local.AppDatabase
 import com.readymapeo.mobile.data.local.entity.Raid
 import com.readymapeo.mobile.network.NetworkConnectivity
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.SharingStarted.Companion.Lazily
+import kotlinx.coroutines.withContext
 
 object RaidRepository {
 
@@ -44,7 +46,7 @@ object RaidRepository {
         return raidsStateFlow!!
     }
 
-    suspend fun getRaidById(raidId: Int): Raid? {
+    suspend fun getRaidById(raidId: Int): Raid? = withContext(Dispatchers.IO)  {
         val raid = raidDao.getById(raidId)
 
         if (raid == null && NetworkConnectivity.isOnline.value){
@@ -52,11 +54,11 @@ object RaidRepository {
 
             if (raidFromApi != null) {
                 raidDao.insert(raidFromApi)
-                return raidFromApi
+                return@withContext raidFromApi
             }
         }
 
-        return raid
+        raid
     }
 
     fun getFilteredRaids(locationScope: String?, locationInputValue: String?, date: Long?): Flow<List<Raid>> {

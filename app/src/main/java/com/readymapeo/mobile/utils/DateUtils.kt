@@ -40,6 +40,12 @@ fun Long.toFrenchDateNoYear(): String {
     return formatter.format(instant.atZone(ZoneId.systemDefault()))
 }
 
+fun Long.toYear(): Int {
+    return Instant.ofEpochMilli(this)
+            .atZone(ZoneId.systemDefault())
+            .year
+}
+
 
 fun String.toTimestamp(): Long {
     val instant = Instant.parse(this)
