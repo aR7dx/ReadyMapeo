@@ -34,14 +34,14 @@ object ClubApiService {
         }
     }
 
-    suspend fun getClubById(clubId: Int): Club? = withContext(Dispatchers.IO) {
+    suspend fun getClubById(clubId: Int): Club = withContext(Dispatchers.IO) {
         try {
             val response = ApiClient.get("/clubs/$clubId")
 
-            val jsonObject = JSONObject(response)
-            val dataObject = jsonObject.getJSONObject("data")
+            val json = JSONObject(response)
+            val data = json.getJSONObject("data")
 
-            val clubJson = dataObject.getJSONObject("club")
+            val clubJson = data.getJSONObject("club")
 
             val club = parseClubJson(clubJson)
             club
@@ -52,7 +52,7 @@ object ClubApiService {
     }
 
     fun parseClubJson(clubJson: JSONObject): Club {
-        val club = Club(
+        return Club(
             clubId = clubJson.getInt("club_id"),
             clubName = clubJson.getString("club_name"),
             clubStreet = clubJson.getString("club_street"),
@@ -68,7 +68,5 @@ object ClubApiService {
             createdAt = clubJson.optStringOrNull("created_at"),
             updatedAt = clubJson.optStringOrNull("updated_at")
         )
-
-        return club
     }
 }

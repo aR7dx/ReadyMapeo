@@ -14,7 +14,7 @@ interface RaidDao {
     fun getAll(): Flow<List<Raid>>
 
     @Query("SELECT * from Raid WHERE raidId = :id")
-    suspend fun getById(id: Int): Raid?
+    fun getById(id: Int): Raid?
 
     @Query("""
         SELECT r.*, c.clubName from Raid r 
@@ -32,20 +32,20 @@ interface RaidDao {
     fun getLast3Raids(): Flow<List<Raid>>
 
     @Upsert
-    suspend fun insert(raid: Raid)
+    fun insert(raid: Raid)
 
     @Upsert
-    suspend fun insertAll(raids: List<Raid>)
+    fun insertAll(raids: List<Raid>)
 
     @Delete
-    suspend fun delete(raid: Raid)
+    fun delete(raid: Raid)
 
     @Query("UPDATE Raid SET isSynced = 1, lastSyncAt = :timestamp WHERE raidId = :id")
-    suspend fun markAsSynced(id: Int, timestamp: Long)
+    fun markAsSynced(id: Int, timestamp: Long)
 
     @Query("UPDATE Raid SET isSynced = 1, lastSyncAt = :timestamp")
-    suspend fun markAllAsSynced(timestamp: Long)
+    fun markAllAsSynced(timestamp: Long)
 
     @Query("DELETE FROM Raid")
-    suspend fun deleteAll()
+    fun deleteAll()
 }

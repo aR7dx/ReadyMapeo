@@ -3,58 +3,27 @@ package com.readymapeo.mobile.data.local.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration8To9 : Migration(8, 9) {
+class Migration3To4 : Migration(3, 4) {
     override fun migrate(db: SupportSQLiteDatabase) {
-        // Create User table (new in v9)
-        db.execSQL("""
-            CREATE TABLE `User` (
-                `id` INTEGER NOT NULL,
-                `docId` INTEGER,
-                `adhId` INTEGER,
-                `name` TEXT NOT NULL,
-                `lastName` TEXT NOT NULL,
-                `firstName` TEXT NOT NULL,
-                `email` TEXT NOT NULL,
-                `birthDate` TEXT NOT NULL,
-                `address` TEXT NOT NULL,
-                `phone` TEXT NOT NULL,
-                `description` TEXT,
-                `active` INTEGER NOT NULL,
-                `emailVerifiedAt` TEXT,
-                `twoFactorConfirmedAt` TEXT,
-                `currentTeamId` INTEGER,
-                `profilePhotoPath` TEXT,
-                `profilePhotoUrl` TEXT,
-                `createdAt` TEXT NOT NULL,
-                `updatedAt` TEXT,
-                `passwordIsSet` INTEGER NOT NULL,
-                `isPublic` INTEGER NOT NULL,
-                `hasCompletedProfile` INTEGER NOT NULL,
-                `licenseNumber` INTEGER,
-                `licenseEndValidity` TEXT,
-                PRIMARY KEY(`id`)
-            )
-        """)
-
         // Backup Raid data
         db.execSQL("CREATE TABLE `Raid_backup` AS SELECT * FROM `Raid`")
 
         // Drop old Raid table
         db.execSQL("DROP TABLE `Raid`")
 
-        // Recreate Raid table with new columns insStartDate and insEndDate
+        // Recreate Raid table with foreign key constraint (ON DELETE SET NULL)
         db.execSQL("""
             CREATE TABLE `Raid` (
                 `raidId` INTEGER NOT NULL,
                 `raidName` TEXT NOT NULL,
                 `raidDescription` TEXT NOT NULL,
                 `adhId` INTEGER NOT NULL,
-                `cluId` INTEGER,
+                `cluId` INTEGER NOT NULL,
                 `insId` INTEGER NOT NULL,
                 `raidDateStart` TEXT NOT NULL,
                 `raidDateEnd` TEXT NOT NULL,
                 `raidContact` TEXT NOT NULL,
-                `raidSiteUrl` TEXT,
+                `raidSiteUrl` TEXT NOT NULL,
                 `raidImage` TEXT,
                 `raidStreet` TEXT NOT NULL,
                 `raidCity` TEXT NOT NULL,
@@ -63,29 +32,26 @@ class Migration8To9 : Migration(8, 9) {
                 `createdAt` TEXT NOT NULL,
                 `updatedAt` TEXT NOT NULL,
                 `racesCount` INTEGER,
-                `clubName` TEXT,
-                `insStartDate` TEXT NOT NULL,
-                `insEndDate` TEXT NOT NULL,
                 `isOpen` INTEGER,
                 `isUpcoming` INTEGER,
                 `isFinished` INTEGER,
                 `lastSyncAt` INTEGER NOT NULL,
                 `isSynced` INTEGER NOT NULL,
                 PRIMARY KEY(`raidId`),
-                FOREIGN KEY(`cluId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE CASCADE
+                FOREIGN KEY(`cluId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE SET NULL
             )
         """)
 
-        // Copy data from backup with default values for new columns
+        // Copy data from backup
         db.execSQL("""
             INSERT INTO `Raid` 
             (raidId, raidName, raidDescription, adhId, cluId, insId, raidDateStart, raidDateEnd, 
              raidContact, raidSiteUrl, raidImage, raidStreet, raidCity, raidPostalCode, raidNumber, 
-             createdAt, updatedAt, racesCount, clubName, insStartDate, insEndDate, isOpen, isUpcoming, isFinished, lastSyncAt, isSynced)
+             createdAt, updatedAt, racesCount, isOpen, isUpcoming, isFinished, lastSyncAt, isSynced)
             SELECT 
             raidId, raidName, raidDescription, adhId, cluId, insId, raidDateStart, raidDateEnd, 
             raidContact, raidSiteUrl, raidImage, raidStreet, raidCity, raidPostalCode, raidNumber, 
-            createdAt, updatedAt, racesCount, clubName, raidDateStart, raidDateEnd, isOpen, isUpcoming, isFinished, lastSyncAt, isSynced
+            createdAt, updatedAt, racesCount, isOpen, isUpcoming, isFinished, lastSyncAt, isSynced
             FROM `Raid_backup`
         """)
 
@@ -93,9 +59,6 @@ class Migration8To9 : Migration(8, 9) {
         db.execSQL("DROP TABLE `Raid_backup`")
     }
 }
-
-
-
 
 
 

@@ -26,11 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.R
-import com.readymapeo.mobile.data.api.AuthApiService
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.Input
 import com.readymapeo.mobile.ui.component.LabelledDivider
-import com.readymapeo.mobile.ui.component.form.SubmitFormButton
+import com.readymapeo.mobile.ui.component.CTAButton
 import com.readymapeo.mobile.ui.theme.BoldTypography
 import com.readymapeo.mobile.ui.theme.CtaMainLightGreen
 import com.readymapeo.mobile.utils.InputType
@@ -134,7 +133,7 @@ fun SubmitLoginForm(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        SubmitFormButton(
+        CTAButton(
             text = if (isLoading.value) "CONNEXION..." else "SE CONNECTER",
             onclick = {
                 if (email.isNotBlank() && password.isNotBlank()) {

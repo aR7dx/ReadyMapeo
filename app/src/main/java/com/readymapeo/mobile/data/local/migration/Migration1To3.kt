@@ -3,36 +3,28 @@ package com.readymapeo.mobile.data.local.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration8To9 : Migration(8, 9) {
+class Migration1To3 : Migration(1, 3) {
     override fun migrate(db: SupportSQLiteDatabase) {
-        // Create User table (new in v9)
+        // Create Club table
         db.execSQL("""
-            CREATE TABLE `User` (
-                `id` INTEGER NOT NULL,
-                `docId` INTEGER,
-                `adhId` INTEGER,
-                `name` TEXT NOT NULL,
-                `lastName` TEXT NOT NULL,
-                `firstName` TEXT NOT NULL,
-                `email` TEXT NOT NULL,
-                `birthDate` TEXT NOT NULL,
-                `address` TEXT NOT NULL,
-                `phone` TEXT NOT NULL,
+            CREATE TABLE `Club` (
+                `clubId` INTEGER NOT NULL,
+                `clubName` TEXT NOT NULL,
+                `clubStreet` TEXT NOT NULL,
+                `clubCity` TEXT NOT NULL,
+                `clubPostalCode` TEXT NOT NULL,
+                `ffsoId` TEXT NOT NULL,
                 `description` TEXT,
-                `active` INTEGER NOT NULL,
-                `emailVerifiedAt` TEXT,
-                `twoFactorConfirmedAt` TEXT,
-                `currentTeamId` INTEGER,
-                `profilePhotoPath` TEXT,
-                `profilePhotoUrl` TEXT,
-                `createdAt` TEXT NOT NULL,
+                `clubImage` TEXT,
+                `isApproved` INTEGER,
+                `approvedBy` INTEGER,
+                `approvedAt` TEXT,
+                `createdBy` INTEGER,
+                `createdAt` TEXT,
                 `updatedAt` TEXT,
-                `passwordIsSet` INTEGER NOT NULL,
-                `isPublic` INTEGER NOT NULL,
-                `hasCompletedProfile` INTEGER NOT NULL,
-                `licenseNumber` INTEGER,
-                `licenseEndValidity` TEXT,
-                PRIMARY KEY(`id`)
+                `lastSyncAt` INTEGER NOT NULL,
+                `isSynced` INTEGER NOT NULL,
+                PRIMARY KEY(`clubId`)
             )
         """)
 
@@ -42,20 +34,20 @@ class Migration8To9 : Migration(8, 9) {
         // Drop old Raid table
         db.execSQL("DROP TABLE `Raid`")
 
-        // Recreate Raid table with new columns insStartDate and insEndDate
+        // Recreate Raid table with 'club' column
         db.execSQL("""
             CREATE TABLE `Raid` (
                 `raidId` INTEGER NOT NULL,
                 `raidName` TEXT NOT NULL,
                 `raidDescription` TEXT NOT NULL,
                 `adhId` INTEGER NOT NULL,
-                `cluId` INTEGER,
+                `cluId` INTEGER NOT NULL,
                 `insId` INTEGER NOT NULL,
                 `raidDateStart` TEXT NOT NULL,
                 `raidDateEnd` TEXT NOT NULL,
                 `raidContact` TEXT NOT NULL,
-                `raidSiteUrl` TEXT,
-                `raidImage` TEXT,
+                `raidSiteUrl` TEXT NOT NULL,
+                `raidImage` TEXT NOT NULL,
                 `raidStreet` TEXT NOT NULL,
                 `raidCity` TEXT NOT NULL,
                 `raidPostalCode` TEXT NOT NULL,
@@ -63,29 +55,26 @@ class Migration8To9 : Migration(8, 9) {
                 `createdAt` TEXT NOT NULL,
                 `updatedAt` TEXT NOT NULL,
                 `racesCount` INTEGER,
-                `clubName` TEXT,
-                `insStartDate` TEXT NOT NULL,
-                `insEndDate` TEXT NOT NULL,
+                `club` TEXT NOT NULL,
                 `isOpen` INTEGER,
                 `isUpcoming` INTEGER,
                 `isFinished` INTEGER,
                 `lastSyncAt` INTEGER NOT NULL,
                 `isSynced` INTEGER NOT NULL,
-                PRIMARY KEY(`raidId`),
-                FOREIGN KEY(`cluId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE CASCADE
+                PRIMARY KEY(`raidId`)
             )
         """)
 
-        // Copy data from backup with default values for new columns
+        // Copy data from backup, using clubName as club value
         db.execSQL("""
             INSERT INTO `Raid` 
             (raidId, raidName, raidDescription, adhId, cluId, insId, raidDateStart, raidDateEnd, 
              raidContact, raidSiteUrl, raidImage, raidStreet, raidCity, raidPostalCode, raidNumber, 
-             createdAt, updatedAt, racesCount, clubName, insStartDate, insEndDate, isOpen, isUpcoming, isFinished, lastSyncAt, isSynced)
+             createdAt, updatedAt, racesCount, club, isOpen, isUpcoming, isFinished, lastSyncAt, isSynced)
             SELECT 
             raidId, raidName, raidDescription, adhId, cluId, insId, raidDateStart, raidDateEnd, 
             raidContact, raidSiteUrl, raidImage, raidStreet, raidCity, raidPostalCode, raidNumber, 
-            createdAt, updatedAt, racesCount, clubName, raidDateStart, raidDateEnd, isOpen, isUpcoming, isFinished, lastSyncAt, isSynced
+            createdAt, updatedAt, racesCount, clubName, isOpen, isUpcoming, isFinished, lastSyncAt, isSynced
             FROM `Raid_backup`
         """)
 
@@ -93,7 +82,6 @@ class Migration8To9 : Migration(8, 9) {
         db.execSQL("DROP TABLE `Raid_backup`")
     }
 }
-
 
 
 

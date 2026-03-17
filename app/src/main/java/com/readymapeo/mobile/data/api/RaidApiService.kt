@@ -59,7 +59,7 @@ object RaidApiService {
         }
     }
 
-    suspend fun parseRaidJson(raidJson: JSONObject): Raid? {
+    fun parseRaidJson(raidJson: JSONObject): Raid? {
         val racesArray = raidJson.optJSONArray("races")
         val cluId = raidJson.getInt("clu_id")
         val registrationJson = raidJson.getJSONObject("registration_period")
@@ -68,7 +68,7 @@ object RaidApiService {
         val club = clubDao?.getById(cluId) ?: return null
 
 
-        val raid = Raid(
+        return Raid(
             raidId = raidJson.getInt("raid_id"),
             raidName = raidJson.getString("raid_name"),
             raidDescription = raidJson.getString("raid_description"),
@@ -96,7 +96,5 @@ object RaidApiService {
             lastSyncAt = System.currentTimeMillis(),
             isSynced = true
         )
-
-        return raid
     }
 }

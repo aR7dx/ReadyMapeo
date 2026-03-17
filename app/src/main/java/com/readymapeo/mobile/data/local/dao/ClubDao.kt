@@ -14,23 +14,23 @@ interface ClubDao {
     fun getAll(): Flow<List<Club>>
 
     @Query("SELECT * from Club WHERE clubId = :id")
-    suspend fun getById(id: Int): Club?
+    fun getById(id: Int): Club?
 
     @Upsert
-    suspend fun insert(club: Club)
+    fun insert(club: Club)
 
     @Upsert
-    suspend fun insertAll(clubs: List<Club>)
+    fun insertAll(clubs: List<Club>)
 
     @Delete
-    suspend fun delete(club: Club)
+    fun delete(club: Club)
 
     @Query("UPDATE Club SET isSynced = 1, lastSyncAt = :timestamp WHERE clubId = :id")
-    suspend fun markAsSynced(id: Int, timestamp: Long)
+    fun markAsSynced(id: Int, timestamp: Long)
 
     @Query("UPDATE Club SET isSynced = 1, lastSyncAt = :timestamp")
-    suspend fun markAllAsSynced(timestamp: Long)
+    fun markAllAsSynced(timestamp: Long)
 
     @Query("DELETE FROM Club")
-    suspend fun deleteAll()
+    fun deleteAll()
 }

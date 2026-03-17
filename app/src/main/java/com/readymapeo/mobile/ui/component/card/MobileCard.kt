@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.readymapeo.mobile.config.ApiConfig
 import com.readymapeo.mobile.network.NetworkImage
 import com.readymapeo.mobile.ui.component.Divider
-import com.readymapeo.mobile.ui.component.form.SubmitFormButton
+import com.readymapeo.mobile.ui.component.CTAButton
 
 @Composable
 fun MobileCard(
@@ -78,7 +78,7 @@ fun CardTitle(title: String) {
 
 @Composable
 fun SeeDetailsButton(text: String = "", onclick: () -> Unit) {
-    SubmitFormButton(
+    CTAButton(
         text = text,
         onclick = onclick
     )

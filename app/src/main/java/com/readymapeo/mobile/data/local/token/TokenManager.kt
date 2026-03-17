@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.readymapeo.mobile.data.api.AuthApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -19,6 +20,7 @@ object TokenManager {
         dataStore = PreferenceDataStoreFactory.create(
             produceFile = { context.preferencesDataStoreFile("auth_prefs") }
         )
+        //verifyToken()
     }
 
     suspend fun saveToken(token: String) {

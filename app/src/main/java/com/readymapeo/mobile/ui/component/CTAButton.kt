@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.ui.component.form
+package com.readymapeo.mobile.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,7 +25,8 @@ import androidx.compose.ui.unit.sp
 import com.readymapeo.mobile.ui.theme.CtaMainBrown
 
 @Composable
-fun SubmitFormButton(
+fun CTAButton(
+    modifier: Modifier = Modifier,
     text: String = "",
     textColor: Color = Color.White,
     backgroundColor: Color = CtaMainBrown,
@@ -38,7 +39,7 @@ fun SubmitFormButton(
 ) {
     Button(
         onClick = onclick,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor

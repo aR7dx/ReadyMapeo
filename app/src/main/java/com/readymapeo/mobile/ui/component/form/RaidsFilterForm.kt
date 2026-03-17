@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.readymapeo.mobile.R
+import com.readymapeo.mobile.ui.component.CTAButton
 import com.readymapeo.mobile.ui.component.DatePicker
 import com.readymapeo.mobile.ui.component.Divider
 import com.readymapeo.mobile.ui.component.Input
@@ -70,7 +71,7 @@ fun RaidsFilterForm(
 
             Divider(dividerColor = dividerColor)
 
-            SubmitFormButton(
+            CTAButton(
                 text = "Rechercher...",
                 textColor = submitTextColor,
                 backgroundColor = submitButtonColor,
@@ -78,13 +79,15 @@ fun RaidsFilterForm(
                 iconColor = submitIconColor,
                 iconOnLeft = true,
                 onclick = {
-                    onFilterChange(RaidsFilterData(
-                        locationScope = viewModel.selectedLocationScope.value,
-                        locationInputValue = viewModel.locationInputValue.value,
-                        date = viewModel.selectedDate.value,
-                        type = viewModel.selectedType.value,
-                        category = viewModel.selectedCategory.value
-                    ))
+                    onFilterChange(
+                        RaidsFilterData(
+                            locationScope = viewModel.selectedLocationScope.value,
+                            locationInputValue = viewModel.locationInputValue.value,
+                            date = viewModel.selectedDate.value,
+                            type = viewModel.selectedType.value,
+                            category = viewModel.selectedCategory.value
+                        )
+                    )
                 }
             )
         }

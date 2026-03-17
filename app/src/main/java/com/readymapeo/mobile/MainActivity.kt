@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import com.readymapeo.mobile.data.local.AppDatabase
 import com.readymapeo.mobile.data.local.token.TokenManager
+import com.readymapeo.mobile.data.repository.AuthRepository
 import com.readymapeo.mobile.data.repository.RaidRepository
 import com.readymapeo.mobile.data.repository.ClubRepository
 import com.readymapeo.mobile.network.ApiClient
@@ -41,6 +42,7 @@ fun ReadyMapeoApp(context: Context) {
     ApiClient.init(appContext)
 
     val database = AppDatabase.getInstance(appContext)
+    AuthRepository.setDatabase(database)
     RaidRepository.setDatabase(database)
     ClubRepository.setDatabase(database)
 
