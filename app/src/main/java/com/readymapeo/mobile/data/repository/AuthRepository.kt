@@ -4,7 +4,7 @@ import com.readymapeo.mobile.data.api.AuthApiService
 import com.readymapeo.mobile.data.api.RaidApiService
 import com.readymapeo.mobile.data.local.AppDatabase
 import com.readymapeo.mobile.data.local.entity.User
-import com.readymapeo.mobile.data.local.token.TokenManager
+import com.readymapeo.mobile.data.TokenManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -27,6 +27,11 @@ object AuthRepository {
 
     suspend fun login(email: String, password: String): Result<String> {
         return AuthApiService.login(email, password)
+    }
+
+    suspend fun logout() {
+        TokenManager.clearAll()
+        userDao.delete()
     }
 
     suspend fun saveToken(token: String) {

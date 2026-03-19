@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import com.readymapeo.mobile.R
 import com.readymapeo.mobile.ui.screens.auth.LoginScreen
+import com.readymapeo.mobile.ui.screens.auth.LogoutScreen
 import com.readymapeo.mobile.ui.screens.clubs.ClubScreen
 import com.readymapeo.mobile.ui.screens.clubs.ClubsScreen
 import com.readymapeo.mobile.ui.screens.home.HomeScreen
@@ -23,7 +24,8 @@ val navRoutes = listOf(
 val routes = navRoutes + listOf(
     Route("/raids/{id}", { RaidScreen() }),
     Route("/clubs/{id}", { ClubScreen() }),
-    Route("/login", { LoginScreen() })
+    Route("/login", { LoginScreen() }),
+    Route("/logout", { LogoutScreen() })
     // ajout de nouvelles routes ici
 )
 

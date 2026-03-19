@@ -24,8 +24,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.R
+import com.readymapeo.mobile.data.AuthManager
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.Input
 import com.readymapeo.mobile.ui.component.LabelledDivider
@@ -37,7 +37,7 @@ import kotlinx.coroutines.launch
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
+fun LoginScreen() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,7 +73,6 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
         Spacer(modifier = Modifier.height(16.dp))
 
         SubmitLoginForm(
-            viewModel = viewModel,
             email = email.value,
             password = password.value
         )
@@ -120,7 +119,6 @@ fun LogoAndText() {
 
 @Composable
 fun SubmitLoginForm(
-    viewModel: LoginViewModel,
     email: String,
     password: String
 ) {
@@ -141,16 +139,12 @@ fun SubmitLoginForm(
                         isLoading.value = true
                         errorMessage.value = null
 
-                        val result = viewModel.login(email, password)
+                        val result = AuthManager.login(email, password)
 
-                        result.onSuccess { token ->
+                        result.onSuccess { it ->
                             errorMessage.value = null
                             isLoading.value = false
-                            
-                            scope.launch {
-                                viewModel.saveToken(token)
-                                redirectRoute("/")
-                            }
+                            redirectRoute("/")
                         }
 
                         result.onFailure { exception ->

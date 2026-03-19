@@ -2,12 +2,10 @@ package com.readymapeo.mobile.ui.screens.profile
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +37,7 @@ import com.readymapeo.mobile.data.local.entity.User
 import com.readymapeo.mobile.network.NetworkImage
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.CTAButton
+import com.readymapeo.mobile.ui.component.LoadingSpinner
 import com.readymapeo.mobile.ui.theme.BoldTypography
 import com.readymapeo.mobile.utils.toFrenchDate
 import com.readymapeo.mobile.utils.toTimestamp
@@ -58,24 +56,14 @@ fun ProfileScreen(viewModel: ProfileViewModel = viewModel()) {
 
     when (isLoggedIn) {
         null -> {
-            LoadingScreen()
+            LoadingSpinner()
         }
         false -> {
-            LoadingScreen()
+            LoadingSpinner()
         }
         true -> {
             ProfileContent(viewModel.user)
         }
-    }
-}
-
-@Composable
-fun LoadingScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }
 
@@ -199,9 +187,9 @@ fun ProfileHeader(userState: StateFlow<User?>) {
                 backgroundColor = Color(0xFFCE2222),
                 icon = ImageVector.vectorResource(R.drawable.logout),
                 iconColor = Color.White,
-                iconOnLeft = true
+                iconOnLeft = true,
             ) {
-                println("DEBUG: rediriger vers /logout")
+                redirectRoute("/logout")
             }
         }
 
