@@ -18,7 +18,8 @@ Mobile version of ReadyMapeo (SAE301)
 - ~raids filtering~
 - raid page (lack races list)
 - ~clubs page~
-- ~account connection~
+- ~account login~
+- ~account logout~
 - ~account page~
 
 ## TODO
@@ -39,7 +40,6 @@ Mobile version of ReadyMapeo (SAE301)
 
 <br/>
 
-- se déconnecter de son compte
 - créer / modifier / supprimer un compte
 
 <br/>
