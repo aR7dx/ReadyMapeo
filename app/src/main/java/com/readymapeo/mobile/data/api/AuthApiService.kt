@@ -1,5 +1,6 @@
 package com.readymapeo.mobile.data.api
 
+import com.readymapeo.mobile.manager.RolesManager
 import com.readymapeo.mobile.data.local.entity.User
 import com.readymapeo.mobile.network.ApiClient
 import com.readymapeo.mobile.utils.optIntOrNull
@@ -54,9 +55,13 @@ object AuthApiService {
 
             val json = JSONObject(response)
             val data = json.getJSONObject("data")
+            
+            val rolesArray = data.optJSONArray("roles")
+            val roles = parseUserRolesJson(rolesArray)
+            
+            RolesManager.saveRoles(roles)
 
-            val user = parseUserJson(data)
-            user
+            return@withContext parseUserJson(data)
         }
         catch (e: Exception) {
             throw e
@@ -90,5 +95,17 @@ object AuthApiService {
             licenseNumber = userJson.getLong("license_number"),
             licenseEndValidity = userJson.optStringOrNull("licence_end_validity")
         )
+    }
+
+    fun parseUserRolesJson(rolesArray: Any?): List<String> {
+        return if (rolesArray is org.json.JSONArray) {
+            val roles = mutableListOf<String>()
+            for (i in 0 until rolesArray.length()) {
+                roles.add(rolesArray.getString(i))
+            }
+            roles
+        } else {
+            emptyList()
+        }
     }
 }

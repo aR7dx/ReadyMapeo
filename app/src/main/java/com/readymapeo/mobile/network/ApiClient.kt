@@ -3,7 +3,7 @@ package com.readymapeo.mobile.network
 import android.app.Application
 import android.widget.Toast
 import com.readymapeo.mobile.config.ApiConfig
-import com.readymapeo.mobile.data.TokenManager
+import com.readymapeo.mobile.manager.TokenManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext

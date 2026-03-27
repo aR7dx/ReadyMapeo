@@ -43,7 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
                 Migration6To7(),
                 Migration7To8(),
                 Migration8To9(),
-                Migration9To10()
+                Migration9To10(),
             )
             .fallbackToDestructiveMigration()
             .build()

@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.data
+package com.readymapeo.mobile.manager
 
 import com.readymapeo.mobile.data.repository.AuthRepository
 import kotlinx.coroutines.CoroutineScope

@@ -3,7 +3,7 @@ package com.readymapeo.mobile.ui.screens.auth
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.readymapeo.mobile.data.AuthManager
+import com.readymapeo.mobile.manager.AuthManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

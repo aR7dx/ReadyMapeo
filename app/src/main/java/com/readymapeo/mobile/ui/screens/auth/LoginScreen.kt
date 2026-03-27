@@ -25,7 +25,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import com.readymapeo.mobile.R
-import com.readymapeo.mobile.data.AuthManager
+import com.readymapeo.mobile.manager.AuthManager
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.Input
 import com.readymapeo.mobile.ui.component.LabelledDivider

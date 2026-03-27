@@ -11,7 +11,7 @@ import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 
 object SyncManager {
-    fun initSyncWorker(context: Context) {
+    fun init(context: Context) {
         val workManager = WorkManager.getInstance(context)
         val networkConstraint = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
 

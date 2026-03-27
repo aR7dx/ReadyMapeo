@@ -5,12 +5,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
+import com.readymapeo.mobile.manager.RolesManager
 import com.readymapeo.mobile.data.local.entity.Raid
 import com.readymapeo.mobile.data.repository.RaidRepository
+import com.readymapeo.mobile.utils.UserRole
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class RaidsViewModel(application: Application) : AndroidViewModel(application) {
+
+    val roles = mutableStateOf(emptyList<String>())
     private val _raids = mutableStateOf<List<Raid>>(emptyList())
     val raids: State<List<Raid>> = _raids
 
@@ -26,6 +30,14 @@ class RaidsViewModel(application: Application) : AndroidViewModel(application) {
     val selectedCategory = mutableStateOf(raidCategory[0])
 
     init {
+        viewModelScope.launch {
+            RolesManager.getRolesFlow()
+                .distinctUntilChanged()
+                .collect { rolesList ->
+                    roles.value = rolesList
+                }
+        }
+
         loadRaids()
     }
 
@@ -49,5 +61,9 @@ class RaidsViewModel(application: Application) : AndroidViewModel(application) {
                     _raids.value = filteredRaids
                 }
         }
+    }
+
+    fun hasRole(role: UserRole): Boolean {
+        return roles.value.contains(role.roleName)
     }
 }

@@ -3,7 +3,7 @@ package com.readymapeo.mobile.ui.screens.auth
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.readymapeo.mobile.data.api.AuthApiService
-import com.readymapeo.mobile.data.TokenManager
+import com.readymapeo.mobile.manager.TokenManager
 import com.readymapeo.mobile.data.repository.AuthRepository
 
 class LoginViewModel(application: Application): AndroidViewModel(application) {
