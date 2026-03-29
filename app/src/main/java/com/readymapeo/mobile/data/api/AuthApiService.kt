@@ -1,7 +1,7 @@
 package com.readymapeo.mobile.data.api
 
 import com.readymapeo.mobile.manager.RolesManager
-import com.readymapeo.mobile.data.local.entity.User
+import com.readymapeo.mobile.data.local.entity.AuthenticatedUser
 import com.readymapeo.mobile.network.ApiClient
 import com.readymapeo.mobile.utils.optIntOrNull
 import com.readymapeo.mobile.utils.optStringOrNull
@@ -49,7 +49,7 @@ object AuthApiService {
         }
     }
 
-    suspend fun getUserInfo(): User = withContext(Dispatchers.IO) {
+    suspend fun getUserInfo(): AuthenticatedUser = withContext(Dispatchers.IO) {
         try {
             val response = ApiClient.get("/user")
 
@@ -68,8 +68,8 @@ object AuthApiService {
         }
     }
 
-    fun parseUserJson(userJson: JSONObject): User {
-        return User(
+    fun parseUserJson(userJson: JSONObject): AuthenticatedUser {
+        return AuthenticatedUser(
             id = userJson.getInt("id"),
             docId = userJson.optIntOrNull("doc_id"),
             adhId = userJson.optIntOrNull("adh_id"),

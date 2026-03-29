@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.ui.component.placeholder
+package com.readymapeo.mobile.ui.component.template
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,7 +43,8 @@ fun NotContentDashedCard(
     iconBoxColor: Color = Color(0xFFEFF6FF),
     stokeColor: Color = Color(0xFFDBEAFE),
     radius: Dp = 99.dp,
-    cardBackgroundColor: Color = Color.White
+    cardBackgroundColor: Color = Color.White,
+    composable: @Composable () -> Unit = {}
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = cardBackgroundColor),
@@ -94,6 +95,8 @@ fun NotContentDashedCard(
                 textAlign = TextAlign.Center,
                 color = subTextColor
             )
+
+            composable()
         }
     }
 }

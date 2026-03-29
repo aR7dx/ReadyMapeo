@@ -24,7 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.readymapeo.mobile.ui.theme.BoldTypography
+import com.readymapeo.mobile.ui.theme.SemiBoldTypography
 
 // composant en partie réalisé à l'aide de la documentation d'Android
 // source : https://developer.android.com/develop/ui/compose/components/menu?hl=fr
@@ -86,7 +86,7 @@ fun Select(
                             text = option,
                             color = textColor,
                             style = if (option == selectedOption.value) {
-                                BoldTypography.bodyLarge
+                                SemiBoldTypography.bodyLarge
                             } else {
                                 MaterialTheme.typography.bodyLarge
                             }

@@ -21,9 +21,10 @@ Mobile version of ReadyMapeo (SAE301)
 - ~account login~
 - ~account logout~
 - ~account page~
+- ~user roles on account page~
+- ~club page~
 
 ## TODO
-- affichage d'un club
 - affichage des courses
 - affichage d'une course
 - affichage des courses d'un raid

@@ -16,9 +16,13 @@ data class Club(
     val isApproved: Boolean? = null,
     val approvedBy: Int? = null,
     val approvedAt: String? = null,
+    val creatorName: String? = null,
     val createdBy: Int? = null,
     val createdAt: String? = null,
     val updatedAt: String? = null,
+    val isMember: Boolean? = null,
+    val isManager: Boolean? = null,
+    val membershipStatus: Boolean? = null,
     val lastSyncAt: Long = 0,
     val isSynced: Boolean = false
 )

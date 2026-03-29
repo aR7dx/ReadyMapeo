@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.ui.component.placeholder
+package com.readymapeo.mobile.ui.component.template
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color

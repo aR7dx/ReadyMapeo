@@ -9,12 +9,19 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
 
+    @Query(
+        """
+        SELECT u.* FROM User u 
+        JOIN ClubMember cm on u.id = cm.memberId
+        WHERE cm.clubId = :clubId
+        """
+    )
+    fun getMembersByClubId(clubId: Int): Flow<List<User>>
+
     @Upsert
-    suspend fun insert(user: User)
+    fun insert(user: User)
 
-    @Query("SELECT * FROM User LIMIT 1")
-    fun getUser(): Flow<User>
+    @Upsert
+    fun insertAll(users: List<User>)
 
-    @Query("DELETE FROM User")
-    suspend fun delete()
 }

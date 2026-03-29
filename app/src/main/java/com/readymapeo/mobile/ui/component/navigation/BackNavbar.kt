@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 fun BackNavbar(
     text: String = "Retour",
     textColor: Color = Color.Black,
-    backgroundColor: Color = Color.White,
+    backgroundColor: Color = Color.Transparent,
     iconColor: Color = Color.Black,
     onclick: () -> Unit = {}
 ) {

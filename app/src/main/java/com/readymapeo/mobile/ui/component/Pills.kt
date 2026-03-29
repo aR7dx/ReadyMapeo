@@ -1,6 +1,7 @@
 package com.readymapeo.mobile.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,11 +31,13 @@ fun Pills (
     textStyle: TextStyle = MaterialTheme.typography.bodySmall,
     icon: ImageVector? = null,
     iconColor: Color? = null,
-    backgroundColor: Color = Color(0xFFFFFF1A)
+    borderColor: Color = Color.Transparent,
+    backgroundColor: Color = Color(0xFFAFEF1A)
 ) {
     Box(
         modifier = Modifier
             .padding(2.dp)
+            .border(1.dp, borderColor, RoundedCornerShape(25.dp))
             .background(
                 color = backgroundColor,
                 RoundedCornerShape(25.dp)

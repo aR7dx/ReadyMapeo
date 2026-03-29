@@ -31,6 +31,9 @@ interface RaidDao {
     @Query("SELECT * from Raid ORDER BY createdAt DESC  LIMIT 3")
     fun getLast3Raids(): Flow<List<Raid>>
 
+    @Query("SELECT * from Raid WHERE cluId = :clubId")
+    fun getRaidsByClubId(clubId: Int): Flow<List<Raid>>
+
     @Upsert
     fun insert(raid: Raid)
 

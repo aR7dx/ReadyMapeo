@@ -1,5 +1,6 @@
 package com.readymapeo.mobile.ui.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,8 @@ fun CTAButton(
     text: String = "",
     textColor: Color = Color.White,
     backgroundColor: Color = CtaMainBrown,
+    border: BorderStroke = BorderStroke(0.dp, Color.Black),
+    showIcon: Boolean = true,
     icon: ImageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
     iconColor: Color = Color.White,
     iconOnLeft: Boolean = false,
@@ -44,6 +47,7 @@ fun CTAButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor
         ),
+        border = border,
         shape = RoundedCornerShape(6.dp),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ) {
@@ -51,7 +55,7 @@ fun CTAButton(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            if (iconOnLeft) {
+            if (showIcon && iconOnLeft) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
@@ -69,7 +73,7 @@ fun CTAButton(
                 color = textColor
             )
 
-            if (iconOnRight) {
+            if (showIcon && iconOnRight) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
                     imageVector = icon,

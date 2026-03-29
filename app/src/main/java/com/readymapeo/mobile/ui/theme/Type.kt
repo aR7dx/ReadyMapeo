@@ -82,6 +82,69 @@ val Typography = Typography(
     )
 )
 
+object SemiBoldTypography {
+    val displayLarge = TextStyle( // H1
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 34.sp,
+        color = Color(0xFF111827)
+    )
+    val displayMedium = TextStyle( // H2
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 30.sp,
+        color = Color(0xFF111827)
+    )
+    val displaySmall = TextStyle( // H3
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 24.sp,
+        color = Color(0xFF111827)
+    )
+    val headlineLarge = TextStyle( // H4
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+        color = Color(0xFF111827)
+    )
+    val headlineMedium = TextStyle( // H5
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+        color = Color(0xFF111827)
+    )
+    val headlineSmall = TextStyle( // H6
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        color = Color(0xFF111827)
+    )
+    val bodyLarge = TextStyle(
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        color = Color(0xFF374151)
+    )
+    val bodyMedium = TextStyle(
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp,
+        color = Color(0xFF4B5563)
+    )
+    val bodySmall = TextStyle(
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 12.sp,
+        color = Color(0xFF6B7280)
+    )
+    val labelLarge = TextStyle(
+        fontFamily = Figtree,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 12.sp,
+        color = Color(0xFF374151)
+    )
+}
+
 object BoldTypography {
     val displayLarge = TextStyle( // H1
         fontFamily = Figtree,
@@ -143,7 +206,6 @@ object BoldTypography {
         fontSize = 12.sp,
         color = Color(0xFF374151)
     )
-
 }
 
 object ExtraBoldTypography {

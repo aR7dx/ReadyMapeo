@@ -58,7 +58,7 @@ object RaidRepository {
             }
         }
 
-        raid
+        return@withContext raid
     }
 
     fun getFilteredRaids(locationScope: String?, locationInputValue: String?, date: Long?): Flow<List<Raid>> {
@@ -69,7 +69,9 @@ object RaidRepository {
         return raidDao.getLast3Raids()
     }
 
-
+    fun getRaidsByClubId(clubId: Int): Flow<List<Raid>> {
+        return raidDao.getRaidsByClubId(clubId)
+    }
 }
 
 

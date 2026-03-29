@@ -24,10 +24,6 @@ object TokenManager {
             preferences[TOKEN_KEY]
         }
     }
-/*
-    suspend fun verifyToken() {
-
-    }*/
 
     suspend fun deleteToken() {
         DataStoreProvider.getDataStore().edit { preferences ->

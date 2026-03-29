@@ -16,6 +16,14 @@ interface ClubDao {
     @Query("SELECT * from Club WHERE clubId = :id")
     fun getById(id: Int): Club?
 
+    @Query("""
+        SELECT * from Club 
+        WHERE LOWER(clubName) like '%' || LOWER(:search) || '%'
+        OR LOWER(clubCity) like '%' || LOWER(:search) || '%'
+        OR clubPostalCode like '%' || :search || '%'
+    """)
+    fun getFilteredClubs(search: String): Flow<List<Club>>
+
     @Upsert
     fun insert(club: Club)
 

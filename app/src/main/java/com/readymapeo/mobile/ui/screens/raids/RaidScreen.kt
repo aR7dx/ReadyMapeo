@@ -31,8 +31,8 @@ import com.readymapeo.mobile.ui.component.Pills
 import com.readymapeo.mobile.ui.component.navigation.BackNavbar
 import com.readymapeo.mobile.network.NetworkImage
 import com.readymapeo.mobile.config.ApiConfig
-import com.readymapeo.mobile.ui.component.placeholder.NotContentDashedCard
-import com.readymapeo.mobile.ui.component.placeholder.RaidImageTemplate
+import com.readymapeo.mobile.ui.component.template.NotContentDashedCard
+import com.readymapeo.mobile.ui.component.template.RaidImageTemplate
 import com.readymapeo.mobile.ui.component.raid.EventStatusCardRaid
 import com.readymapeo.mobile.ui.theme.RaidGreenOverlay
 import com.readymapeo.mobile.ui.theme.RaidGreenPrimary
@@ -127,7 +127,6 @@ fun RaidBanner(title: String, clubName: String, raidLocation: String, racesCount
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             BackNavbar(
                 textColor = RaidGreenSecondary,
-                backgroundColor = Color.Transparent,
                 iconColor = RaidGreenSecondary,
                 onclick = { redirectRoute("/raids") }
             )

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,6 +18,7 @@ import com.readymapeo.mobile.config.ApiConfig
 import com.readymapeo.mobile.network.NetworkImage
 import com.readymapeo.mobile.ui.component.Divider
 import com.readymapeo.mobile.ui.component.CTAButton
+import com.readymapeo.mobile.ui.theme.SemiBoldTypography
 
 @Composable
 fun MobileCard(
@@ -26,13 +26,15 @@ fun MobileCard(
     alternativeImage: @Composable () -> Unit,
     title: String,
     buttonText: String = "VOIR LES DETAILS",
+    showButtonIcon: Boolean = true,
+    showCtaButton: Boolean = true,
     onclick: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(4.dp),
+        elevation = CardDefaults.cardElevation(3.dp),
         onClick = onclick
     ) {
 
@@ -48,10 +50,12 @@ fun MobileCard(
             // content of the card
             content()
 
-            Divider()
+            if (showCtaButton) {
+                Divider()
 
-            // see details button
-            SeeDetailsButton(buttonText, onclick)
+                // see details button
+                SeeDetailsButton(buttonText, showButtonIcon, onclick)
+            }
         }
     }
 }
@@ -71,15 +75,16 @@ fun CardImage(imagePath: String?, alternativeImage: (@Composable () -> Unit)? = 
 fun CardTitle(title: String) {
     Text(
         text = title,
-        style = MaterialTheme.typography.displaySmall
+        style = SemiBoldTypography.displaySmall
     )
     Spacer(modifier = Modifier.height(2.dp))
 }
 
 @Composable
-fun SeeDetailsButton(text: String = "", onclick: () -> Unit) {
+fun SeeDetailsButton(text: String = "", showIcon: Boolean, onclick: () -> Unit) {
     CTAButton(
         text = text,
+        showIcon = showIcon,
         onclick = onclick
     )
 }

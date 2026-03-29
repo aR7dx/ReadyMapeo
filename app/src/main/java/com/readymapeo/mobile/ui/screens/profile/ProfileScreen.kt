@@ -3,6 +3,7 @@ package com.readymapeo.mobile.ui.screens.profile
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -33,15 +34,20 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.R
 import com.readymapeo.mobile.config.ApiConfig
-import com.readymapeo.mobile.data.local.entity.User
+import com.readymapeo.mobile.data.local.entity.AuthenticatedUser
 import com.readymapeo.mobile.network.NetworkImage
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.CTAButton
 import com.readymapeo.mobile.ui.component.LoadingSpinner
+import com.readymapeo.mobile.ui.component.Pills
+import com.readymapeo.mobile.ui.component.template.ErrorPills
+import com.readymapeo.mobile.ui.component.template.InfoPills
+import com.readymapeo.mobile.ui.component.template.SuccessPills
 import com.readymapeo.mobile.ui.theme.BoldTypography
+import com.readymapeo.mobile.ui.theme.SemiBoldTypography
+import com.readymapeo.mobile.utils.UserRole
 import com.readymapeo.mobile.utils.toFrenchDate
 import com.readymapeo.mobile.utils.toTimestamp
-import com.readymapeo.mobile.utils.toYear
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -62,13 +68,14 @@ fun ProfileScreen(viewModel: ProfileViewModel = viewModel()) {
             LoadingSpinner()
         }
         true -> {
-            ProfileContent(viewModel.user)
+            ProfileContent(viewModel)
         }
     }
 }
 
 @Composable
-fun ProfileContent(userState: StateFlow<User?>) {
+fun ProfileContent(viewModel: ProfileViewModel) {
+    val userState: StateFlow<AuthenticatedUser?> = viewModel.user
 
     LazyColumn(
         modifier = Modifier
@@ -79,9 +86,13 @@ fun ProfileContent(userState: StateFlow<User?>) {
         item {
             ProfileHeader(userState)
         }
-
+/*
         item {
             ProfileInfo(userState)
+        }
+*/
+        item {
+            ProfileRoles(viewModel)
         }
 
         item {
@@ -97,7 +108,7 @@ fun ProfileContent(userState: StateFlow<User?>) {
 
 
 @Composable
-fun ProfileHeader(userState: StateFlow<User?>) {
+fun ProfileHeader(userState: StateFlow<AuthenticatedUser?>) {
     val user = userState.collectAsState()
 
     Card(
@@ -146,7 +157,7 @@ fun ProfileHeader(userState: StateFlow<User?>) {
 
                         Text(
                             text = user.value?.name ?: "<Inconnu>",
-                            style = BoldTypography.headlineLarge
+                            style = SemiBoldTypography.headlineLarge
                         )
                     }
 
@@ -157,6 +168,7 @@ fun ProfileHeader(userState: StateFlow<User?>) {
                         style = MaterialTheme.typography.bodyLarge
                     )
                     // System.currentTimeMillis().toYear()
+                    /*
                     Text(
                         text = "Age : ${(user.value?.createdAt?.toTimestamp()?.toYear())}",
                         style = MaterialTheme.typography.bodyLarge
@@ -164,7 +176,17 @@ fun ProfileHeader(userState: StateFlow<User?>) {
                     Text(
                         text = "Adresse : ${user.value?.address}",
                         style = MaterialTheme.typography.bodyLarge
+                    )*/
+                    Text(
+                        text = "Numéro: ${user.value?.licenseNumber}",
+                        style = MaterialTheme.typography.bodyLarge
                     )
+                    if (user.value?.licenseEndValidity != null) {
+                        Text(
+                            text = "Validité de la licence: ${user.value?.licenseEndValidity}",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
                 }
             }
         }
@@ -199,50 +221,57 @@ fun ProfileHeader(userState: StateFlow<User?>) {
 }
 
 @Composable
-fun ProfileInfo(userState: StateFlow<User?>) {
-    val user = userState.collectAsState()
-
+fun ProfileRoles(viewModel: ProfileViewModel) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(1.dp),
         border = BorderStroke(1.dp, Color.LightGray),
-        ) {
-        Column(
-            modifier = Modifier.padding(24.dp)
-        ) {
-            Text(
-                text= "Licence:",
-                style = BoldTypography.headlineMedium
-            )
-            Spacer(modifier = Modifier.height(2.dp))
+    ) {
+        Text(
+            modifier = Modifier.padding(start = 8.dp, top = 12.dp, end = 8.dp),
+            text = "Mes Roles",
+            style = SemiBoldTypography.bodyLarge
+        )
 
-            if (user.value?.licenseNumber != null && user.value?.licenseEndValidity != null) {
-                Text(
-                    text = "Numéro: ${user.value?.licenseNumber}",
-                    style = MaterialTheme.typography.bodyLarge
+        FlowRow(
+            modifier = Modifier.padding(8.dp)
+        ) {
+            if (viewModel.hasRole(UserRole.ADMIN)) {
+                ErrorPills(
+                    text = "Administrateur",
+                    textStyle = BoldTypography.bodySmall,
                 )
-                Text(
-                    text = "Validité de la licence: ${user.value?.licenseEndValidity}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
             }
-
-            Text(
-                text= "Contact:",
-                style = BoldTypography.headlineMedium
-            )
-            Text("Téléphone: ${user.value?.phone}")
+            if (viewModel.hasRole(UserRole.ADHERENT)) {
+                SuccessPills(
+                    text = "Adhérent",
+                    textStyle = BoldTypography.bodySmall,
+                )
+            }
+            if (viewModel.hasRole(UserRole.RESPONSABLE_CLUB)) {
+                InfoPills(
+                    text = "Responsable Club",
+                    textStyle = BoldTypography.bodySmall,
+                )
+            }
+            if (viewModel.hasRole(UserRole.GESTIONNAIRE_RAID)) {
+                Pills(
+                    text = "Gestionnaire Raid",
+                    textColor = Color(0xFF7530AE),
+                    textStyle = BoldTypography.bodySmall,
+                    borderColor = Color(0xFFE9D5FF),
+                    backgroundColor = Color(0xFFf3E8FF)
+                )
+            }
         }
+
     }
 }
 
 @Composable
-fun UserTeams(userState: StateFlow<User?>) {
+fun UserTeams(userState: StateFlow<AuthenticatedUser?>) {
 
     Column {
         Row(
@@ -252,7 +281,7 @@ fun UserTeams(userState: StateFlow<User?>) {
             Text(
                 modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 0.dp, bottom = 8.dp),
                 text = "Vos équipes | ",
-                style = MaterialTheme.typography.displaySmall
+                style = SemiBoldTypography.displaySmall
             )
             TextButton(
                 onClick = {}
@@ -260,7 +289,7 @@ fun UserTeams(userState: StateFlow<User?>) {
                 Text(
                     text = "Créer une équipe",
                     color = Color(0xFF3B82F6),
-                    style = MaterialTheme.typography.displaySmall
+                    style = SemiBoldTypography.displaySmall
                 )
             }
         }
@@ -296,7 +325,7 @@ fun LastRaces() {
         Text(
             modifier = Modifier.padding(8.dp),
             text = "Vos dernières courses",
-            style = MaterialTheme.typography.displaySmall
+            style = SemiBoldTypography.displaySmall
         )
         NoLastRacesCard()
     }

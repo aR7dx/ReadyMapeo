@@ -69,7 +69,7 @@ fun RaidsFilterForm(
                 categoryList = viewModel.raidCategory
             )
 
-            Divider(dividerColor = dividerColor)
+            Divider(color = dividerColor)
 
             CTAButton(
                 text = "Rechercher...",

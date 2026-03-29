@@ -13,12 +13,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun Divider(
     modifier: Modifier = Modifier,
-    dividerColor: Color = Color(0xFFE6E6ED)
+    color: Color = Color(0xFFE6E6ED)
 ) {
     Spacer(modifier = Modifier.height(4.dp))
     HorizontalDivider(
         modifier = modifier,
-        color = dividerColor
+        color = color
     )
     Spacer(modifier = Modifier.height(4.dp))
 }

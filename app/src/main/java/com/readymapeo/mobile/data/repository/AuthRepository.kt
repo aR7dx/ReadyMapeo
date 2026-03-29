@@ -3,7 +3,7 @@ package com.readymapeo.mobile.data.repository
 import com.readymapeo.mobile.data.api.AuthApiService
 import com.readymapeo.mobile.data.api.RaidApiService
 import com.readymapeo.mobile.data.local.AppDatabase
-import com.readymapeo.mobile.data.local.entity.User
+import com.readymapeo.mobile.data.local.entity.AuthenticatedUser
 import com.readymapeo.mobile.manager.TokenManager
 import com.readymapeo.mobile.manager.RolesManager
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +23,7 @@ object AuthRepository {
         }
     }
 
-    private val userDao get() = database.userDao()
-
+    private val authenticatedUserDao get() = database.authenticatedUserDao()
 
     suspend fun login(email: String, password: String): Result<String> {
         return AuthApiService.login(email, password)
@@ -33,19 +32,19 @@ object AuthRepository {
     suspend fun logout() {
         TokenManager.clearAll()
         RolesManager.clearRoles()
-        userDao.delete()
+        authenticatedUserDao.delete()
     }
 
     suspend fun saveToken(token: String) {
         TokenManager.saveToken(token)
     }
 
-    suspend fun getUserInfo(): Flow<User> = withContext(Dispatchers.IO){
-        userDao.delete()
-        val user = AuthApiService.getUserInfo()
-        userDao.insert(user)
+    suspend fun getAuthenticatedUserInfo(): Flow<AuthenticatedUser> = withContext(Dispatchers.IO){
+        authenticatedUserDao.delete()
+        val authenticatedUser = AuthApiService.getUserInfo()
+        authenticatedUserDao.insert(authenticatedUser)
 
-        userDao.getUser().flowOn(Dispatchers.IO)
+        authenticatedUserDao.getAuthenticatedUser().flowOn(Dispatchers.IO)
     }
 
     fun isLoggedIn(): Flow<Boolean> {

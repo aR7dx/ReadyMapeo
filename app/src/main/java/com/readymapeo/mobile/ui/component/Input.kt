@@ -29,7 +29,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.readymapeo.mobile.R
-import com.readymapeo.mobile.ui.theme.BoldTypography
+import com.readymapeo.mobile.ui.theme.SemiBoldTypography
 import com.readymapeo.mobile.utils.InputType
 
 @Composable
@@ -41,6 +41,7 @@ fun Input(
     placeholder: String = "",
     textColor: Color = Color.Black,
     backgroundColor: Color = Color.Transparent,
+    onValueChange: () -> Unit = {},
 ) {
     val keyboardType = when (type) {
         InputType.TEXT -> KeyboardType.Text
@@ -70,7 +71,7 @@ fun Input(
             Text(
                 text = label,
                 color = labelColor,
-                style = BoldTypography.bodyMedium,
+                style = SemiBoldTypography.bodyMedium,
                 modifier = Modifier.padding(start = 2.dp, bottom = 4.dp)
             )
         }
@@ -88,6 +89,7 @@ fun Input(
                 value = mutableValue.value,
                 onValueChange = { value ->
                     mutableValue.value = value
+                    onValueChange()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
@@ -133,7 +135,10 @@ fun Input(
 
                         if (mutableValue.value.isNotEmpty()) {
                             IconButton(
-                                onClick = { mutableValue.value = "" },
+                                onClick = {
+                                    mutableValue.value = ""
+                                    onValueChange()
+                                },
                                 modifier = Modifier.padding(0.dp)
                             ) {
                                 Icon(

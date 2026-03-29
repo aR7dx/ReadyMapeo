@@ -32,6 +32,7 @@ import com.readymapeo.mobile.ui.component.LabelledDivider
 import com.readymapeo.mobile.ui.component.CTAButton
 import com.readymapeo.mobile.ui.theme.BoldTypography
 import com.readymapeo.mobile.ui.theme.CtaMainLightGreen
+import com.readymapeo.mobile.ui.theme.SemiBoldTypography
 import com.readymapeo.mobile.utils.InputType
 import kotlinx.coroutines.launch
 
@@ -96,7 +97,7 @@ fun LogoAndText() {
 
         Text(
             text = "Ravi de vous revoir",
-            style = BoldTypography.displayMedium
+            style = SemiBoldTypography.displayMedium
         )
 
         Row(

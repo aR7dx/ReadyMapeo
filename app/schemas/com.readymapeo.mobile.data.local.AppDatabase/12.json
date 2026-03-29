@@ -1,11 +1,11 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 10,
-    "identityHash": "ffcb90c380248362b99703165c6c055f",
+    "version": 12,
+    "identityHash": "b753b45efe797761168da943d61d5f6d",
     "entities": [
       {
-        "tableName": "User",
+        "tableName": "AuthenticatedUser",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `docId` INTEGER, `adhId` INTEGER, `name` TEXT NOT NULL, `lastName` TEXT NOT NULL, `firstName` TEXT NOT NULL, `email` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `address` TEXT NOT NULL, `phone` TEXT NOT NULL, `description` TEXT, `active` INTEGER NOT NULL, `emailVerifiedAt` TEXT, `twoFactorConfirmedAt` TEXT, `currentTeamId` INTEGER, `profilePhotoPath` TEXT, `profilePhotoUrl` TEXT, `createdAt` TEXT NOT NULL, `updatedAt` TEXT, `passwordIsSet` INTEGER NOT NULL, `isPublic` INTEGER NOT NULL, `hasCompletedProfile` INTEGER NOT NULL, `licenseNumber` INTEGER, `licenseEndValidity` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -150,8 +150,134 @@
         }
       },
       {
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `lastName` TEXT NOT NULL, `firstName` TEXT NOT NULL, `description` TEXT NOT NULL, `email` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `address` TEXT NOT NULL, `phone` TEXT NOT NULL, `active` INTEGER NOT NULL, `profilePhotoPath` TEXT NOT NULL, `profilePhotoUrl` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `passwordIsSet` INTEGER NOT NULL, `isPublic` INTEGER NOT NULL, `hasCompletedProfile` INTEGER NOT NULL, `licenceNumber` TEXT NOT NULL, `licenceEndValidity` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "lastName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "firstName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "birthDate",
+            "columnName": "birthDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "active",
+            "columnName": "active",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profilePhotoPath",
+            "columnName": "profilePhotoPath",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profilePhotoUrl",
+            "columnName": "profilePhotoUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passwordIsSet",
+            "columnName": "passwordIsSet",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPublic",
+            "columnName": "isPublic",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hasCompletedProfile",
+            "columnName": "hasCompletedProfile",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "licenceNumber",
+            "columnName": "licenceNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "licenceEndValidity",
+            "columnName": "licenceEndValidity",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
         "tableName": "Club",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clubId` INTEGER NOT NULL, `clubName` TEXT NOT NULL, `clubStreet` TEXT NOT NULL, `clubCity` TEXT NOT NULL, `clubPostalCode` TEXT NOT NULL, `ffsoId` TEXT NOT NULL, `description` TEXT, `clubImage` TEXT, `isApproved` INTEGER, `approvedBy` INTEGER, `approvedAt` TEXT, `creatorName` TEXT, `createdBy` INTEGER, `createdAt` TEXT, `updatedAt` TEXT, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`clubId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clubId` INTEGER NOT NULL, `clubName` TEXT NOT NULL, `clubStreet` TEXT NOT NULL, `clubCity` TEXT NOT NULL, `clubPostalCode` TEXT NOT NULL, `ffsoId` TEXT NOT NULL, `description` TEXT, `clubImage` TEXT, `isApproved` INTEGER, `approvedBy` INTEGER, `approvedAt` TEXT, `creatorName` TEXT, `createdBy` INTEGER, `createdAt` TEXT, `updatedAt` TEXT, `isMember` INTEGER, `isManager` INTEGER, `membershipStatus` INTEGER, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`clubId`))",
         "fields": [
           {
             "fieldPath": "clubId",
@@ -235,6 +361,21 @@
             "affinity": "TEXT"
           },
           {
+            "fieldPath": "isMember",
+            "columnName": "isMember",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isManager",
+            "columnName": "isManager",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "membershipStatus",
+            "columnName": "membershipStatus",
+            "affinity": "INTEGER"
+          },
+          {
             "fieldPath": "lastSyncAt",
             "columnName": "lastSyncAt",
             "affinity": "INTEGER",
@@ -253,6 +394,75 @@
             "clubId"
           ]
         }
+      },
+      {
+        "tableName": "ClubMember",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clubId` INTEGER NOT NULL, `memberId` INTEGER NOT NULL, PRIMARY KEY(`clubId`, `memberId`), FOREIGN KEY(`clubId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`memberId`) REFERENCES `User`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "clubId",
+            "columnName": "clubId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "memberId",
+            "columnName": "memberId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "clubId",
+            "memberId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_ClubMember_clubId",
+            "unique": false,
+            "columnNames": [
+              "clubId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ClubMember_clubId` ON `${TABLE_NAME}` (`clubId`)"
+          },
+          {
+            "name": "index_ClubMember_memberId",
+            "unique": false,
+            "columnNames": [
+              "memberId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ClubMember_memberId` ON `${TABLE_NAME}` (`memberId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Club",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "clubId"
+            ],
+            "referencedColumns": [
+              "clubId"
+            ]
+          },
+          {
+            "table": "User",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "memberId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "Raid",
@@ -430,7 +640,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ffcb90c380248362b99703165c6c055f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b753b45efe797761168da943d61d5f6d')"
     ]
   }
 }
