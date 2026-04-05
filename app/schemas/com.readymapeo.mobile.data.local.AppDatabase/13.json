@@ -1,0 +1,784 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 13,
+    "identityHash": "af98f1f330f4aa77a1d2e4c0bc8d9b5e",
+    "entities": [
+      {
+        "tableName": "AuthenticatedUser",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `docId` INTEGER, `adhId` INTEGER, `name` TEXT NOT NULL, `lastName` TEXT NOT NULL, `firstName` TEXT NOT NULL, `email` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `address` TEXT NOT NULL, `phone` TEXT NOT NULL, `description` TEXT, `active` INTEGER NOT NULL, `emailVerifiedAt` TEXT, `twoFactorConfirmedAt` TEXT, `currentTeamId` INTEGER, `profilePhotoPath` TEXT, `profilePhotoUrl` TEXT, `createdAt` TEXT NOT NULL, `updatedAt` TEXT, `passwordIsSet` INTEGER NOT NULL, `isPublic` INTEGER NOT NULL, `hasCompletedProfile` INTEGER NOT NULL, `licenseNumber` INTEGER, `licenseEndValidity` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "docId",
+            "columnName": "docId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "adhId",
+            "columnName": "adhId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "lastName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "firstName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "birthDate",
+            "columnName": "birthDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "active",
+            "columnName": "active",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "emailVerifiedAt",
+            "columnName": "emailVerifiedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "twoFactorConfirmedAt",
+            "columnName": "twoFactorConfirmedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "currentTeamId",
+            "columnName": "currentTeamId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "profilePhotoPath",
+            "columnName": "profilePhotoPath",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "profilePhotoUrl",
+            "columnName": "profilePhotoUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "passwordIsSet",
+            "columnName": "passwordIsSet",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPublic",
+            "columnName": "isPublic",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hasCompletedProfile",
+            "columnName": "hasCompletedProfile",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "licenseNumber",
+            "columnName": "licenseNumber",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "licenseEndValidity",
+            "columnName": "licenseEndValidity",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `lastName` TEXT NOT NULL, `firstName` TEXT NOT NULL, `description` TEXT NOT NULL, `email` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `address` TEXT NOT NULL, `phone` TEXT NOT NULL, `active` INTEGER NOT NULL, `profilePhotoPath` TEXT NOT NULL, `profilePhotoUrl` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `passwordIsSet` INTEGER NOT NULL, `isPublic` INTEGER NOT NULL, `hasCompletedProfile` INTEGER NOT NULL, `licenceNumber` TEXT NOT NULL, `licenceEndValidity` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "lastName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "firstName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "birthDate",
+            "columnName": "birthDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "active",
+            "columnName": "active",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profilePhotoPath",
+            "columnName": "profilePhotoPath",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profilePhotoUrl",
+            "columnName": "profilePhotoUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passwordIsSet",
+            "columnName": "passwordIsSet",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPublic",
+            "columnName": "isPublic",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hasCompletedProfile",
+            "columnName": "hasCompletedProfile",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "licenceNumber",
+            "columnName": "licenceNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "licenceEndValidity",
+            "columnName": "licenceEndValidity",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "Club",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clubId` INTEGER NOT NULL, `clubName` TEXT NOT NULL, `clubStreet` TEXT NOT NULL, `clubCity` TEXT NOT NULL, `clubPostalCode` TEXT NOT NULL, `ffsoId` TEXT NOT NULL, `description` TEXT, `clubImage` TEXT, `isApproved` INTEGER, `approvedBy` INTEGER, `approvedAt` TEXT, `creatorName` TEXT, `createdBy` INTEGER, `createdAt` TEXT, `updatedAt` TEXT, `isMember` INTEGER, `isManager` INTEGER, `membershipStatus` INTEGER, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`clubId`))",
+        "fields": [
+          {
+            "fieldPath": "clubId",
+            "columnName": "clubId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clubName",
+            "columnName": "clubName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clubStreet",
+            "columnName": "clubStreet",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clubCity",
+            "columnName": "clubCity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clubPostalCode",
+            "columnName": "clubPostalCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ffsoId",
+            "columnName": "ffsoId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "clubImage",
+            "columnName": "clubImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isApproved",
+            "columnName": "isApproved",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "approvedBy",
+            "columnName": "approvedBy",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "approvedAt",
+            "columnName": "approvedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "creatorName",
+            "columnName": "creatorName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createdBy",
+            "columnName": "createdBy",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isMember",
+            "columnName": "isMember",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isManager",
+            "columnName": "isManager",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "membershipStatus",
+            "columnName": "membershipStatus",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastSyncAt",
+            "columnName": "lastSyncAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isSynced",
+            "columnName": "isSynced",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "clubId"
+          ]
+        }
+      },
+      {
+        "tableName": "ClubMember",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clubId` INTEGER NOT NULL, `memberId` INTEGER NOT NULL, PRIMARY KEY(`clubId`, `memberId`), FOREIGN KEY(`clubId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`memberId`) REFERENCES `User`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "clubId",
+            "columnName": "clubId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "memberId",
+            "columnName": "memberId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "clubId",
+            "memberId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_ClubMember_clubId",
+            "unique": false,
+            "columnNames": [
+              "clubId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ClubMember_clubId` ON `${TABLE_NAME}` (`clubId`)"
+          },
+          {
+            "name": "index_ClubMember_memberId",
+            "unique": false,
+            "columnNames": [
+              "memberId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ClubMember_memberId` ON `${TABLE_NAME}` (`memberId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Club",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "clubId"
+            ],
+            "referencedColumns": [
+              "clubId"
+            ]
+          },
+          {
+            "table": "User",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "memberId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Raid",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`raidId` INTEGER NOT NULL, `raidName` TEXT NOT NULL, `raidDescription` TEXT NOT NULL, `adhId` INTEGER NOT NULL, `cluId` INTEGER, `insId` INTEGER NOT NULL, `raidDateStart` TEXT NOT NULL, `raidDateEnd` TEXT NOT NULL, `raidContact` TEXT NOT NULL, `raidSiteUrl` TEXT, `raidImage` TEXT, `raidStreet` TEXT NOT NULL, `raidCity` TEXT NOT NULL, `raidPostalCode` TEXT NOT NULL, `raidNumber` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL, `racesCount` INTEGER, `clubName` TEXT, `insStartDate` TEXT NOT NULL, `insEndDate` TEXT NOT NULL, `isOpen` INTEGER, `isUpcoming` INTEGER, `isFinished` INTEGER, `lastSyncAt` INTEGER NOT NULL, `isSynced` INTEGER NOT NULL, PRIMARY KEY(`raidId`), FOREIGN KEY(`cluId`) REFERENCES `Club`(`clubId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "raidId",
+            "columnName": "raidId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidName",
+            "columnName": "raidName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidDescription",
+            "columnName": "raidDescription",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "adhId",
+            "columnName": "adhId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cluId",
+            "columnName": "cluId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "insId",
+            "columnName": "insId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidDateStart",
+            "columnName": "raidDateStart",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidDateEnd",
+            "columnName": "raidDateEnd",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidContact",
+            "columnName": "raidContact",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidSiteUrl",
+            "columnName": "raidSiteUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "raidImage",
+            "columnName": "raidImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "raidStreet",
+            "columnName": "raidStreet",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidCity",
+            "columnName": "raidCity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidPostalCode",
+            "columnName": "raidPostalCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raidNumber",
+            "columnName": "raidNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "racesCount",
+            "columnName": "racesCount",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "clubName",
+            "columnName": "clubName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "insStartDate",
+            "columnName": "insStartDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "insEndDate",
+            "columnName": "insEndDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isOpen",
+            "columnName": "isOpen",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isUpcoming",
+            "columnName": "isUpcoming",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isFinished",
+            "columnName": "isFinished",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastSyncAt",
+            "columnName": "lastSyncAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isSynced",
+            "columnName": "isSynced",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "raidId"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "Club",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "cluId"
+            ],
+            "referencedColumns": [
+              "clubId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Race",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`raceId` INTEGER NOT NULL, `raceName` TEXT NOT NULL, `raceDescription` TEXT NOT NULL, `raceDateStart` TEXT NOT NULL, `raceDateEnd` TEXT NOT NULL, `raceDifficulty` TEXT NOT NULL, `raceDurationMinutes` INTEGER NOT NULL, `raceType` TEXT NOT NULL, `raceImageUrl` TEXT NOT NULL, `racePriceMajor` INTEGER NOT NULL, `racePriceMinor` INTEGER NOT NULL, `raceIsOpen` INTEGER NOT NULL, `raceRaidId` INTEGER NOT NULL, `raceRaidName` TEXT NOT NULL, `raceRaidCity` TEXT NOT NULL, `raceClubId` INTEGER NOT NULL, `raceClubName` TEXT NOT NULL, `raceOrganizerName` TEXT NOT NULL, `raceAgeCategories` TEXT, PRIMARY KEY(`raceId`), FOREIGN KEY(`raceRaidId`) REFERENCES `Raid`(`raidId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "raceId",
+            "columnName": "raceId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceName",
+            "columnName": "raceName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceDescription",
+            "columnName": "raceDescription",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceDateStart",
+            "columnName": "raceDateStart",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceDateEnd",
+            "columnName": "raceDateEnd",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceDifficulty",
+            "columnName": "raceDifficulty",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceDurationMinutes",
+            "columnName": "raceDurationMinutes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceType",
+            "columnName": "raceType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceImageUrl",
+            "columnName": "raceImageUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "racePriceMajor",
+            "columnName": "racePriceMajor",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "racePriceMinor",
+            "columnName": "racePriceMinor",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceIsOpen",
+            "columnName": "raceIsOpen",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceRaidId",
+            "columnName": "raceRaidId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceRaidName",
+            "columnName": "raceRaidName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceRaidCity",
+            "columnName": "raceRaidCity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceClubId",
+            "columnName": "raceClubId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceClubName",
+            "columnName": "raceClubName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceOrganizerName",
+            "columnName": "raceOrganizerName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceAgeCategories",
+            "columnName": "raceAgeCategories",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "raceId"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "Raid",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "raceRaidId"
+            ],
+            "referencedColumns": [
+              "raidId"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'af98f1f330f4aa77a1d2e4c0bc8d9b5e')"
+    ]
+  }
+}

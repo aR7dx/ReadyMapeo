@@ -22,7 +22,7 @@ import androidx.room.Index
     ],
     indices = [
         Index(value = ["clubId"]),
-        Index(value = ["memberId"])
+        Index(value = ["memberId"]),
     ]
 )
 data class ClubMember (

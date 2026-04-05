@@ -5,6 +5,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.readymapeo.mobile.data.api.RaidApiService
 import com.readymapeo.mobile.data.local.AppDatabase
+import com.readymapeo.mobile.manager.DataStoreProvider
+import com.readymapeo.mobile.network.NetworkConnectivity
 
 class RaidSyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
@@ -18,9 +20,13 @@ class RaidSyncWorker(context: Context, params: WorkerParameters) : CoroutineWork
 
     override suspend fun doWork(): Result {
         return try {
+            DataStoreProvider.init(applicationContext)
+
             val raids = RaidApiService.getRaids()
 
-            //raidDao.deleteAll()
+            if (NetworkConnectivity.isOnline.value) {
+                raidDao.deleteAll()
+            }
             raidDao.insertAll(raids)
 
             Result.success()

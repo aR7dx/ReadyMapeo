@@ -8,14 +8,17 @@ import com.readymapeo.mobile.data.local.dao.ClubDao
 import com.readymapeo.mobile.data.local.dao.RaidDao
 import com.readymapeo.mobile.data.local.dao.AuthenticatedUserDao
 import com.readymapeo.mobile.data.local.dao.ClubMemberDao
+import com.readymapeo.mobile.data.local.dao.RaceDao
 import com.readymapeo.mobile.data.local.dao.UserDao
 import com.readymapeo.mobile.data.local.entity.Club
 import com.readymapeo.mobile.data.local.entity.Raid
+import com.readymapeo.mobile.data.local.entity.Race
 import com.readymapeo.mobile.data.local.entity.AuthenticatedUser
 import com.readymapeo.mobile.data.local.entity.ClubMember
 import com.readymapeo.mobile.data.local.entity.User
 import com.readymapeo.mobile.data.local.migration.Migration10To11
 import com.readymapeo.mobile.data.local.migration.Migration11To12
+import com.readymapeo.mobile.data.local.migration.Migration12To13
 import com.readymapeo.mobile.data.local.migration.Migration1To3
 import com.readymapeo.mobile.data.local.migration.Migration3To4
 import com.readymapeo.mobile.data.local.migration.Migration4To5
@@ -32,8 +35,9 @@ import com.readymapeo.mobile.data.local.migration.Migration9To10
         Club::class,
         ClubMember::class,
         Raid::class,
+        Race::class,
     ],
-    version = 12
+    version = 13
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -42,6 +46,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun clubDao(): ClubDao
     abstract fun clubMemberDao(): ClubMemberDao
     abstract fun raidDao(): RaidDao
+    abstract fun raceDao(): RaceDao
 
 
     companion object {
@@ -61,6 +66,7 @@ abstract class AppDatabase : RoomDatabase() {
                 Migration9To10(),
                 Migration10To11(),
                 Migration11To12(),
+                Migration12To13(),
             )
             .fallbackToDestructiveMigration()
             .build()

@@ -15,6 +15,7 @@ import com.readymapeo.mobile.data.repository.AuthRepository
 import com.readymapeo.mobile.data.repository.ClubMemberRepository
 import com.readymapeo.mobile.data.repository.RaidRepository
 import com.readymapeo.mobile.data.repository.ClubRepository
+import com.readymapeo.mobile.data.repository.RaceRepository
 import com.readymapeo.mobile.data.repository.UserRepository
 import com.readymapeo.mobile.manager.DataStoreProvider
 import com.readymapeo.mobile.network.ApiClient
@@ -54,6 +55,7 @@ fun ReadyMapeoApp(context: Context) {
     ClubMemberRepository.setDatabase(database)
     RaidRepository.setDatabase(database)
     ClubRepository.setDatabase(database)
+    RaceRepository.setDatabase(database)
 
     SyncManager.init(appContext)
 

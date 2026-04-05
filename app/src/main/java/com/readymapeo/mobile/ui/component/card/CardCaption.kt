@@ -15,7 +15,10 @@ import androidx.compose.ui.unit.dp
 import com.readymapeo.mobile.R
 
 @Composable
-fun CardCaption(text: String) {
+fun CardCaption(
+    firstText: String,
+    secondText: String? = null
+) {
     Row (verticalAlignment = Alignment.CenterVertically) {
         Icon (
             imageVector = ImageVector.vectorResource(R.drawable.building),
@@ -24,8 +27,15 @@ fun CardCaption(text: String) {
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = text,
+            text = firstText,
             color = Color(0xFF7F8690)
         )
+
+        if (!secondText.isNullOrBlank()) {
+            Text(
+                text = " • $secondText",
+                color = Color(0xFF7F8690)
+            )
+        }
     }
 }

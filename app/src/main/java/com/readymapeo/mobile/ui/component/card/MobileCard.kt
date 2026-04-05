@@ -22,6 +22,7 @@ import com.readymapeo.mobile.ui.theme.SemiBoldTypography
 
 @Composable
 fun MobileCard(
+    baseUrl: String = ApiConfig.BASE_URL_STORAGE,
     imagePath: String? = null,
     alternativeImage: @Composable () -> Unit,
     title: String,
@@ -39,6 +40,7 @@ fun MobileCard(
     ) {
 
         CardImage(
+            baseUrl = baseUrl,
             imagePath = imagePath,
             alternativeImage = alternativeImage
         )
@@ -61,10 +63,10 @@ fun MobileCard(
 }
 
 @Composable
-fun CardImage(imagePath: String?, alternativeImage: (@Composable () -> Unit)? = null) {
+fun CardImage(baseUrl: String?, imagePath: String?, alternativeImage: (@Composable () -> Unit)? = null) {
     NetworkImage(
         modifier = Modifier.fillMaxWidth().height(200.dp),
-        baseUrl = ApiConfig.BASE_URL_STORAGE,
+        baseUrl = baseUrl,
         imagePath = imagePath,
         alternativeImage = alternativeImage,
         contentScale = ContentScale.Crop

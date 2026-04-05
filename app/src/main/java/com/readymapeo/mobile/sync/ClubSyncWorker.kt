@@ -6,6 +6,8 @@ import androidx.work.WorkerParameters
 import com.readymapeo.mobile.data.api.ClubApiService
 import com.readymapeo.mobile.data.local.AppDatabase
 import com.readymapeo.mobile.data.repository.ClubRepository
+import com.readymapeo.mobile.manager.DataStoreProvider
+import com.readymapeo.mobile.network.NetworkConnectivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -15,18 +17,24 @@ class ClubSyncWorker(context: Context, params: WorkerParameters): CoroutineWorke
     private val clubDao = database.clubDao()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        return@withContext try {
+         try {
+            DataStoreProvider.init(applicationContext)
+
             val clubs = ClubApiService.getClubs()
+
+            if (NetworkConnectivity.isOnline.value) {
+                clubDao.deleteAll()
+            }
             clubDao.insertAll(clubs)
 
             val members = ClubApiService.getClubsMembers()
             ClubRepository.createClubsMembers(members)
 
-            Result.success()
+            return@withContext Result.success()
         }
         catch (e: Exception) {
             e.printStackTrace()
-            Result.retry()
+            return@withContext Result.retry()
         }
     }
 }

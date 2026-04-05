@@ -22,13 +22,12 @@ object RaidApiService {
     suspend fun getRaids(): List<Raid> = withContext(Dispatchers.IO) {
         try {
             val response = ApiClient.get("/raids")
-
-            val jsonObject = JSONObject(response)
-            val dataArray = jsonObject.getJSONArray("data")
+            val json = JSONObject(response)
+            val data = json.getJSONArray("data")
 
             val raids = mutableListOf<Raid>()
-            for (i in 0 until dataArray.length()) {
-                val raidJson = dataArray.getJSONObject(i)
+            for (i in 0 until data.length()) {
+                val raidJson = data.getJSONObject(i)
 
                 val raid = parseRaidJson(raidJson)
                 if (raid != null) {
@@ -36,7 +35,7 @@ object RaidApiService {
                 }
             }
 
-            raids
+            return@withContext raids
         }
         catch (e: Exception) {
            throw e
@@ -46,10 +45,10 @@ object RaidApiService {
     suspend fun getRaidById(raidId: Int): Raid? = withContext(Dispatchers.IO) {
         try {
             val response = ApiClient.get("/raids/$raidId")
+            val json = JSONObject(response)
+            val data = json.getJSONObject("data")
 
-            val jsonObject = JSONObject(response)
-            val dataObject = jsonObject.getJSONObject("data")
-            val raidJson = dataObject.getJSONObject("raid")
+            val raidJson = data.getJSONObject("raid")
 
             val raid = parseRaidJson(raidJson)
             raid
@@ -64,7 +63,7 @@ object RaidApiService {
         val cluId = raidJson.getInt("clu_id")
         val registrationJson = raidJson.getJSONObject("registration_period")
 
-        // Verifie que le club existe
+        // Vérifie que le club existe
         val club = clubDao?.getById(cluId) ?: return null
 
 
