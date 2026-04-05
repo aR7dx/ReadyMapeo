@@ -1,6 +1,7 @@
 package com.readymapeo.mobile.ui.component.navigation
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
@@ -12,39 +13,44 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.readymapeo.mobile.routes.currentRoute
 import com.readymapeo.mobile.routes.navRoutes
 import com.readymapeo.mobile.routes.redirectRoute
+import com.readymapeo.mobile.ui.component.network.ConnectionStatusBanner
 
-@PreviewScreenSizes
 @Composable
 fun NavigationBottomBar() {
     val currentTab by currentRoute
 
-    NavigationSuiteScaffold(
-        navigationSuiteItems = {
-        navRoutes.forEach {
-            item(
-                icon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(it.iconRes!!),
-                        contentDescription = it.label
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.weight(1f)) {
+            NavigationSuiteScaffold(
+                navigationSuiteItems = {
+                navRoutes.forEach {
+                    item(
+                        icon = {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(it.iconRes!!),
+                                contentDescription = it.label
+                            )
+                        },
+                        label = { Text(it.label!!) },
+                        selected = it == currentTab,
+                        onClick = {
+                            redirectRoute(it.path)
+                        }
                     )
-                },
-                label = { Text(it.label!!) },
-                selected = it == currentTab,
-                onClick = {
-                    redirectRoute(it.path)
                 }
-            )
-        }
-    }
-    ) {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Box(modifier = Modifier.padding(innerPadding)) {
-                currentTab.screen()
+            }
+            ) {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        currentTab.screen()
+                    }
+                }
             }
         }
+
+        ConnectionStatusBanner()
     }
 }

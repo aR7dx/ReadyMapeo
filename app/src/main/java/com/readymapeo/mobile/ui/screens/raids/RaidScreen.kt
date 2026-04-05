@@ -29,7 +29,7 @@ import com.readymapeo.mobile.R
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.Pills
 import com.readymapeo.mobile.ui.component.navigation.BackNavbar
-import com.readymapeo.mobile.network.NetworkImage
+import com.readymapeo.mobile.ui.component.network.NetworkImage
 import com.readymapeo.mobile.config.ApiConfig
 import com.readymapeo.mobile.ui.component.template.NotContentDashedCard
 import com.readymapeo.mobile.ui.component.template.RaidImageTemplate

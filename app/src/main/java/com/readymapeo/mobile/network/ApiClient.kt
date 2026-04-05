@@ -1,7 +1,6 @@
 package com.readymapeo.mobile.network
 
 import android.app.Application
-import android.widget.Toast
 import com.readymapeo.mobile.config.ApiConfig
 import com.readymapeo.mobile.manager.TokenManager
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +31,8 @@ object ApiClient {
             connection.requestMethod = method
             connection.setRequestProperty("Content-Type", "application/json")
             connection.setRequestProperty("Accept", "application/json")
+            connection.connectTimeout = 5000
+            connection.readTimeout = 5000
 
             token?.let {
                 connection.setRequestProperty("Authorization", "Bearer $it")
@@ -53,11 +54,11 @@ object ApiClient {
 
             response
         } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
+            /* withContext(Dispatchers.Main) {
                 appContext?.let {
                     Toast.makeText(it, "Erreur réseau: ${e.message}", Toast.LENGTH_LONG).show()
                 }
-            }
+            } */
             throw e
         }
     }

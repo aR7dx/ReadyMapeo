@@ -35,7 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.readymapeo.mobile.R
 import com.readymapeo.mobile.config.ApiConfig
 import com.readymapeo.mobile.data.local.entity.AuthenticatedUser
-import com.readymapeo.mobile.network.NetworkImage
+import com.readymapeo.mobile.ui.component.network.NetworkImage
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.CTAButton
 import com.readymapeo.mobile.ui.component.LoadingSpinner

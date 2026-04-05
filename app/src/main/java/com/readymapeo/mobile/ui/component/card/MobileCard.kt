@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.readymapeo.mobile.config.ApiConfig
-import com.readymapeo.mobile.network.NetworkImage
+import com.readymapeo.mobile.ui.component.network.NetworkImage
 import com.readymapeo.mobile.ui.component.Divider
 import com.readymapeo.mobile.ui.component.CTAButton
 import com.readymapeo.mobile.ui.theme.SemiBoldTypography
