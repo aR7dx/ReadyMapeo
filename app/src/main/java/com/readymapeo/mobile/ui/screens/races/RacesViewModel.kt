@@ -13,6 +13,8 @@ class RacesViewModel(application: Application): AndroidViewModel(application) {
 
     private val _races = mutableStateOf<List<Race>>(emptyList())
     val races: State<List<Race>> = _races
+    val raceSearch = mutableStateOf("")
+
 
     init {
         loadRaces()
@@ -23,6 +25,15 @@ class RacesViewModel(application: Application): AndroidViewModel(application) {
             RaceRepository.getAllRaces().collect { racesList ->
                 _races.value = racesList
             }
+        }
+    }
+
+    fun filterRaces() {
+        viewModelScope.launch() {
+            RaceRepository.getFilteredRaces(raceSearch.value)
+                .collect { filteredRaces ->
+                    _races.value = filteredRaces
+                }
         }
     }
 }

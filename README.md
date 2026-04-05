@@ -3,8 +3,8 @@
 Mobile version of ReadyMapeo (SAE301) 
 
 ## Screenshots
-![Raids](./image/raids_page.png)
-![Raid](./image/raid_page.png)
+> [!TIP]
+> See image folder for many screenshots of the app
 
 
 ## Synchro
@@ -16,16 +16,20 @@ Mobile version of ReadyMapeo (SAE301)
 - ~home page~
 - ~raids page~
 - ~raids filtering~
+- ~raid synchronization~
 - raid page (lack races list)
 - ~clubs page~
+- ~club page~
+- ~club synchronization~
 - ~account login~
 - ~account logout~
 - ~account page~
 - ~user roles on account page~
-- ~club page~
+- ~races page~
+- ~races filtering~
+- ~race synchronization~
 
 ## TODO
-- affichage des courses
 - affichage d'une course
 - affichage des courses d'un raid
 
@@ -47,7 +51,8 @@ Mobile version of ReadyMapeo (SAE301)
 
 - classements
 - synchro des classements
-- synchro des courses
+- synchro des équipes
+- affichage des équipes dans lesquelles est l'utilisateur
 
 <br/>
 

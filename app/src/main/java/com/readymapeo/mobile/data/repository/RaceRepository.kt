@@ -6,6 +6,7 @@ import com.readymapeo.mobile.data.local.entity.Race
 import com.readymapeo.mobile.network.NetworkConnectivity
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted.Companion.Lazily
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
@@ -40,5 +41,9 @@ object RaceRepository {
             }.stateIn(GlobalScope, Lazily, emptyList())
         }
         return racesStateFlow!!
+    }
+
+    fun getFilteredRaces(search: String): Flow<List<Race>> {
+        return raceDao.getFilteredRaces(search)
     }
 }

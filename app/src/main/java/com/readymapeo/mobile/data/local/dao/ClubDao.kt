@@ -18,9 +18,9 @@ interface ClubDao {
 
     @Query("""
         SELECT * from Club 
-        WHERE LOWER(clubName) like '%' || LOWER(:search) || '%'
-        OR LOWER(clubCity) like '%' || LOWER(:search) || '%'
-        OR clubPostalCode like '%' || :search || '%'
+        WHERE LOWER(clubName) LIKE '%' || LOWER(:search) || '%'
+        OR LOWER(clubCity) LIKE '%' || LOWER(:search) || '%'
+        OR clubPostalCode LIKE '%' || :search || '%'
     """)
     fun getFilteredClubs(search: String): Flow<List<Club>>
 
