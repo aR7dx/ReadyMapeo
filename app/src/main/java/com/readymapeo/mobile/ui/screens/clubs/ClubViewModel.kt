@@ -68,7 +68,7 @@ class ClubViewModel(application: Application): AndroidViewModel(application) {
 
                 _isMember.value = isMemberResult
             }
-            catch (e: Exception) {
+            catch (_: Exception) {
                 _isMember.value = false
             }
         }

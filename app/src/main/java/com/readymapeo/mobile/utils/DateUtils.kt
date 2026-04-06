@@ -40,6 +40,14 @@ fun Long.toFrenchDateNoYear(): String {
     return formatter.format(instant.atZone(ZoneId.systemDefault()))
 }
 
+// exemple : 2026-03-22T12:30:00+00:00 → 12:30
+fun String.toHour(): String {
+    val instant = Instant.parse(this)
+    val formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.FRENCH)
+
+    return formatter.format(instant.atZone(ZoneId.systemDefault()))
+}
+
 fun Long.toYear(): Int {
     return Instant.ofEpochMilli(this)
             .atZone(ZoneId.systemDefault())

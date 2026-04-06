@@ -38,6 +38,43 @@ object RaceApiService {
         }
     }
 
+    suspend fun getRaceById(raceId: Int): Race = withContext(Dispatchers.IO) {
+        try {
+            val response = ApiClient.get("/races/$raceId")
+            val json = JSONObject(response)
+
+            val data = json.getJSONObject("data")
+
+            val race = parseRaceJson(data)
+            return@withContext race
+        }
+        catch(e: Exception) {
+            throw e
+        }
+    }
+
+    suspend fun getRacesByRaidId(raidId: Int): List<Race> = withContext(Dispatchers.IO) {
+        try {
+            val response = ApiClient.get("/raids/$raidId")
+            val json = JSONObject(response)
+            val data = json.getJSONObject("data")
+            val racesJson = data.getJSONArray("races")
+
+            val races = mutableListOf<Race>()
+
+            for (i in 0 until racesJson.length()) {
+                val raceJson = racesJson.getJSONObject(i)
+                val race = parseRaceJson(raceJson)
+                races.add(race)
+            }
+
+            return@withContext races
+        }
+        catch(e: Exception) {
+            throw e
+        }
+    }
+
     fun parseRaceJson(raceJson: JSONObject): Race {
         val raidJson = raceJson.getJSONObject("raid")
         val clubJson = raidJson.getJSONObject("club")

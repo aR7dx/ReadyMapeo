@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.ui.component.template
+package com.readymapeo.mobile.ui.component.placeholder
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

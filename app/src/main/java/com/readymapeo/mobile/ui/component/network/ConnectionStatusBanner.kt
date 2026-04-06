@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.readymapeo.mobile.network.NetworkConnectivity
 import com.readymapeo.mobile.network.NetworkObserver
 import com.readymapeo.mobile.network.NetworkStatusManager
+import com.readymapeo.mobile.ui.theme.CtaMainGreen
 import kotlinx.coroutines.delay
 
 @Composable
@@ -70,23 +71,25 @@ fun ConnectionStatusBanner() {
         }
     }
 
-    AnimatedVisibility(
-        visible = showConnectedBanner && isOnline,
-        enter = fadeIn(),
-        exit = fadeOut()
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.Green)
-                .padding(vertical = 12.dp),
-            contentAlignment = Alignment.Center
+    if (isOnline) {
+        AnimatedVisibility(
+            visible = showConnectedBanner,
+            enter = fadeIn(),
+            exit = fadeOut()
         ) {
-            Text(
-                text = "Vous êtes connecté",
-                color = Color.White,
-                fontSize = 14.sp
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(CtaMainGreen)
+                    .padding(vertical = 12.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Vous êtes connecté",
+                    color = Color.White,
+                    fontSize = 14.sp
+                )
+            }
         }
     }
 }

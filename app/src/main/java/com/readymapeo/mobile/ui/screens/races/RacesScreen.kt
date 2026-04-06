@@ -19,8 +19,10 @@ import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.Input
 import com.readymapeo.mobile.ui.component.card.CardCaption
 import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
+import com.readymapeo.mobile.ui.component.card.EventDuration
 import com.readymapeo.mobile.ui.component.card.MobileCard
 import com.readymapeo.mobile.ui.component.card.StartAndEndDate
+import com.readymapeo.mobile.ui.component.placeholder.RaceImageTemplate
 
 @Composable
 fun RacesScreen(viewModel: RacesViewModel = viewModel()) {
@@ -62,15 +64,18 @@ fun RacesScreen(viewModel: RacesViewModel = viewModel()) {
             MobileCard(
                 baseUrl = ApiConfig.BASE_URL,
                 imagePath = race.raceImageUrl,
-                alternativeImage = {},
+                alternativeImage = { RaceImageTemplate() },
                 title = race.raceName,
                 onclick = { redirectRoute("/races/${race.raceId}") }
             ) {
                 // location of the race
-                CityAndPostalCode(race.raceRaidCity, "???")
+                CityAndPostalCode(race.raceRaidCity)
 
                 // dates of the race
                 StartAndEndDate(race.raceDateStart, race.raceDateEnd)
+
+                // duration of the race
+                EventDuration(race.raceDurationMinutes, "min")
 
                 // caption of the card
                 CardCaption(race.raceRaidName, race.raceClubName)

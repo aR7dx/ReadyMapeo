@@ -1,6 +1,8 @@
 package com.readymapeo.mobile.ui.screens.raids
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +14,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,12 +37,21 @@ import com.readymapeo.mobile.ui.component.Pills
 import com.readymapeo.mobile.ui.component.navigation.BackNavbar
 import com.readymapeo.mobile.ui.component.network.NetworkImage
 import com.readymapeo.mobile.config.ApiConfig
-import com.readymapeo.mobile.ui.component.template.NotContentDashedCard
-import com.readymapeo.mobile.ui.component.template.RaidImageTemplate
+import com.readymapeo.mobile.ui.component.card.MobileCard
+import com.readymapeo.mobile.ui.component.placeholder.ErrorPills
+import com.readymapeo.mobile.ui.component.placeholder.InfoPills
+import com.readymapeo.mobile.ui.component.placeholder.NotContentDashedCard
+import com.readymapeo.mobile.ui.component.placeholder.RaceImageTemplate
+import com.readymapeo.mobile.ui.component.placeholder.RaidImageTemplate
+import com.readymapeo.mobile.ui.component.placeholder.SuccessPills
 import com.readymapeo.mobile.ui.component.raid.EventStatusCardRaid
 import com.readymapeo.mobile.ui.theme.RaidGreenOverlay
 import com.readymapeo.mobile.ui.theme.RaidGreenPrimary
 import com.readymapeo.mobile.ui.theme.RaidGreenSecondary
+import com.readymapeo.mobile.ui.theme.SemiBoldTypography
+import com.readymapeo.mobile.utils.toFrenchDate
+import com.readymapeo.mobile.utils.toHour
+import com.readymapeo.mobile.utils.toTimestamp
 
 @Composable
 fun RaidScreen(viewModel: RaidViewModel = viewModel()) {
@@ -46,6 +61,7 @@ fun RaidScreen(viewModel: RaidViewModel = viewModel()) {
     LaunchedEffect(raidId) {
         if (raidId != null) {
             viewModel.loadRaid(raidId)
+            viewModel.loadRaidRaces(raidId)
         }
     }
 
@@ -84,20 +100,120 @@ fun RaidScreen(viewModel: RaidViewModel = viewModel()) {
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    text = "${raid.racesCount} courses",
+                    text = "${viewModel.raidRaces.value.size} courses",
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
 
+        items(viewModel.raidRaces.value) { race ->
+            val isRaceFinished = race.raceDateEnd.toTimestamp() <= System.currentTimeMillis()
 
-        val nb: Int = if (raid.racesCount!! <= 0) 1 else 0
-        items(nb) {
-            Column(modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 32.dp)) {
-                NotContentDashedCard(
-                    title = "AUCUNE COURSE",
-                    subText = "AUCUNE COURSE N'EST DISPONIBLE POUR CE RAID POUR LE MOMENT."
-                )
+            MobileCard(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                baseUrl = ApiConfig.BASE_URL,
+                imagePath = race.raceImageUrl,
+                buttonText = if (isRaceFinished) {
+                    "CONSULTER LES RÉSULTATS"
+                } else {
+                    "PLUS DE DETAILS"
+               },
+                alternativeImage = { RaceImageTemplate() },
+                status = {
+                    if (isRaceFinished) {
+                        ErrorPills(
+                            text = "TERMINÉE",
+                            textStyle = SemiBoldTypography.bodySmall
+                        )
+                    }
+                    else if (race.raceDateStart.toTimestamp() > System.currentTimeMillis()) {
+                        InfoPills(
+                            text = "À VENIR",
+                            textStyle = SemiBoldTypography.bodySmall,
+                        )
+                    } else {
+                        SuccessPills(
+                            text = "EN COURS",
+                            textStyle = SemiBoldTypography.bodySmall,
+                        )
+                    }
+                },
+                title = race.raceName,
+                titleColor = Color(0xFF1E3A8A),
+                subTitle = "ORGANISE PAR ${race.raceOrganizerName.uppercase()}",
+                subTitleColor = Color(0xFFBBC5E7),
+                titleBadge = { InfoPills(text = race.raceDifficulty) },
+                ctaButtonBackgroundColor = if (isRaceFinished) {
+                    Color(0xFF1E3A8A)
+                } else {
+                    Color(0xFF2563EB)
+                },
+                onclick = { redirectRoute("/races/${race.raceId}") }
+            ) {
+                Row(
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth(0.5f)
+                            .border(BorderStroke(1.dp, Color(0xFFF3F4F6)), RoundedCornerShape(8.dp)),
+                        colors = CardDefaults.cardColors(containerColor = Color.White)
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Text(
+                                text = "DATE & HEURE",
+                                color = Color(0xFFC1C9DE),
+                                style = SemiBoldTypography.bodyMedium
+                            )
+                            Text(
+                                text = race.raceDateStart.toFrenchDate(),
+                                color = Color(0xFF1E3A8A),
+                                style = SemiBoldTypography.bodyMedium
+                            )
+                            Text(
+                                text = race.raceDateStart.toHour(),
+                                color = Color(0xFF059669),
+                                style = SemiBoldTypography.bodyMedium
+                            )
+                        }
+                    }
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .border(BorderStroke(1.dp, Color(0xFFF3F4F6)), RoundedCornerShape(8.dp)),
+                        colors = CardDefaults.cardColors(containerColor = Color.White)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .padding(12.dp)
+                                .fillMaxHeight()
+                        ) {
+                            Text(
+                                text = "DURÉE",
+                                color = Color(0xFFC1C9DE),
+                                style = SemiBoldTypography.bodyMedium
+                            )
+                            Text(
+                                text = race.raceDurationMinutes.toString() + "MIN",
+                                color = Color(0xFF1E3A8A),
+                                style = SemiBoldTypography.bodyMedium
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        item {
+            if (viewModel.raidRaces.value.isEmpty()) {
+                Column(modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 32.dp)
+                ) {
+                    NotContentDashedCard(
+                        title = "AUCUNE COURSE",
+                        subText = "AUCUNE COURSE N'EST DISPONIBLE POUR CE RAID POUR LE MOMENT."
+                    )
+                }
             }
         }
     }

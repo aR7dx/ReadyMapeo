@@ -1,7 +1,9 @@
 package com.readymapeo.mobile.data.api
 
 import com.readymapeo.mobile.data.local.dao.ClubDao
+import com.readymapeo.mobile.data.local.dao.RaceDao
 import com.readymapeo.mobile.data.local.entity.Raid
+import com.readymapeo.mobile.data.local.entity.Race
 import com.readymapeo.mobile.network.ApiClient
 import com.readymapeo.mobile.utils.optBooleanOrNull
 import com.readymapeo.mobile.utils.optStringOrNull
@@ -12,10 +14,17 @@ import org.json.JSONObject
 object RaidApiService {
 
     private var clubDao: ClubDao? = null
+    private var raceDao: RaceDao? = null
 
     fun setClubDao(dao: ClubDao) {
         if (clubDao == null) {
             clubDao = dao
+        }
+    }
+
+    fun setRaceDao(dao: RaceDao) {
+        if (raceDao == null) {
+            raceDao = dao
         }
     }
 
@@ -49,6 +58,17 @@ object RaidApiService {
             val data = json.getJSONObject("data")
 
             val raidJson = data.getJSONObject("raid")
+
+            val racesArray = raidJson.optJSONArray("races")
+            if (racesArray != null && raceDao != null) {
+                val races = mutableListOf<Race>()
+                for (i in 0 until racesArray.length()) {
+                    val raceJson = racesArray.getJSONObject(i)
+                    val race = RaceApiService.parseRaceJson(raceJson)
+                    races.add(race)
+                }
+                raceDao?.insertAll(races)
+            }
 
             val raid = parseRaidJson(raidJson)
             raid

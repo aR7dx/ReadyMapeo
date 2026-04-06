@@ -52,10 +52,10 @@ fun ReadyMapeoApp(context: Context) {
     val database = AppDatabase.getInstance(appContext)
     AuthRepository.setDatabase(database)
     UserRepository.setDatabase(database)
+    RaceRepository.setDatabase(database)
     ClubMemberRepository.setDatabase(database)
     RaidRepository.setDatabase(database)
     ClubRepository.setDatabase(database)
-    RaceRepository.setDatabase(database)
 
     SyncManager.init(appContext)
 

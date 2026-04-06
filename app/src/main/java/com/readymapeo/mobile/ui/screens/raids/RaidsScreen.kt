@@ -28,8 +28,8 @@ import com.readymapeo.mobile.ui.component.card.CardCaption
 import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
 import com.readymapeo.mobile.ui.component.card.MobileCard
 import com.readymapeo.mobile.ui.component.card.StartAndEndDate
-import com.readymapeo.mobile.ui.component.template.NotContentDashedCard
-import com.readymapeo.mobile.ui.component.template.RaidImageTemplate
+import com.readymapeo.mobile.ui.component.placeholder.NotContentDashedCard
+import com.readymapeo.mobile.ui.component.placeholder.RaidImageTemplate
 import com.readymapeo.mobile.ui.component.form.CollapsibleRaidsFilterForm
 import com.readymapeo.mobile.ui.theme.CtaMainLightGreen
 import com.readymapeo.mobile.utils.UserRole

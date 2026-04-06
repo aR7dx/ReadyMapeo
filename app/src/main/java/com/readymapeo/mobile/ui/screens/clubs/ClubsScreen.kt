@@ -24,8 +24,8 @@ import com.readymapeo.mobile.ui.component.Input
 import com.readymapeo.mobile.ui.component.card.CardCaption
 import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
 import com.readymapeo.mobile.ui.component.card.MobileCard
-import com.readymapeo.mobile.ui.component.template.ClubImageTemplate
-import com.readymapeo.mobile.ui.component.template.NotContentDashedCard
+import com.readymapeo.mobile.ui.component.placeholder.ClubImageTemplate
+import com.readymapeo.mobile.ui.component.placeholder.NotContentDashedCard
 
 @Composable
 fun ClubsScreen(viewModel: ClubsViewModel = viewModel()) {

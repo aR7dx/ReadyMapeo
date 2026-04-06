@@ -13,9 +13,11 @@ class RaidSyncWorker(context: Context, params: WorkerParameters) : CoroutineWork
     private val database = AppDatabase.getInstance(context)
     private val raidDao = database.raidDao()
     private val clubDao = database.clubDao()
+    private val raceDao = database.raceDao()
 
     init {
         RaidApiService.setClubDao(clubDao)
+        RaidApiService.setRaceDao(raceDao)
     }
 
     override suspend fun doWork(): Result {

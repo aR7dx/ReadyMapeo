@@ -31,7 +31,7 @@ fun CTAButton(
     text: String = "",
     textColor: Color = Color.White,
     backgroundColor: Color = CtaMainBrown,
-    border: BorderStroke = BorderStroke(0.dp, Color.Black),
+    border: BorderStroke = BorderStroke(0.dp, Color.Transparent),
     showIcon: Boolean = true,
     icon: ImageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
     iconColor: Color = Color.White,

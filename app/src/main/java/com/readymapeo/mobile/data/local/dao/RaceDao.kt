@@ -31,6 +31,9 @@ interface RaceDao {
         """)
     fun getFilteredRaces(search: String): Flow<List<Race>>
 
+    @Query("SELECT * FROM Race WHERE raceRaidId = :raidId")
+    fun getRacesByRaidId(raidId: Int): Flow<List<Race>>
+
     @Upsert
     fun insert(race: Race)
 

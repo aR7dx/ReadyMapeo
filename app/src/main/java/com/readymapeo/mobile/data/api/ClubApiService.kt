@@ -80,7 +80,6 @@ object ClubApiService {
             val creatorJson = clubJson.optJSONObject("creator")
 
             val club = parseClubJson(data, clubJson, creatorJson!!)
-
             return@withContext club
         }
         catch (e: Exception) {

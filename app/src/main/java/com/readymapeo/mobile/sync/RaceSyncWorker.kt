@@ -15,8 +15,8 @@ class RaceSyncWorker(context: Context, params: WorkerParameters): CoroutineWorke
     private val database = AppDatabase.getInstance(context)
     private val raceDao = database.raceDao()
 
-    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        try {
+    override suspend fun doWork(): Result {
+        return try {
             DataStoreProvider.init(applicationContext)
 
             val races = RaceApiService.getRaces()
@@ -26,11 +26,11 @@ class RaceSyncWorker(context: Context, params: WorkerParameters): CoroutineWorke
             }
             raceDao.insertAll(races)
 
-            return@withContext Result.success()
+            Result.success()
         }
         catch (e: Exception) {
             e.printStackTrace()
-            return@withContext Result.retry()
+            Result.retry()
         }
     }
 }

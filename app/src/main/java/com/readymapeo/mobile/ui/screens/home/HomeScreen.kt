@@ -38,7 +38,7 @@ import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
 import com.readymapeo.mobile.ui.component.card.MobileCard
 import com.readymapeo.mobile.ui.component.card.StartAndEndDate
 import com.readymapeo.mobile.ui.component.form.RaidsFilterForm
-import com.readymapeo.mobile.ui.component.template.RaidImageTemplate
+import com.readymapeo.mobile.ui.component.placeholder.RaidImageTemplate
 import com.readymapeo.mobile.ui.screens.raids.RaidsViewModel
 import com.readymapeo.mobile.ui.theme.CtaMainGreen
 import com.readymapeo.mobile.ui.theme.CtaMainLightGreen

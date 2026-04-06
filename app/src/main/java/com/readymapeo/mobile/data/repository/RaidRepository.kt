@@ -23,6 +23,7 @@ object RaidRepository {
         if (!::database.isInitialized) {
             database = appDatabase
             RaidApiService.setClubDao(appDatabase.clubDao())
+            RaidApiService.setRaceDao(appDatabase.raceDao())
         }
     }
 

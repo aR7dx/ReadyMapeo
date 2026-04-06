@@ -40,9 +40,9 @@ import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.CTAButton
 import com.readymapeo.mobile.ui.component.LoadingSpinner
 import com.readymapeo.mobile.ui.component.Pills
-import com.readymapeo.mobile.ui.component.template.ErrorPills
-import com.readymapeo.mobile.ui.component.template.InfoPills
-import com.readymapeo.mobile.ui.component.template.SuccessPills
+import com.readymapeo.mobile.ui.component.placeholder.ErrorPills
+import com.readymapeo.mobile.ui.component.placeholder.InfoPills
+import com.readymapeo.mobile.ui.component.placeholder.SuccessPills
 import com.readymapeo.mobile.ui.theme.BoldTypography
 import com.readymapeo.mobile.ui.theme.SemiBoldTypography
 import com.readymapeo.mobile.utils.UserRole
