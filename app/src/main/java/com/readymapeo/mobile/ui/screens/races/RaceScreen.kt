@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.readymapeo.mobile.config.ApiConfig
 import com.readymapeo.mobile.routes.currentRouteParams
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.navigation.BackNavbar
@@ -42,6 +44,10 @@ fun RaceScreen(viewModel: RaceViewModel = viewModel()) {
     ) {
         item {
             BackNavbar { redirectRoute("/races") }
+        }
+
+        item {
+            Text("Page non implementée. \nRendez-vous sur ${ApiConfig.BASE_URL}/races/$raceId pour voir les détails de la course.")
         }
     }
 

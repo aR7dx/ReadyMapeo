@@ -19,6 +19,7 @@ import com.readymapeo.mobile.data.local.entity.User
 import com.readymapeo.mobile.data.local.migration.Migration10To11
 import com.readymapeo.mobile.data.local.migration.Migration11To12
 import com.readymapeo.mobile.data.local.migration.Migration12To13
+import com.readymapeo.mobile.data.local.migration.Migration13To14
 import com.readymapeo.mobile.data.local.migration.Migration1To3
 import com.readymapeo.mobile.data.local.migration.Migration3To4
 import com.readymapeo.mobile.data.local.migration.Migration4To5
@@ -37,7 +38,7 @@ import com.readymapeo.mobile.data.local.migration.Migration9To10
         Raid::class,
         Race::class,
     ],
-    version = 13
+    version = 14
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -67,6 +68,7 @@ abstract class AppDatabase : RoomDatabase() {
                 Migration10To11(),
                 Migration11To12(),
                 Migration12To13(),
+                Migration13To14(),
             )
             .fallbackToDestructiveMigration()
             .build()

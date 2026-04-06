@@ -4,6 +4,7 @@ import com.readymapeo.mobile.data.api.AuthApiService
 import com.readymapeo.mobile.data.api.RaidApiService
 import com.readymapeo.mobile.data.local.AppDatabase
 import com.readymapeo.mobile.data.local.entity.AuthenticatedUser
+import com.readymapeo.mobile.manager.AuthManager
 import com.readymapeo.mobile.manager.TokenManager
 import com.readymapeo.mobile.manager.RolesManager
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,7 @@ object AuthRepository {
     suspend fun logout() {
         TokenManager.clearAll()
         RolesManager.clearRoles()
+        AuthManager.clearCache()
         authenticatedUserDao.delete()
     }
 
@@ -44,6 +46,8 @@ object AuthRepository {
         authenticatedUserDao.delete()
         val authenticatedUser = AuthApiService.getUserInfo()
         authenticatedUserDao.insert(authenticatedUser)
+
+        AuthManager.initializeUser(authenticatedUser)
 
         authenticatedUserDao.getAuthenticatedUser().flowOn(Dispatchers.IO)
     }

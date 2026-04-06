@@ -26,11 +26,17 @@ object SyncManager {
             .setConstraints(networkConstraint)
             .build()
 
-        // Calling one time synchronization
-        workManager.beginUniqueWork("club_sync_now", ExistingWorkPolicy.KEEP, clubSyncNow)
-            .then(raceSyncNow)
-            .then(raidSyncNow)
-            .enqueue()
+        try {
+            workManager.enqueueUniqueWork("club_sync_now", ExistingWorkPolicy.REPLACE, clubSyncNow)
+        } catch (e: Exception) {}
+
+        try {
+            workManager.enqueueUniqueWork("race_sync_now", ExistingWorkPolicy.REPLACE, raceSyncNow)
+        } catch (e: Exception) {}
+
+        try {
+            workManager.enqueueUniqueWork("raid_sync_now", ExistingWorkPolicy.REPLACE, raidSyncNow)
+        } catch (e: Exception) {}
 
         // Periodic synchronization
         val clubSyncPeriodic = PeriodicWorkRequestBuilder<ClubSyncWorker>(5, TimeUnit.MINUTES)
@@ -42,7 +48,6 @@ object SyncManager {
         val raidSyncPeriodic = PeriodicWorkRequestBuilder<RaidSyncWorker>(5, TimeUnit.MINUTES)
             .setConstraints(networkConstraint)
             .build()
-
 
         // Calling periodic synchronization
         workManager.enqueueUniquePeriodicWork("club_sync_periodic", ExistingPeriodicWorkPolicy.KEEP, clubSyncPeriodic)

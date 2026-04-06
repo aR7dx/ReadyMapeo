@@ -57,7 +57,7 @@ object ClubApiService {
                     val clubId = clubJson.getInt("club_id")
 
                     val memberJson = membersArray.getJSONObject(j)
-                    val member = parseClubMemberJson(clubId, memberJson)
+                    val member = parseClubMemberJson(memberJson)
 
                     members.add(Pair(member, clubId))
                 }
@@ -115,7 +115,7 @@ object ClubApiService {
         )
     }
 
-    fun parseClubMemberJson(clubId: Int, memberJson: JSONObject): User {
+    fun parseClubMemberJson(memberJson: JSONObject): User {
         return User(
             id = memberJson.getInt("id"),
             name = memberJson.getString("name"),
@@ -134,8 +134,8 @@ object ClubApiService {
             passwordIsSet = memberJson.getBoolean("password_is_set"),
             isPublic = memberJson.getBoolean("is_public"),
             hasCompletedProfile = memberJson.getBoolean("has_completed_profile"),
-            licenceNumber = memberJson.getString("licence_number"),
-            licenceEndValidity = memberJson.getString("licence_end_validity"),
+            licenceNumber = memberJson.optStringOrNull("licence_number"),
+            licenceEndValidity = memberJson.optStringOrNull("licence_end_validity"),
         )
     }
 }

@@ -44,7 +44,7 @@ import com.readymapeo.mobile.ui.component.placeholder.NotContentDashedCard
 import com.readymapeo.mobile.ui.component.placeholder.RaceImageTemplate
 import com.readymapeo.mobile.ui.component.placeholder.RaidImageTemplate
 import com.readymapeo.mobile.ui.component.placeholder.SuccessPills
-import com.readymapeo.mobile.ui.component.raid.EventStatusCardRaid
+import com.readymapeo.mobile.ui.component.forms.EventStatusCardRaid
 import com.readymapeo.mobile.ui.theme.RaidGreenOverlay
 import com.readymapeo.mobile.ui.theme.RaidGreenPrimary
 import com.readymapeo.mobile.ui.theme.RaidGreenSecondary

@@ -10,6 +10,7 @@ Mobile version of ReadyMapeo (SAE301)
 ## Synchro
 - [GET] all raids (OK) (deletion not sync)
 - [GET] all clubs (OK) (deletion not sync)
+- [GET] all races (OK) (deletion not sync)
 
 
 ## FINISHED
@@ -17,7 +18,7 @@ Mobile version of ReadyMapeo (SAE301)
 - ~raids page~
 - ~raids filtering~
 - ~raid synchronization~
-- raid page (lack races list)
+- ~raid page with his own races~
 - ~clubs page~
 - ~club page~
 - ~club synchronization~
@@ -28,15 +29,15 @@ Mobile version of ReadyMapeo (SAE301)
 - ~races page~
 - ~races filtering~
 - ~race synchronization~
+- ~create raid page for club manager and admin users~
 
-## TODO
+## IMPROVEMENTS ?
 - affichage d'une course
-- affichage des courses d'un raid
 
 <br/>
  
 - créer / modifier / supprimer un club
-- créer / modifier / supprimer un raid
+- modifier / supprimer un raid
 - créer / modifier / supprimer une course
 - créer / modifier / supprimer une équipe
 - rejoindre / quitter un club

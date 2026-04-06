@@ -2,7 +2,9 @@ package com.readymapeo.mobile.manager
 
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.readymapeo.mobile.utils.UserRole
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 object RolesManager {
@@ -11,11 +13,19 @@ object RolesManager {
     private var cachedRoles: List<String> = emptyList()
 
     fun init() {
-        // TODO
+        // Maybe later
     }
 
     fun getCachedRoles(): List<String> {
         return cachedRoles
+    }
+
+    suspend fun hasRole(role: UserRole): Boolean {
+        if (cachedRoles.contains(role.roleName)) {
+            return true
+        }
+
+        return getRolesFlow().first().contains(role.roleName)
     }
 
     suspend fun saveRoles(roles: List<String>) {

@@ -43,12 +43,18 @@ interface RaidDao {
     @Delete
     fun delete(raid: Raid)
 
-    @Query("UPDATE Raid SET isSynced = 1, lastSyncAt = :timestamp WHERE raidId = :id")
-    fun markAsSynced(id: Int, timestamp: Long)
+     @Query("UPDATE Raid SET isSynced = 1, lastSyncAt = :timestamp WHERE raidId = :id")
+     fun markAsSynced(id: Int, timestamp: Long)
 
-    @Query("UPDATE Raid SET isSynced = 1, lastSyncAt = :timestamp")
-    fun markAllAsSynced(timestamp: Long)
+     @Query("UPDATE Raid SET isSynced = 1, lastSyncAt = :timestamp")
+     fun markAllAsSynced(timestamp: Long)
 
-    @Query("DELETE FROM Raid")
-    fun deleteAll()
+     @Query("SELECT * FROM Raid WHERE isSynced = 0")
+     suspend fun getUnsyncedRaids(): List<Raid>
+
+     @Query("UPDATE Raid SET isSynced = :isSynced WHERE raidId = :id")
+     suspend fun updateSyncStatus(id: Int, isSynced: Boolean)
+
+     @Query("DELETE FROM Raid")
+     fun deleteAll()
 }

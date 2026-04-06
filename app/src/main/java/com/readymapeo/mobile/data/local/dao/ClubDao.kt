@@ -41,4 +41,7 @@ interface ClubDao {
 
     @Query("DELETE FROM Club")
     fun deleteAll()
+
+    @Query("SELECT * FROM Club WHERE createdBy = :managerId")
+    fun getClubsOfAManager(managerId: Int): Flow<List<Club>>
 }

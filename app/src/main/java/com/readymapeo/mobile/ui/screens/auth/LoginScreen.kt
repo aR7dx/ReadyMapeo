@@ -26,11 +26,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import com.readymapeo.mobile.R
 import com.readymapeo.mobile.manager.AuthManager
+import com.readymapeo.mobile.data.repository.AuthRepository
 import com.readymapeo.mobile.routes.redirectRoute
 import com.readymapeo.mobile.ui.component.Input
 import com.readymapeo.mobile.ui.component.LabelledDivider
 import com.readymapeo.mobile.ui.component.CTAButton
-import com.readymapeo.mobile.ui.theme.BoldTypography
 import com.readymapeo.mobile.ui.theme.CtaMainLightGreen
 import com.readymapeo.mobile.ui.theme.SemiBoldTypography
 import com.readymapeo.mobile.utils.InputType
@@ -142,10 +142,17 @@ fun SubmitLoginForm(
 
                         val result = AuthManager.login(email, password)
 
-                        result.onSuccess { it ->
+                        result.onSuccess {
                             errorMessage.value = null
                             isLoading.value = false
-                            redirectRoute("/")
+
+                            try {
+                                AuthRepository.getAuthenticatedUserInfo().collect { _ ->
+                                    redirectRoute("/")
+                                }
+                            } catch (_: Exception) {
+                                errorMessage.value = "Erreur lors du chargement des infos utilisateur"
+                            }
                         }
 
                         result.onFailure { exception ->

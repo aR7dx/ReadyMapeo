@@ -1,4 +1,4 @@
-package com.readymapeo.mobile.ui.component.raid
+package com.readymapeo.mobile.ui.component.forms
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement

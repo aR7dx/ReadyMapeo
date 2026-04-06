@@ -70,9 +70,19 @@ object RaidRepository {
         return raidDao.getLast3Raids()
     }
 
-    fun getRaidsByClubId(clubId: Int): Flow<List<Raid>> {
-        return raidDao.getRaidsByClubId(clubId)
-    }
+     fun getRaidsByClubId(clubId: Int): Flow<List<Raid>> {
+         return raidDao.getRaidsByClubId(clubId)
+     }
+
+     suspend fun insertRaid(raid: Raid) = withContext(Dispatchers.IO) {
+         raidDao.insert(raid)
+     }
+
+     suspend fun getUnsyncedRaids(): List<Raid> = withContext(Dispatchers.IO) {
+         raidDao.getUnsyncedRaids()
+     }
+
+     suspend fun updateRaidSyncStatus(raidId: Int, isSynced: Boolean) = withContext(Dispatchers.IO) {
+         raidDao.updateSyncStatus(raidId, isSynced)
+     }
 }
-
-

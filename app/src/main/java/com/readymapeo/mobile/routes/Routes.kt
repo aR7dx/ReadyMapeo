@@ -11,6 +11,7 @@ import com.readymapeo.mobile.ui.screens.home.HomeScreen
 import com.readymapeo.mobile.ui.screens.profile.ProfileScreen
 import com.readymapeo.mobile.ui.screens.races.RaceScreen
 import com.readymapeo.mobile.ui.screens.races.RacesScreen
+import com.readymapeo.mobile.ui.screens.raids.CreateRaidScreen
 import com.readymapeo.mobile.ui.screens.raids.RaidsScreen
 import com.readymapeo.mobile.ui.screens.raids.RaidScreen
 
@@ -23,11 +24,13 @@ val navRoutes = listOf(
 )
 
 val routes = navRoutes + listOf(
+    Route("/raids/create", { CreateRaidScreen() }),
+    Route("/login", { LoginScreen() }),
+    Route("/logout", { LogoutScreen() }),
+    // route avec paramètre après
     Route("/raids/{id}", { RaidScreen() }),
     Route("/races/{id}", { RaceScreen()}),
     Route("/clubs/{id}", { ClubScreen() }),
-    Route("/login", { LoginScreen() }),
-    Route("/logout", { LogoutScreen() })
     // ajout de nouvelles routes ici
 )
 

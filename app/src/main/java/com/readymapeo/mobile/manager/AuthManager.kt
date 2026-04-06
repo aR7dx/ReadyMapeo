@@ -1,9 +1,11 @@
 package com.readymapeo.mobile.manager
 
+import com.readymapeo.mobile.data.local.entity.AuthenticatedUser
 import com.readymapeo.mobile.data.repository.AuthRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +18,7 @@ object AuthManager {
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
+    private var authenticatedUser: AuthenticatedUser? = null
     private val _isLoggedIn = MutableStateFlow<Boolean?>(null)
     val isLoggedIn: StateFlow<Boolean?> = _isLoggedIn.asStateFlow()
 
@@ -39,6 +42,25 @@ object AuthManager {
     }
 
     /**
+     * Initialise le cache avec les infos de l'utilisateur authentifié
+     */
+    fun initializeUser(user: AuthenticatedUser) {
+        AuthManager.authenticatedUser = user
+    }
+
+    /**
+     * Récupère l'utilisateur authentifié en cache
+     */
+    fun getAuthenticatedUser(): AuthenticatedUser? = AuthManager.authenticatedUser
+
+    /**
+     * Vide le cache lors de la déconnexion
+     */
+    fun clearCache() {
+        AuthManager.authenticatedUser = null
+    }
+
+    /**
      * Effectue une connexion au compte de l'utilisateur
      */
     suspend fun login(email: String, password: String): Result<String> {
@@ -54,5 +76,9 @@ object AuthManager {
      */
     suspend fun logout() {
         AuthRepository.logout()
+    }
+
+    suspend fun isLoggedIn(): Flow<Boolean> {
+        return AuthRepository.isLoggedIn()
     }
 }

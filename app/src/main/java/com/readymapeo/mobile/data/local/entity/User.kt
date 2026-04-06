@@ -22,6 +22,6 @@ data class User (
     val passwordIsSet: Boolean,
     val isPublic: Boolean,
     val hasCompletedProfile: Boolean,
-    val licenceNumber: String,
-    val licenceEndValidity: String,
+    val licenceNumber: String?,
+    val licenceEndValidity: String?,
 )

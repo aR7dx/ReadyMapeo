@@ -41,6 +41,7 @@ fun Input(
     placeholder: String = "",
     textColor: Color = Color.Black,
     backgroundColor: Color = Color.Transparent,
+    enabled: Boolean = true,
     onValueChange: () -> Unit = {},
 ) {
     val keyboardType = when (type) {
@@ -86,12 +87,13 @@ fun Input(
             contentAlignment = Alignment.CenterStart
         ) {
             BasicTextField(
+                modifier = Modifier.fillMaxWidth(),
+                enabled = enabled,
                 value = mutableValue.value,
                 onValueChange = { value ->
                     mutableValue.value = value
                     onValueChange()
                 },
-                modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
                 visualTransformation = visualTransformation,

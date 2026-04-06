@@ -1,6 +1,7 @@
 package com.readymapeo.mobile.sync
 
 import android.content.Context
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.readymapeo.mobile.data.api.ClubApiService
@@ -19,6 +20,7 @@ class ClubSyncWorker(context: Context, params: WorkerParameters): CoroutineWorke
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
          try {
             DataStoreProvider.init(applicationContext)
+            ClubRepository.setDatabase(database)
 
             val clubs = ClubApiService.getClubs()
 
@@ -27,8 +29,10 @@ class ClubSyncWorker(context: Context, params: WorkerParameters): CoroutineWorke
             }
             clubDao.insertAll(clubs)
 
-            val members = ClubApiService.getClubsMembers()
-            ClubRepository.createClubsMembers(members)
+            if (NetworkConnectivity.isOnline.value) {
+                val members = ClubApiService.getClubsMembers()
+                ClubRepository.createClubsMembers(members)
+            }
 
             return@withContext Result.success()
         }

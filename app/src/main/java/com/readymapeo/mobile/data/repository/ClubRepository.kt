@@ -76,16 +76,16 @@ object ClubRepository {
         }
         
         members.forEach { memberInfo ->
-            try {
-                userDao.insert(memberInfo.first)
+            userDao.insert(memberInfo.first)
 
-                clubMemberDao.insert(ClubMember(
-                    clubId = memberInfo.second,
-                    memberId = memberInfo.first.id
-                ))
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            clubMemberDao.insert(ClubMember(
+                memberId = memberInfo.first.id,
+                clubId = memberInfo.second,
+            ))
         }
+    }
+
+    fun getClubsOfAManager(userId: Int): Flow<List<Club>> {
+        return clubDao.getClubsOfAManager(userId)
     }
 }

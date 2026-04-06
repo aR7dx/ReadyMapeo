@@ -39,17 +39,28 @@ import com.readymapeo.mobile.utils.toFrenchDate
 
 @Composable
 fun DatePicker(
+    modifier: Modifier = Modifier,
     mutableSelectedDate: MutableState<Long?>,
     placeholder: String = "Choisir une date",
-    backgroundColor: Color = Color.Transparent
+    backgroundColor: Color = Color.Transparent,
+    onValueChange: () -> Unit = {},
+    isValid: Boolean = true
 ) {
     var showDatePicker by remember { mutableStateOf(false) }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(40.dp)
-            .border(1.dp, Color.LightGray, RoundedCornerShape(6.dp))
+            .border(
+            1.dp,
+            if (isValid) {
+                        Color.LightGray
+                    } else {
+                        Color.Red
+                    },
+            RoundedCornerShape(6.dp)
+            )
             .background(backgroundColor, RoundedCornerShape(6.dp))
             .clickable { showDatePicker = true }
     ) {
@@ -67,7 +78,13 @@ fun DatePicker(
                     .weight(1f)
                     .height(40.dp)
                     .padding(start = 12.dp),
-                textStyle = MaterialTheme.typography.bodyLarge.copy(color = Color.Black),
+                textStyle = MaterialTheme.typography.bodyLarge.copy(color =
+                    if (isValid) {
+                        Color.Black
+                    } else {
+                        Color.Red
+                    }
+                ),
                 decorationBox = { innerTextField ->
                     Box(
                         modifier = Modifier
@@ -78,7 +95,12 @@ fun DatePicker(
                         if (mutableSelectedDate.value == null) {
                             Text(
                                 text = placeholder,
-                                color = Color.Black.copy(alpha = 0.5f),
+                                color =
+                                    if (isValid) {
+                                        Color.Black.copy(alpha = 0.5f)
+                                    } else {
+                                        Color.Red.copy(alpha = 0.5f)
+                                    },
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         }
@@ -89,7 +111,11 @@ fun DatePicker(
 
             if (mutableSelectedDate.value != null) {
                 IconButton(
-                    onClick = { mutableSelectedDate.value = null },
+                    onClick = {
+                        mutableSelectedDate.value = null
+
+                        onValueChange()
+                    },
                     modifier = Modifier.height(40.dp)
                 ) {
                     Icon(
@@ -106,13 +132,22 @@ fun DatePicker(
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.calendar),
                     contentDescription = "calendar_icon",
+                    tint = if (isValid) {
+                        Color.Unspecified
+                    } else {
+                        Color.Red
+                    }
                 )
             }
         }
 
         if (showDatePicker) {
             DatePickerModal(
-                onDateSelected = { mutableSelectedDate.value = it },
+                onDateSelected = {
+                    mutableSelectedDate.value = it
+
+                    onValueChange()
+                 },
                 onDismiss = { showDatePicker = false }
             )
         }

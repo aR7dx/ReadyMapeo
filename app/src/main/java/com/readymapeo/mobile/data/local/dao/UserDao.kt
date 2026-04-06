@@ -11,8 +11,8 @@ interface UserDao {
 
     @Query(
         """
-        SELECT u.* FROM User u 
-        JOIN ClubMember cm on u.id = cm.memberId
+        SELECT DISTINCT u.* FROM User u 
+        INNER JOIN ClubMember cm ON u.id = cm.memberId
         WHERE cm.clubId = :clubId
         """
     )

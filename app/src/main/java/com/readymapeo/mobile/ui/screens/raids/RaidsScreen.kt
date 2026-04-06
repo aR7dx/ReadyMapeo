@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,6 +30,7 @@ import com.readymapeo.mobile.ui.component.card.CardCaption
 import com.readymapeo.mobile.ui.component.card.CityAndPostalCode
 import com.readymapeo.mobile.ui.component.card.MobileCard
 import com.readymapeo.mobile.ui.component.card.StartAndEndDate
+import com.readymapeo.mobile.ui.component.SyncStatusBadge
 import com.readymapeo.mobile.ui.component.placeholder.NotContentDashedCard
 import com.readymapeo.mobile.ui.component.placeholder.RaidImageTemplate
 import com.readymapeo.mobile.ui.component.form.CollapsibleRaidsFilterForm
@@ -80,6 +83,19 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
                     title = raid.raidName,
                     onclick = { redirectRoute("/raids/${raid.raidId}") }
                 ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Status",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Gray
+                        )
+                        SyncStatusBadge(isSynced = raid.isSynced)
+                    }
+
                     // location of raids
                     CityAndPostalCode(raid.raidCity, raid.raidPostalCode)
 
@@ -101,9 +117,9 @@ fun RaidsScreen(viewModel: RaidsViewModel = viewModel()) {
             }
         }
 
-        if (viewModel.hasRole(UserRole.ADMIN)) {
+        if (viewModel.hasRole(UserRole.ADMIN) || viewModel.hasRole(UserRole.RESPONSABLE_CLUB)) {
             FloatingActionButton(
-                onClick = {},
+                onClick = { redirectRoute("/raids/create") },
                 containerColor = CtaMainLightGreen,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
